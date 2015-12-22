@@ -1,0 +1,348 @@
+第一课
+
+控制台上面的手机图标可以切换到手机模拟器，右上角的框可以将控制台切换到右侧显示。
+
+每次选完显示设备以后都要刷新一下。选设备的右侧是横竖屏的切换。
+
+netword 是网络的选择。可以模拟不同网络下进入网站的过程。
+
+如果有的时候，控制台上面的手机图标没有了，就在emulation下面进行选择。
+
+这个下面的emulate mobile一定要勾选上。下面还有一个shrink to fit 是可以进行视图等比例缩放的，可以在小分辨率的情况下看到设备的全貌，这个选项和zoom to fit 是一样的。shrink to fit 和zoom to fit 一般不勾选。
+
+这个下面还有media（媒体），是用来选择设备种类的，做响应式用到。比如tv screen print 等等。
+
+这个下面还有network（网络模拟），这里可以对不同的设备和不同的系统版本进行一个自由的组合。然后进行测试。选完组合以后，下面就会出现一个浏览器的头信息。浏览器的判断。
+
+这个下面还有sensors（传感器），这里面是一些设备相关的东西。
+emulate touch screen：模拟移动端的事件。
+emulate geolocation coordinates：模拟经纬度。
+accelerometer：模拟陀螺仪。
+阿尔法对应Z轴，贝塔对应X轴，伽玛对应Y轴。
+
+如何将本地电脑上做好的页面进行测试：（使用真机对已经做好的页面进行测试）
+
+本地服务器的搭建：
+
+搭建服务器||HBuilder
+XAMPP：一个各种环境的集成安装包。
+在XAMPP安装好以后，将要测试的网页放在xampp-htdocs-www目录下。
+
+安卓模拟器：海马玩，南光。不如真机实在。
+
+
+同一网络下用设备连接
+
+关闭防火墙
+
+
+像素比：指导教程:iphone分辨率终极指南。这个像素比是一个手机一个设置。
+
+点、points（抽象单位）：
+
+像素渲染（栅格化）：
+
+物理像素：（调整大小）：
+
+dpi、ppi：
+
+获取像素比（window.devecePixelRatio）：当可以获取到像素比以后，再套上公式，就可以做到一个动态的计算了。公式：1/像素比  ，这样的话，就可以尽可能的保证在任何设备上面，做到一比一像素还原。
+
+<meta>标签：可以用来做移动端的适配。
+
+<meta name="viewport" content="device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+参数说明：
+
+width设备宽度：[pixel_value|device-width]（这个宽度值设置的是视口的宽度，要注意视口宽度和设备宽的相协调，HTML里设置的宽度是页面的宽度，也要注意视口宽度和页面宽度和设备宽度相协调。前面的参数表示具体数值，后面的宽度表示设备宽度）
+eg:
+
+<script>
+        var is=1;
+        is=is/window.devicePixelRatio;
+        var head=document.getElementsByTagName("head")[0];
+        metaTag=document.createElement("meta");
+        metaTag.setAttribute("name","viewport");
+        metaTag.setAttribute("content","device-width,user-scalable=no,initial-scale="+is+",minimum-scale="+is+",maximum-scale="+is);
+        head.appendChild(metaTag);
+    </script>
+
+
+
+下面这个是视频提供的，但是我试了感觉无效：(因为引号位置不对，所以无效。)
+
+var iscale=1;
+iscale=iscale/window.devicePixelRatio;
+document.write('<meta name="viewport" content="device-width,user-scalable=no,initial-scale="+iscale+",minimum-scale="+iscale+",maximum-scale="+iscale>')
+
+
+这里是尽可能的一比一的像素还原。
+
+user-scalable:（值为no||yes）是否允许缩放。
+
+initial-scale:初始比例。一般为1，如果设置为2，则会以两倍的页面大小来显示。
+
+minimum-scale:允许缩放的最小比例。
+
+maximum-scale:允许缩放的最大比例。
+
+target-densitydpi:（已淘汰）
+
+动态控制比例：1/像素比。
+
+只是手机的话，设计师只要设计出来一个640的版本就可以，然后通过动态控制像素比来做页面。
+
+如果要做IPAD，就需要再来一套尺寸了。
+
+
+
+
+
+
+第二课
+
+给HTML元素的宽/高设置百分比，是相对于父级来说的。
+
+关于浮动：用了浮动的元素，马上要给其父级清除浮动。
+eg:   .clearfix {content:""; display:block; clear:both;}
+
+关于移动端设计稿：百度-移动端设计稿尺寸，会出现相关的文章，可以得到很多知识。
+
+一屏=web单页
+
+
+
+box-sizing:border-box;是什么？    为元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制。
+
+
+前期准备：
+
+布局单位介绍、选择：
+
+1、如果用像素的话，因为机器的不同，会有不同的显示。所以不能用像素作单位。
+2、百分比计算太麻烦 ，而且因为百分比是根据父级的大小来计算的，如果不知道父级的大小就没办法用。
+3、em，em是根据字体大小来计算的。如果不进行设置的话，普通的字体大小是16PX,这样的话，如果想设置DIV的宽度的话，width=已知的以PX为单位的尺寸/16，就可以算出来是多少em，如果字体大小是进行了设置的，比如设置成了24PX，那么，width=已知的以PX为单位的尺寸/24，就是现有的em为单位的大小。
+但是因为em取决于字体的大小，也就是取决于font-size,那么如果字体大小要改的话，这个DIV的宽高也会发生变化。
+4、rem,root em,根em,根是谁，是HTML标签。如何设置呢，首先在HTML的样式里设置font-size:XXpx;,然后再在需要设置rem的标签里设置大小。HTML里面的字体大小，就是一个rem。rem是移动端的单位。
+
+如何动态的改变rem的大小：（这样可以在屏幕分辨率改变的情况下，动态的改变rem的大小。）
+
+使用JS，获取到屏幕的宽度，然后除以16.将获得的值写入根目录的font-size,然后根据设计图的需要设置的块的尺寸大小除以根目录的font-size，就可以得到具体的rem.
+eg:var iWidth=document.documentElement.clientWidth;
+   document.getElementsByTagName("html")[0].style.fontSize=iWidth/16+"px";
+   比如，DIV300px,font-size:40px;那么就是300/40=7.5rem
+为什么要用屏幕宽度除以16呢。因为除以16好计算。网上用的也比较多。
+
+图片的处理：
+
+如果是img标签图片的宽高，就把宽高值用rem来处理，宽度也可以设置100%。
+如果是背景图片，那就设置background-size:100% 6.5rem;也可以将高度也设置成100%
+
+默认样式处理：
+
+a{-webkit-tap-highlight-color:transparent;}
+上面这条样式可以去掉A链接的默认点击变灰的情况 。
+
+input{-webkit-appearance:none;/*去除input默认样式*/}
+老版本的iphone上面，会把input做成圆角。这个样式可以去除。
+
+一般情况下获取到宽度就可以了，高度可以靠内容来撑开。
+
+框架搭建：
+
+
+
+
+
+
+
+第三课
+
+媒体查询：媒体查询要放到样式里面，开头要用@media开头，然后空格加设备。
+<style>
+@media tv {       //这个的意思是如果是TV设备，则加载如下样式。
+
+	div {     //注意：在媒体查询里面一定要指定样式加给谁。
+
+		width:300px; height:300px; background-color:blue;
+	
+	}
+
+}
+</style>
+
+<style>
+@media all {       //注意：如果设置了all，并且这个样式放到了正常样式的后面，则正常的样式会被这个样式覆盖，如果正常样式放到了这个样式后面，那么这个样式将会被正常样式覆盖。这个无关乎优先级，只是单纯的后面的样式覆盖前面的样式 。
+
+	div {     
+
+		width:300px; height:300px; background-color:blue;
+	
+	}
+
+}
+</style>
+
+控制台里看到样式被划掉，就是被覆盖掉了。
+
+
+
+媒体特性：
+
+min-width:分辨率宽度大于等于设置值的时候识别。（在写媒体特性的时候，特性要用括号包住。）
+eg:
+<style>
+@media (min-width:600px) {      
+
+	div {     
+
+		width:300px; height:300px; background-color:blue;
+	
+	}
+
+}
+</style>
+
+max-width:分辨率宽度小于等于设置值的时候识别。
+
+orientation:portrait   :竖屏  这样设置的话，竖屏的时候，才会应用这里的样式 。
+eg:
+<style>
+@media (orientation:portrait) {      
+
+	div {     
+
+		width:300px; height:300px; background-color:blue;
+	
+	}
+
+}
+</style>
+
+orientation:landscape   :横屏
+
+-webkit-min-device-pixel-ratio:2   :像素比 判断像素比，如果像素比是2的时候，则应用如下样式。注意，这里是要加-webkit-的
+eg:
+<style>
+@media (-webkit-min-device-pixel-ratio:2) {      
+
+	div {     
+
+		width:300px; height:300px; background-color:blue;
+	
+	}
+
+}
+</style>
+
+关键字：
+
+and ：和、与（连接媒体特性）   当连接两个特性的时候，需要用这个。
+eg:
+<style>
+@media (min-width:700px) and (max-width:800px) {      
+
+	div {     
+
+		width:300px; height:300px; background-color:blue;
+	
+	}
+
+}
+</style>
+not：排除指定媒体类型  这个是用来排除媒体类型的。排除的媒体不执行，其它的代码都执行。
+eg:
+<style>
+@media not tv {
+
+	div {background-color:red;}
+
+}
+</style>
+only：指定某种特定的媒体类型（很多时候是用来对那些不支持媒体特性但却支持媒体类型的设备）
+eg:
+<style>
+@media only tv {
+
+	div {background-color:red;}
+
+}
+</style>
+
+
+
+
+第四课
+
+写法示例：
+eg:
+<style>
+@media all and (min-width:600px) and (max-width:700px) {
+
+	div {background-color:red;}
+
+}
+</style>
+
+注意：(实际开发中第一种用的比较多)
+1、如果在外链样式表里写媒体查询样式 ，那么，要注意样式覆盖。后面的样式会覆盖前面的样
+2、可以直接在link标签里面写media，这样的话，会在达成media条件的时候，应用此link标签里面的样式 。
+eg:<link rel="stylesheet" href="media.css" media="all and (min-width:600px)" />式 。
+3、可以在import引用样式的时候使用。
+4、图片如果写到媒体查询内，那么只有在触发条件的时候，图片才会加载。
+eg:
+<style>
+
+@import url("css.css") all and (min-width:600px);
+
+</style>
+
+link：提前处理好CSS文件，随着HTML结构一起渲染。  （无特殊要求的时候使用。）
+@import：先处理HTML结构，最后加载@import进来的外链样式表。（模块化CSS的时候可以使用。）
+
+@import问题：
+1、影响浏览器的并行下载 
+2、多个@import可能会导致下载的顺序错乱。（如果在CSS文件内再次引用@import，那么@import就要放到第一位，放在后面会没有效果。）
+
+响应式其实就是一个减法，为什么这么说呢？ 在写页面的时候，将所有的东西全部写出来 ，然后在缩小页面尺寸的时候，去缩小，或者隐藏一些元素。所以说是减法。
+也就是说，如果准备在小屏显示的东西，那么在大屏的时候也要先写上，然后在小屏的时候让他显示出来就行了。
+
+
+注意：如果想让做成的网页响应手机和平板，那么也要在头部加meta标签，viewport=device-width
+因为做的网页单位是像素，那么这个标签里的比例设置的就是1.0 。
+
+响应式常用尺寸：
+
+@media all and (min-width:1200px){}
+@media all and (min-width:850px) and (max-width:1199px) {}
+@media all and (min-width:700px) and (max-width:849px) {}
+@media all and (min-width:480px) and (max-width:699px) {}
+@media all and (max-width:479px) {}
+
+
+
+
+第五课
+
+背景图片定位不需要专门position  可以直接在background后面继续写。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
