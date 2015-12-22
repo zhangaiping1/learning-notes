@@ -1,0 +1,229 @@
+第一课
+
+在安装好GITHUB以后，登陆好，然后创建仓库。
+
+创建仓库：点右上角加号--点加号下面的新的本地的仓库（第二个是创建一个组织）--填写仓库名--在Description里面填写说明（可填写中文）--下面的public是公开的意思，说的是这个仓库是个公开的还是私有的--下面是创建readme文件，是对项目的一个描述--再下面的两个项，左边是来确认是否不操作某个系统文件，右边是是否创建一个许可，大项目会创建许可，这两个默认即可。--然后点击创建。
+
+第二课
+
+将仓库文件下载到本地进行编辑：
+在本地上用代码工具进入到一个文件夹下，然后git clone https://github.com/xxx
+设置贡献者(需要进入GIT项目文件夹内)：git config --global user.name "xxx"       git config --global user.email"xxx"     git config --list "xxx"
+查看：上面的代码不写名字，就是查看。
+      查看所有的配置： git config --list
+
+
+第三课
+
+GIT命令：
+git status:查看工作区和暂存区的内容。                eg:git status
+
+git add:将工作区内容添加到暂存区                     eg:git add demo1.html
+注意：git add .   这个点的意思是将所有的内容全部提交到暂存区。
+
+git commit:将暂存区内容添加到版本库中。              eg:git commit
+注意：1、在git commit以后会弹出来一个窗口，是用来添加注释的。可以中文，但是有可能乱码。
+      2、git commit -m "xxx" 添加注释也可以这样写，在添加了-m参数以后，后面跟注释。
+
+git reset HEAD:将暂存区的内容撤销回工作区。          eg:git reset HEAD demo1.html
+
+git commit -a -m "":将工作区内容一部到位添加到版本库中。  添加两个参数，-a表示将工作区内容添加到暂存区
+eg:git commit -a -m "xxx"
+
+git log:查看提交的版本历史。                         eg:git log
+
+
+第四课
+
+对比：
+git diff:检测工作区和暂存区的文件区别。
+git diff --cached(--staged):检测暂存区和版本区的文件区别。
+git diff master:检测工作区与版本区的文件区别。
+
+
+
+第五课
+
+撤销：
+git reset HEAD <file.name>:将暂存区的文件撤销回工作区。
+eg:git reset HEAD drag.js
+
+git checkout -- <file.name>:将暂存区文件或版本区文件撤销回工作区，如果暂存区存在文件，先撤销暂存区，如果暂存区没有文件，将会撤销版本区。(将工作区修改的部分销毁掉)。注意中间的横线，这个横线是两边都有空格的。
+eg:git checkout -- drag.js
+
+git commit --amend:撤销上一次的提交操作,并重新将暂存区文件提交(修改上次的提交)。可以添加m参数，进行注释。
+注意：如果想要和别的一起提交，需要先将其它的文件添加到暂存区。因为这个命令是撤销上一次的提交，并重新提交暂存区内容。（撤销完以后不会留下版本信息）
+eg:git commit --amend     git commit -m "changes3" --amend
+
+如果查看版本显示不全，继续回车就可继续查看，如果不想查看，按Q键即可退出。
+
+
+
+
+第六课
+
+删除：
+git rm <file.name>:在工作区文件删除的情况下，删除暂存区文件（工作区的文件是可以在WINDOWS下删除的。）如果工作区文件没有删除，用这个命令删除暂存区文件会报错。
+git rm -f <file.name>:在工作区和暂存区都有文件的情况下，这个命令会将两个区域的文件都删除掉。
+git rm --cached <file.name>:在工作区和暂存区都有文件的情况下，这个命令只会将暂存区的文件删除掉，工作区的文件会保留。
+
+
+第七课
+
+恢复：
+git checkout commit id <file.name>:恢复某个版本的某个文件。(需要git log查看版本号)
+eg:git checkout XXXXXX drag.js
+
+git reset --hard commit id :将所有的文件恢复到某个版本。
+eg:git reset --hard xxxxxx
+
+>>HEAD^:将所有的文件恢复到上一个版本。
+eg:git reset --hard HEAD^
+
+>>HEAD~<num>:将所有的文件恢复到前面某一个版本，参数为一个数字，如果是2，则是返回当前版本前面两个版本。记得要将当前版本也算进去。
+eg:git reset --hard HEAD~2
+
+git reflog:这个命令里，保存了所有的操作版本，包括删除的版本。(和HEAD~<num>一起使用，效果更好。)
+
+
+第八课
+
+同步到远程仓库
+git remote:查看远程仓库名称。
+
+-v:加V参数以后，不仅可以查看名称，也同时可以查看对应的地址。
+eg:git remote -v
+
+origin:远程仓库名字
+git push origin master:将某个分支同步到某个仓库。
+
+
+多人协作
+添加多人协作帐号（多人协作）：在网站上点击右上角的“加号”，点击new collaborator，按步骤添加。添加完成以后就可以在另一个帐户里操作。
+
+
+
+第九课
+
+如果多人协作开发，在每次写代码之前，都要同步一次，否则会容易冲突。git fetch和git pull都可以同步。
+多人协作解决冲突：
+git fetch:从远端拉取文件，但并不合并文件。需要手动合并文件。（拉取远端文件）
+>>git diff master origin/master:对比拉取下来的远端文件与工作区的文件的区别。（查看差别）
+>>git merge origin/master:将拉取下来的远端文件和工作区文件进行合并。然后进行手动的修改。（合并文件）
+git pull:从远端拉取文件，会合并到本地文件。
+
+
+
+第十课
+
+开源项目协作：
+fork:将项目保存一个分支到自己的GITHUB上。然后进行操作，添加到暂存区，添加到版本库，添加到远程上等等。
+pull request:将修改过的文件，发送给远程的原用户。在将文件添加到远程上以后，在网页上点这个按钮。
+
+远程用户在接收到文件以后，可以点击merge xxx来进行合并。合并后还可以回复。
+
+在远程上也可以进行代码的修改。然后现场发送pull request请求。
+
+删除项目：点击settings--Delete this repository--输入要删除的仓库名--点击下面的按钮
+
+
+
+
+第十一课
+
+git分支：
+
+git branch:查看分支。
+
+git branch xxx:创建一个以xxx为名的分支。
+eg:git branch new1.
+
+
+
+第十二课
+
+-d:删除分支(只能删除合并过的分支，没有合并过的分支删除的话会报错。)
+eg:git branch -d xxx
+
+-D：强制删除没有合并过的分支
+eg:git branch -D xxx
+
+--merged:查看当前分支下面合并过的分支
+eg:git branch --merged
+
+--no-merged:查看没有和当前分支合并的分支。
+eg:git branch --no-merged
+
+git checkout xxx:切换到XXX分支。
+eg:git checkout xxx
+
+-b:快速的创建一个分支，并且切换到该分支上。
+eg:git checkout -b new2
+
+git merge xxx:将XXX分支合并到当前分支。
+eg:git merge xxx
+
+有冲突的分支如何解决：合并分支时提示有冲突，可以git status查看冲突，然后打开文件，解决冲突，再一次的将文件提交到版本库。即可。然后可以查看所有分支 ，可看已合并的分支等，确认自己的做法是否正确。
+
+
+
+
+
+第十三课
+
+GITHUB上的分支：
+
+git push:首先创建分支，然后将文件push到新的分支上。
+eg: git push origin new1
+
+github上直接创建：可以在网页上直接创建分支，并且可以选择从哪个分支创建新的分支。可以删除分支。
+
+
+github上的标签：
+
+git tag:查看标签。
+
+git tag xxx:打上XXX的标签。
+eg:git tag v1.0
+
+提交打好的标签：git push origin v1.0
+
+github上直接创建：
+在标签项里，有一个Draft a new release按钮，可以创建新的标签。
+
+
+
+
+第十四课
+
+创建组织：
+github上创建：在页面上的加号，第二个选项是创建一个组织。创建好以后就可以添加人员，但是必须得到对方的验证。在首页的左下角可以找到自己创建的组织。
+
+创建博客：
+github和创建：
+创建一个仓库--仓库名要和GIT的用户名一样--格式：用户名.github.io--创建好以后就可以将自己的主页上传上来--用这个地址就可以打开了。
+
+https://pages.github.com/   这个页面是英文版的创建博客的说明。
+
+
+注意格式的正确性：
+
+
+
+
+第十五课
+
+如何深入：多用
+技巧：如果忘记单词，可以按tab键，会自动补全。
+资源：
+http://git.oschina.net/progit     这是一本书，讲的GIT如何使用。
+廖雪峰的GIT教程。
+
+
+
+
+
+
+
+
+
