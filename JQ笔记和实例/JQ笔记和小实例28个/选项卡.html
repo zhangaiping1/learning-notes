@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.1.js"></script>
+    <style>
+        div {width:100px; height:100px; border: 1px solid black;}
+        .active {background: red;}
+    </style>
+    <script>
+        $(function () {
+
+            /*$("input").click(function () {                                     //当点击按钮的时候发生一个事。
+
+                $("input").attr("class","");                                   //获取所有的按钮，然后设置其class为空。
+                $(this).attr("class","active");                                //当前点击的按钮，class为active
+                $("div").css("display","none");                                //所有的div的display为none。
+                $("div").eq($(this).index("input")).css("display","block");    //下标为“当前点击的按钮的索引值”的div元素的display为block。
+
+            })*/
+                                                                               //下面换一种链式写法。
+            $("input").click(function () {
+
+
+                $(this).attr("class","active").siblings("input").attr("class","");                                 //当前点击的按钮为active，其它的input兄弟按钮为空。
+
+                $("div").eq($(this).index("input")).css("display","block").siblings("div").css("display","none");  //以“当前点击的按钮的索引值”为下标的DIV的display为block。其它的标签为DIV的兄弟元素的display为none。
+
+            })
+
+        });
+    </script>
+</head>
+<body>
+
+<div style="display: block;">111</div>
+<div style="display: none;">222</div>
+<div style="display: none;">333</div>
+<input type="button" value="1" class="active"/>
+<input type="button" value="2"/>
+<input type="button" value="3"/>
+</body>
+</html>

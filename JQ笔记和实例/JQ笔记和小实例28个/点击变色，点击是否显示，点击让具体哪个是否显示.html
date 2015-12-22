@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .a {background: red;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+
+</head>
+<body>
+
+<ul>
+    <button id="aa">点击变色</button>
+    <button id="bb">点击隐藏显示</button>
+    <li>123</li>
+    <li>456</li>
+    <li>798</li>
+    <li>654</li>
+</ul>
+<script>
+    $("#aa").click(function () {
+        $(this).nextAll("li").toggleClass("a");   //这里用到了nextAll() toggleClass()
+    });
+    $("#bb").click(function () {
+        $(this).siblings("li").eq(2).toggle();    //这里用到了siblings()  eq()  toggle() 
+    });
+</script>
+</body>
+</html>

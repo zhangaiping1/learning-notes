@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin:0; padding:0;}
+        div {width:100px; height:100px; background: red; position: absolute;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {                                       //拖动效果。
+            var disX=0;                                       //因为需要得到鼠标点击的位置到DIV的边框的距离，所以在此处定义了两个变量。
+            var disY=0;
+            $("#div1").on("mousedown",function (ev) {         //当鼠标点击下去的时候，得到鼠标点击位置到DIV边框的距离，    根据鼠标点击的位置到页面边距的距离减去DIV边框到页面边距的距离。
+                disX=ev.pageX-$(this).offset().left;
+                disY=ev.pageY-$(this).offset().top;
+               // if($("#div1")[0].setCapture) {              //此处不写也可以正常运行 。不知道干什么用的。
+               //     $("#div1")[0].setCapture();
+               // };
+                $(document).on("mousemove",function (ev) {    //当鼠标移动的时候，将DIV的CSS的LEFT值写为鼠标点击的位置到页面边距的距离减去鼠标点击的位置到DIV边框的距离。相减以后得到的值，就是DIV边框到页面边距的距离。
+                    $("#div1").css("left",ev.pageX-disX);
+                    $("#div1").css("top",ev.pageY-disY);
+                });
+
+            $(document).on("mouseup",function () {            //当鼠标释放的时候，清空所有的事件。就可以做到DIV放到了当前位置。
+                   $(document).off();
+            });
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div id="div1">1111111</div>
+
+</body>
+</html>

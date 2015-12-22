@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        span {float: left; margin-left: 20px;}
+        div {width:100px; height:100px; float: left; margin-left: 20px; border: 1px solid black;}
+    </style>
+
+</head>
+<body>
+<span>red</span>
+<span>blue</span>
+<span>yellow</span>
+<span>black</span>
+<br />
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+    var color="";
+    var oSpan=document.getElementsByTagName("span");
+    var oDiv=document.getElementsByTagName("div");
+    for (var i=0;i<oSpan.length;i++){
+        oSpan[i].onclick=function (){
+            color=this.innerHTML;
+        };
+    for (var j=0;j<oDiv.length;j++){                  //注意两个循环不能都用i
+        oDiv[j].onclick=function (){
+            this.style.background=color;
+        };
+    }
+
+
+    }
+
+</script>
+</body>
+</html>

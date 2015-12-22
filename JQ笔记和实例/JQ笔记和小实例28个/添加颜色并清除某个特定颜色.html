@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        span {float: left; margin-left: 20px;}
+        div {width:100px; height:100px; float: left; margin-left: 20px; border: 1px solid black;}
+    </style>
+    <script src="js/jquery-1.11.1.js" type="application/javascript"></script>
+
+</head>
+<body>
+<span>red</span>
+<span>blue</span>
+<span>yellow</span>
+<span>black</span>
+<br />
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<button>清除红色</button>
+<script>
+    var color="";
+    $("span").click(function () {                    //获取颜色。
+        color=$(this).html();
+    });
+    $("div").click(function (){                     //添加颜色。
+        $(this).css("background",color);
+    });
+    $("button").click(function (){                 //清除某个特定的颜色。
+        $("div[style*=red]").css("background","");
+    });
+
+</script>
+</body>
+</html>

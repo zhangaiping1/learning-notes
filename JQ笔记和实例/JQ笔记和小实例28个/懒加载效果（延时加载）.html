@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .aa {width:470px; height:150px; border: 1px solid black; margin: 500px; display: block;}
+
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+
+        $(function () {                                       //这是一个懒加载效果
+            change();                                         //首先下面的函数要运行一遍。因为屏幕中间有一张图片。不运行会不显示。
+            $(window).scroll(change);                         //在屏幕滚动的时候再次运行函数。函数如下。
+            function change(){
+
+            $("img").each(function (i,elem) {                 //给所有的图片加循环。    elem就是受到操作的那个元素。
+
+                var $winHeight=$(window).height();            //获取视窗高度。        因为多长图片的位置不一样，都需要获取。所以这个参数要加到循环内。
+
+                var $scrHeight=$(document).scrollTop();       //获取滚动高度。        因为多长图片的位置不一样，都需要获取。所以这个参数要加到循环内。
+
+                var $imgHeight=$(elem).offset().top;          //获取受作用图片到页面顶部的高度。        因为多长图片的位置不一样，都需要获取。所以这个参数要加到循环内。
+               if($winHeight+$scrHeight>$imgHeight) {         //如果视窗高度+滚动高度>受作用图片到页面顶部的高度，那么就将元素内自定义的属性的值获取到然后添加给真正的src。使得图片加载。
+
+                    var $ss=$(elem).attr("_src");
+
+                    $(elem).attr("src",$ss);
+
+               };
+
+            });
+            };
+        });
+
+    </script>
+</head>
+<body>
+<img class="aa" _src="images/1.jpg"/>
+<img class="aa" _src="images/2.jpg"/>
+<img class="aa" _src="images/3.jpg"/>
+<img class="aa" _src="images/4.jpg"/>
+<img class="aa" _src="images/5.jpg"/>
+
+</body>
+</html>

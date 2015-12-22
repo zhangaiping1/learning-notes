@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+        * {margin:0; padding:0;}
+
+        #dl {width:500px; height:400px; border: 1px solid black; position: fixed; left:50%; top:50%; margin-left: -250px; margin-top: -200px; display: none; background: white; z-index: 9999;}  /*定位以后设置层级，可以让元素内容提前。*/
+        #btm { opacity: 0.3; background: black; position: absolute; left:0; top:0;}  /*在父级加上相对定位，在子级加上绝对定位，可以让层级盖住不脱离文件流的内容。*/
+        #zz {position: relative;}                                                      /*这里是父级的相对定位。*/
+
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+
+    <script>
+
+        (function ($) {                                              //这里开始写弹窗的插件。
+
+            $.fn.extend({
+
+                tc:function () {
+
+                    $(this).click(function () {                      //当前按钮点击的时候发生一件事儿。
+
+                        $("#dl").attr("style","display:block");      /*登陆窗口的display为block*/
+                        $("#btm").css("width",$(window).width()+"px").css("height",$(window).height()+"px");   /*半透明层获取到视口的宽高，记得带上单位，宽高的获取要加上括号。*/
+                        $("#btm").css("display","block");            /*让其display状态为block。*/
+
+
+                    });
+                    $("button").eq(1).click(function () {            //另外两个按钮在点击的时候，让登陆窗口和半透明层隐藏。
+
+                        $("#dl").attr("style","display:none");
+                        $("#btm").css("display","none");
+
+                    });
+                    $("button").eq(2).click(function () {
+
+                        $("#dl").attr("style","display:none");
+                        $("#btm").css("display","none");
+
+                    });
+
+
+                }
+
+            });
+
+
+        })(jQuery);
+
+    </script>
+    <script>
+
+        $(function () {                                              //记着要加载完成以后再调用。
+
+            $("button").eq(0).tc();                                  //在这里调用上面的插件。
+
+        });
+
+    </script>
+
+</head>
+<body>
+<div id="zz">
+
+    <button>登陆</button>
+
+
+    <div id="dl">
+
+        <span>帐号：</span><input type="text"/>
+        <br/>
+        <span>密码：</span><input type="text"/>
+
+        <button>确定</button>
+        <button>取消</button>
+
+    </div>
+    <div id="btm">
+    </div>
+</div>
+
+</body>
+</html>

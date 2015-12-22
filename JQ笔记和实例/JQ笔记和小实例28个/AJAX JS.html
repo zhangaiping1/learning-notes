@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+    <title>CSS第一题</title>
+    <style>
+        #div1 {width:200px; height:200px; border: 1px solid black;}
+    </style>
+    <script>
+        window.onload=function () {                                                     //这里是一个AJAX
+            var oBtn1=document.getElementById("btn1");
+            oBtn1.onclick=aa;                                                           //当按钮点击的时候运行下面的函数.
+            function aa() {
+               // alert(1);
+            var xmlhttp=new XMLHttpRequest();                                           //首先定义XMLHttpRequest()
+            xmlhttp.onreadystatechange=function () {                                    //当定义的对象的状态达到  200和4的时候,将返回的数据添加到DIV内.
+
+                if(xmlhttp.status==200 && xmlhttp.readyState==4) {
+
+                    document.getElementById("div1").innerHTML=xmlhttp.responseText;
+
+                };
+
+            };
+            xmlhttp.open("get","/ajax/a1.txt",true);                                    //创建AJAX请求.
+            xmlhttp.send();                                                             //发送AJAX请求.
+            };
+
+        };
+    </script>
+</head>
+
+<body>
+<button id="btn1">点击出数据</button>
+<div id="div1"></div>
+
+</body>
+</html>

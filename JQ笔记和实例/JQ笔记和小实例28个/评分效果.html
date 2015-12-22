@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .aa {width:30px; height:30px; background: url("star.jpg") 0 -70px; list-style: none; float: left;}
+        .bb {width:30px; height:30px; background: url("star.jpg"); list-style: none; float: left;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+
+        $(function () {
+
+            var $btn=true;                                     //设置一个开关，当开关打开时可以设置样式，如果开关关闭，则无法设置样式。
+            $("li").mouseover(function () {                    //LI的移入事件。
+
+                if($btn) {                                     //开关打开时
+
+                    var $index=$(this).index();
+
+                    $("li").each(function (i,elem) {           //给LI做循环事件。传入两个参数。I 和 ELEM
+
+                        if($index>=i) {                        //如果移入的这个元素的索引大于等于I
+
+                            $(elem).attr("class","bb");        //则元素的样式为BB。
+
+                        }else {
+
+                            $(elem).attr("class","aa");        //否则元素的样式为AA。
+
+                        };
+
+                    });
+
+                };
+
+            });
+            $("li").mouseout(function () {                    //如果鼠标移出，则在开关打开的情况下，所有的样式为AA。
+
+                if($btn){
+
+               $("li").attr("class","aa");
+
+                };
+
+            });
+            $("li").click(function () {                      //如果在LI上点击了，则关闭开关，保持样式。
+
+               $btn=false;
+
+            });
+
+        });
+
+    </script>
+
+
+</head>
+<body>
+<ul>
+    <li class="aa"></li>
+    <li class="aa"></li>
+    <li class="aa"></li>
+    <li class="aa"></li>
+    <li class="aa"></li>
+</ul>
+</body>
+</html>

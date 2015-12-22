@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        h4 {border-bottom: 1px solid black;}
+        #parent {width:600px; margin:0 auto; }
+        #box {width:600px;
+            border: 1px solid black; margin-bottom: 10px;}
+        #sr {width:100%;}
+        button {width:100%;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+</head>
+<body>
+    <div id="parent">
+        <h4>留言栏：</h4>
+        <div id="box">
+
+        </div>
+        <textarea name="" id="sr" cols="30" rows="10"></textarea>
+        <button>输入</button>
+    </div>
+    <script>
+        $("button").click(function () {
+            var $html="<p><span></span> "+$("textarea").val()+"</p>"+$("#box").html();    //在BOX内写入一个P元素，再写入一个SPAN元素。在P元素内写入下面输入框的值。再加上以前BOX框内原有的值。
+            $("#box").html($html)
+            $("textarea").val("");                                                        //清空输入框内原有的值。
+            change();
+
+        });
+        function change(){
+            //$("span").html("");
+            for (var i=0;i<$("p").length;i++){                                            //用循环的方式将数字写入到SPAN元素内。注意这里用了下标做索引。
+                $("p span").eq(i).html(i+1);                //需要注意的地方：1、定义的变量内允许使用HTML标签。    2、允许使用+号进行相连接。      3、允许JS和JQ同时存在。    4、eq()的用法。
+            }
+        };
+
+    </script>
+</body>
+</html>

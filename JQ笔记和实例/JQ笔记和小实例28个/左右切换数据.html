@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1 {width:200px; height:400px; border: 1px solid black; float: left;}
+        #div2 {width:200px; height:400px; border: 1px solid black; float: left;}
+        .active {background:red;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+
+            $("li").click(function () {                                  //当LI的内容点击时，让他的属性class得到一个样式active。
+
+                $(this).attr("class","active");
+
+            });
+            $("#input1").click(function () {                              //当input1被点击时，有active的LI添加到DIV2的UL的子节点的最后。然后清空样式active。  find()用于选择接受到的参数的子节点和子节点的子节点。
+
+                $("li[class=active]").appendTo($("#div2").find('ul'));
+                $("li[class=active]").attr("class","");
+
+            });
+            $("#input2").click(function () {                             //同理，当点击input2时，样式为active的LI添加到DIV1的UL的子节点的最后。然后清空样式active。
+
+                $("li[class=active]").appendTo($("#div1").find("ul"));
+                $("li[class=active]").attr("class","");
+
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+    <div id="div1">
+        <ul>
+            <li>123</li>
+            <li>456</li>
+            <li>789</li>
+            <li>159</li>
+        </ul>
+    </div>
+    <div id="div2">
+        <ul>
+            <li>abc</li>
+            <li>cde</li>
+            <li>def</li>
+            <li>awd</li>
+        </ul>
+    </div>
+    <input type="button" id="input1" value=">>>>"/>
+    <input type="button" id="input2" value="<<<<"/>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+    <title></title>
+</head>
+<style>
+    * {margin: 0; padding:0;}
+    #parent {width:470px; height:150px; border: 1px solid black; position: absolute; left:50%; top:50%; margin-left: -230px; margin-top: -375px; overflow: hidden;}
+    #parent2 {position: relative;}
+    ul {list-style: none;}
+    #ul2 {width:150px; height:30px; position: absolute; left:320px; bottom:-150px; z-index: 9999;}
+    #ul2 li { display: inline-block; width:20px; height:20px; border: 1px solid black; text-align: center; background:#ccc;cursor: pointer;}
+    #ul2 .active {background:red;}
+    #ul1 {width:2500px; height:200px; position: absolute;}
+    #ul1 li {width:470px; height:150px; float: left; position: absolute;}
+</style>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+    $(function () {                                                           //鼠标移入后切换.只切换一张.
+
+        var viewIndex=0;                                                      //此处定义一个变量,用来作为索引或者下标来用.
+        var timer=null;                                                       //此处定义延迟执行函数的变量.
+        $("#ul1 li").slice(1).css("left",470);                                //首先用slice方法，将第2张及以后图片定位到视口右侧。
+        $("#ul2 li").mouseover(function () {                                  //当鼠标移入的时候,发生发生切换.
+
+            clearTimeout(timer);                                              //为了防止鼠标反复移动造成反复自动切换,此处定义一个延迟执行,并在每次延迟执行前进行清除.
+            timer=setTimeout($.proxy(function () {                            //此处是延迟执行函数,因为套上这个函数以后this的指向会发生改变,所以使用$.proxy()方法来修正this的指向。
+                                                                              //this：这里套了两个函数，如果不套第二个函数，this的指向是li，现在套了第二个函数，函数内部的this指向的就是timer。
+                                                                              //现在修正this的指向，套用$.proxy(function,context)后，如：$.proxy(function () {},this);这样里面的函数将会有this的上下文中执行。
+                                                                              //这里的this属性第一个函数中，所以这个this指向的就是li，这样的话，this的指向问题就被修正过来了。
+            if(viewIndex<$(this).index()) {                                   //如果定义的索引小于鼠标移入的li的索引，那么表示视口里的li位于移入li的左侧，那么，将视口里的li向左移动，将鼠标移入的li定位到视口的右侧，
+                                                                              //然后移入到视口中，代码在倒数第四行。  因为最终都会移入到视口中，也就是定位在0，0点，所以将移入视口的代码提了出来。
+                $("#ul1 li").eq($(this).index()).css("left",470);             //此处是将li定位于视口右侧。
+                $("#ul1 li").eq(viewIndex).animate({left:-470},500);          //此处是将li向左移470PX。
+            };
+
+            if(viewIndex>$(this).index()) {                                   //vkjs定义的索引大于鼠标移入的LI的索引，那么表示视口里的LI位于要移入的LI的右侧。那么将视口里的LI向右移动。将鼠标移入的LI定位于视口的左侧。
+                                                                              //然后移入视口中。
+                $("#ul1 li").eq($(this).index()).css("left",-470);            //这里是定位于视口左侧。
+                $("#ul1 li").eq(viewIndex).animate({left:470},500);           //这里是向右移动470PX。
+            };
+            $("#ul1 li").eq($(this).index()).animate({left:0},500);           //这里是将定位好的LI，移入到视口内。
+            $(this).attr("class","active").siblings().attr("class","");       //这里是将鼠标移入的LI加上class，将其它的兄弟LI去掉class.
+            viewIndex=$(this).index();                                        //在操作完成以后将原始的索引值替换成当前的LI的索引值。以便于下一次的移入操作。
+
+            },this),200);                                                     //防止反复操作，这里在清除定时器之前延迟200MS后操作。
+
+
+        });
+
+    });
+</script>
+<body>
+<div id="parent">
+    <div id="parent2">
+        <ul id="ul2">
+            <li id="li6" class="active">1</li>
+            <li id="li7">2</li>
+            <li id="li8">3</li>
+            <li id="li9">4</li>
+            <li id="li10">5</li>
+        </ul>
+        <ul id="ul1">
+            <li id="li1" style="background: url('images/1.jpg')"></li>
+            <li id="li2" style="background: url('images/2.jpg')"></li>
+            <li id="li3" style="background: url('images/3.jpg')"></li>
+            <li id="li4" style="background: url('images/4.jpg')"></li>
+            <li id="li5" style="background: url('images/5.jpg')"></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

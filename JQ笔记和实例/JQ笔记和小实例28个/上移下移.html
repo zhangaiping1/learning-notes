@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+
+            $("input[value='上移']").click(function () {                        //在有值是上移的项上点击发生的事。
+
+
+                if ($(this).parent("li").prev().length==0) {                    //如果当前点击元素的父元素LI的上一个兄弟元素的长度为0。 则弹出“到头了”
+                    alert("到头了");
+                }else {
+                    $(this).parent("li").prev().before($(this).parent("li"));   //否则，当前点击元素的父元素LI的上一个兄弟元素前面添加上当前元素的父元素LI。
+                };
+
+            });
+            $("input[value='下移']").click(function () {                        //在有值为下移的项上点击发生的事。
+                if ($(this).parent("li").next().length==0){                     //如果当前点击元素的父元素的下一个兄弟节点的长度为0。则弹出“到底了”
+                    alert("到底了");
+                }else {
+                    $(this).parent("li").next().after($(this).parent("li"));    //否则，当前点击元素的父元素LI的下一个兄弟元素的后面添加上当前点击元素的父元素LI。
+                };
+
+
+            });
+
+
+        })
+    </script>
+
+</head>
+<body>
+<ul>
+    <li>1<input type="button" value="上移"/><input type="button" value="下移"/></li>
+    <li>2<input type="button" value="上移"/><input type="button" value="下移"/></li>
+    <li>3<input type="button" value="上移"/><input type="button" value="下移"/></li>
+    <li>4<input type="button" value="上移"/><input type="button" value="下移"/></li>
+    <li>5<input type="button" value="上移"/><input type="button" value="下移"/></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+
+        $(function () {                                    //管理员和普通用户状态切换
+
+            $("input").eq(0).click(function () {           //获取到管理员选项，点击时，在文字外面包装上一个链接。
+
+                $("span").wrap("<a href='#'></a>")
+
+            });
+            $("input").eq(1).click(function () {           //获取到普通用户选项，点击时，将外在的链接去掉。
+
+               $("span").unwrap();
+
+            });
+
+        })
+
+    </script>
+</head>
+<body>
+<input type="radio" name="aaa" value="管理员"/>管理员
+<input type="radio" name="aaa" value="普通用户"/>普通用户
+<br />
+<a href="#"><span>管理内容</span></a>
+</body>
+</html>

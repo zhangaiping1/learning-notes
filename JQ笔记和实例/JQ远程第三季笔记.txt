@@ -1,0 +1,2024 @@
+
+
+第一课
+
+获取元素：$("#xxx").css("background","red");
+
+JQ选中的选择上的一组元素，会全部选中。那个循环在库中自动实现了。
+
+$==jQuery  jQuery("li").css("background","red");  这个也能实现。这个东西的出现是为了避免冲突。
+
+
+JQ方
+法函数化  click()  html()  
+
+
+鼠标移入移出：$("#div1").mouseover(function () {});   $("#div1").mouseout(function () {});
+
+一行代码内，JQ和JS不能混写。
+
+JQ中的this是原生的。不能和JQ混用。 如果想用this可以用$符号括起来：$(this) 这样就是JQ了。
+
+相关的还有$(window)  $(document)等等。
+
+获取属性：attr（）
+
+设置value值：val()
+
+在对一个集合进行获取的时候，返回的值都是这个集合第一个元素的内容。
+
+强大的$()
+
+像JS一样加载完成以后运行：$(function () {}); ========window.onload=function () {};
+
+也可以写成：$(window).load(function () {});
+
+针对属性来进行操作：$("input[value]").css("background","red");
+                    $("input[value=456]").css("background","red");
+                    $("input[value^=123]").css("background","red");
+		    $("input[value$=555]").css("background","red");
+                    $("input[value*=3]").css("background","red");
+
+
+
+引号的问题：如果属性有多个值的情况下，则值部分需要加引号，如：$("class='box box2'").css("background","red");
+
+链式操作：对某一个元素进行一连串的操作时，可以用链式写法。注意：链式操作只针对设置，不能获取。
+
+原本：var oDiv=$("#div1");
+	oDiv.html("bbb");
+	oDiv.css("background","red");
+	oDiv.click(function () {alert(123)});
+
+链式的写法：$("#div1").html("bbb").css("background","red").click(function () {alert(123)});
+
+
+
+
+不成文的规范：如果是JQ的东西，命名前面可以加上$符号。例：var $div=$("#div");
+
+JQ的容错性比较好。就算东西不存在，也不会报错。
+
+
+
+
+集合的长度： size()和length   注意：length是没有括号的。  例： $("div").length;
+$()获取到的都是一个集合，即使是一个元素，也是一个集合。所以一个元素也有长度。
+
+这样就可以进行容错处理：在不知道一个元素存不存在的时候，就可以查看他的length，如果length不等于0，就表示他存在。
+
+class操作：addClass()     添加class
+	   removeClass()  删除class
+	   toggleClass()  这个比较智能，如果存在，则删除，如果不存在，则添加。智能切换。
+
+做一个点击一个颜色，再点击另一个颜色的例子。
+
+显示隐藏：show() 显示 
+	  hide() 隐藏
+	  toggle() 智能切换。
+
+做一个例子。
+
+这里用css()也能做到，但是不如show和hide智能。所以show和hide比较好用。
+
+
+
+
+节点操作：  prev()  next() 上一个兄弟节点，下一个兄弟节点。
+
+eg:$("span").next("h1").css("background","red");  这里选择的是H1，里面的参数即可以是标签，也可以是class等等，类似于CSS的都可以。
+
+
+prevAll()  nextAll()  上面所有的兄弟节点，下面所有的兄弟节点。 一样可以传入参数进行选择。
+
+siblings()  选择兄弟节点，不论上下。  
+
+例子：点击按钮变红色背景。点另一个原来那个还原。
+例子：点击按钮切换列表是否显示。
+
+下标： eq()
+
+$("li").eq(0).css("background","red");
+
+for (var i=0;i<$("li").length;i++) {
+	$("li").eq(i).html(i);
+}
+
+练习：抽奖效果  留言板效果。
+
+
+
+
+
+
+
+
+
+第二课
+
+
+选择节点的方法： first()选择第一个  last()选择最后一个  slice()传入1~2个参数，表示选择的起点和终点，注意：第二个参数选择的终点是不包括的。
+
+children()用来选择子节点，但是不包括子节点的子节点。他接受一个参数，用来筛选。
+
+find()用来选择所有的与参数相符的子节点，包括子节点的子节点。必须要写一个参数，用来筛选。
+如果想选择所有的子节点，可以将参数设置为*号。
+
+小技巧：多使用find()方法，比较优化。比标签选择器要优化。
+
+parent()选择父节点。接受一个参数，进行筛选。
+
+parents()选择所有的祖先节点。接受一个参数，进行筛选。
+
+closest()找到最近的满足参数条件的元素，只会找到一个（在祖先节点中查找，注意：包括自身）。
+
+
+创建节点：
+
+$("<>")  创建一个节点  例：var $li=$("<li id="abc">123</li>");
+
+添加节点：
+
+append() 添加节点到指定位置的子节点的最后。  例：$("ul").append($li);
+
+prepend() 添加节点到指定位置的子节点的开始。 例：$("ul").prepend($li);
+
+before():添加节点到指定位置的前面。  例：$("ul").before($li);
+
+after(): 添加节点到指定位置的后面。  例：$("ul").after($li);
+
+appendTo: 添加节点到指定位置的子节点的最后。  例：$li.appendTo($("ul"));   注意，这里的添加顺序不同。
+appendTo()和append()效果是一样的。不同的地方是后续操作不同，比如要加背景的话，.css()会针对开头的元素进行添加。
+
+对应关系：
+insertBefore()   before()
+
+insertAfter()    after()
+
+appendTo()       append()
+
+prependTo()      prepend()
+
+
+如果需要重复的操作一个新添加的元素，就将新添加的元素存成一个变量，这样操作起来不浪费性能。如果不存成一个变量，重复操作的话，会反复的去获取这个元素，造成浪费性能。
+
+
+
+
+remove()  删除节点。
+
+clone()   克隆节点。
+
+对页面已有的元素进行节点操作，都是剪切的方式。如果需要复制，不剪切，就用clone()。
+
+clone的默认是不会克隆节点的操作行为。想复制行为就要写一个参数true。
+
+例子：节点的上移下移。
+
+
+index()  JQ中的索引。  XXX.index("XXX")
+
+index:索引就是当前操作的元素在所有兄弟节点中排第几，从0开始算的。
+
+接受一个参数，参数是一个元素，然后在符合参数的所有元素中排名。
+
+如果索引值得出来-1，就是出问题了。
+
+例子：选项卡。
+
+
+
+遍历操作（循环）：
+
+each()  :
+
+$("li").each(function (i,elem) {
+
+	$(elem).html(i);
+
+});
+
+在这个函数内this==elem
+
+通过return false 来跳出我们的遍历操作。
+
+
+
+包装对象：
+
+wrap(): 外部包装。给原始元素外面包一层标签。例：$("span").wrap("<div>");
+
+wrapAll(): 整体包装。注意：整体包装有可能改变结构。例：$("span").wrapAll("<div>");
+
+wrapInner():内部包装。 给元素里面的子元素及内容等包装一层标签。
+
+unwrap():删除包装。就是删掉父级元素。注意：body不能删。
+
+例子：管理员和普通用户状态控制。
+
+
+JQ转原生JS
+
+get() ：JQ转成原生JS。得到的是一个集合，通过参数来查找指定集合的某一个。        例：$("#div1").get(0).innerHTML
+
+JQ满足不了的需要用JS满足的，需要转。
+
+比如：
+一、获取内容高度。
+
+$("#t1").height();  这样获取出来的是输入框的高度。JQ是无法获取到输入框中的内容高度的。
+
+$("#t1").get(0).scrollHeight;  原生的有获取到内容高度的方法，所以就需要将JQ转原生。
+
+二、元素之间的比较。
+
+$nowLi==$("li").first()   这俩个比较是不相同的，虽然他们的值相同，但是他们的引用不同。
+
+$nowLi.get(0)==$("li").first().get(0)   这样比较就可以，转成原生以后他们就相同了。
+
+还是不明白的话，去看JS的对象引用的相关问题。
+
+练习：左右切换数据    评分效果。
+
+
+
+
+
+
+
+第三课
+
+width()   height()
+
+宽高值  $("#div1").width()  可以得到宽度值。现CSS得到的值的区别在于这个值没有单位。CSS会获得单位。得到的值不包括padding
+
+innerWidth()和innerHeight()  得到的宽度等于实际宽度+padding
+
+outerWidth()和outerHeight()  得到的宽度等于实际宽度+padding+border
+
+outerWidth(true)和outerHeight(true)   得到的宽度等于实际宽度+padding+border+margin
+
+以上都接受参数，如果参数指定的是数字，则为设置宽高。如果接受两个参数，要先写数字，再写true。
+
+原生获取不到隐藏元素的宽高，JQ可以获取到。
+
+
+小技巧：
+
+可视区的尺寸： $(window).width()     $(window).height()
+
+页面的尺寸：   $(document).width()   $(document).height()
+
+滚动距离：     $(document).scrollTop()  $(document).scrollLeft()     $("#div1").scrollTop()
+滚动距离不仅可以检测，并且可以设置。接受一个参数，数值。
+
+元素距离： 
+
+offset()     $("#div1").offset().left          $("#div1").offset().top     
+这个距离是相对于整个页面的距离，不是相对于可视区的距离。   left和top不加括号。
+
+position()   $("#div2").position().left  用检测元素到加了定位的父级元素的距离。如果父级没有加定位，则测量到整个页面的距离。注意 ，这个方法不认margin值。但是认浮动。
+如果非要认出来某个距离。可以使用一些技巧 ，比如得到两个元素距屏幕左边的距离。然后相减。
+
+offsetParent()   找到有定位的祖先元素。注意，此处找到的是元素。然后再offset()之类的来计算距离。
+
+
+小例子：懒加载页面中的图片（延时加载）：
+
+
+
+
+
+
+JQ的事件：
+
+JQ中的事件操作都是绑定的形式。所以不论给一个元素加多少个事件操作，所有的事件都会执行。不会覆盖。
+
+on():  $("#div1").on("click mouseover",function () {  
+		alert(123);  
+		$("#div1").off("click");   //写参数是取消某一个。不写是取消全部。
+	});
+
+$("#div1").click(function () {
+	alert(123);
+	$("#div1").off();
+	
+});
+
+
+
+Event对象：
+
+pageX,Y  clientX,Y:
+
+$("#div1").click(function (ev) {
+
+	console.log(ev.pageY);  //鼠标到页面上边距的距离。注意，这个距离求到的值是到页面的距离，不是到可视区的距离。
+	console.log(ev.clientY);  //这里求到的值是距可视区的距离。
+
+});
+
+
+which: 检测键盘的键值。
+
+$(document).on("keydown",funciton (ev) {
+
+	console.log(ev.which);
+
+});
+
+target:检测出事件源
+
+$(document).on("click",funciton (ev) {
+
+	console.log(ev.target);   //这样的话，鼠标点到哪里，就会检测到哪里，点到DIV，会检测出点的是DIV，点空白处，会检测出点的是BODY。
+
+});
+
+stopPropagation():阻止冒泡
+
+$(document).on("click",function (ev) {
+
+	console.log(123);
+
+});
+$("#div1").on("click",function (ev) {
+
+	ev.stopPropagation();           //这样的话，在点击DIV的时候，就不会弹上面的123
+
+});
+
+
+preventDefault():阻止默认行为
+
+$(document).on("contextmenu",function (ev) {
+
+	ev.preventDefault();   //这样的话，就会阻止住事件的默认行为，他不会弹右键菜单了。
+
+});
+
+return false:即可以阻止冒泡，也可以阻止默认行为。
+
+
+$(document).on("contextmenu",function (ev) {
+
+	return false;   //这样的话，即阻止了冒泡，又阻止了默认事件。
+
+});
+
+
+实战小技巧：多次添加on的处理方式
+
+$("#div1").on("click",function () {
+
+	$("span").off().on("click",function () {    //这里如果不添加off，那和以在DIV点几下，再点span，就会弹出来几个1。但是平时我们要求点span就弹一下，所以这里要加一个off。避免span弹多次。
+ 
+		alert(1);
+});
+
+});
+
+拖拉效果：
+
+
+
+delegate():事件委托，利用冒泡来实现的。好处：1、性能好  2、对后续添加的内容，直接可以拥有事件操作。
+
+
+
+
+$("ul").delegate("li","click",function () {
+
+	$(this).css("background","red");
+
+});
+$("input").click(function () {
+
+	var $li=$("<li>hello</li>");
+	$("ul").append($li);            //如果用事件委托的形式，后续添加的li也将获取点击变色事件。
+});
+
+委托对象：ev.delegateTarget
+
+$("ul").delegate("li","click",function (ev) {
+
+	$(ev.delegateTarget).css("border","1px solid red");  //ev.delegateTarget==ul
+
+});
+
+
+undelegate():取消委托事件。
+
+$("ul").delegate("li","click",function (ev) {
+
+	$(this).css("background","red");
+	$(ev.delegateTarget).undelegate();
+
+});
+
+
+
+trigger():主动触发(自动运行)。接受一个参数。参数为要触发的事件。比如click
+例：
+
+  $("input").select(function(){
+    $("input").after("文本被选中！");
+  });
+  $("button").click(function(){
+    $("input").trigger("select");
+  });
+
+
+如果在定义了一个事件以后，在命名的事件下面直接调用。也可以自动运行 。
+例：$("div").click(function () { alert("aaa")});   
+	$("div").click();  //这样也可以自动运行 。
+
+
+命名空间：
+
+例：$("div").on("click",function () {alert(123)});
+    $("div").on("click.abc",function () {alert(456)});
+    $("div").trigger("click.abc");   //这样的话只会弹456，上面的.abc就是命名空间。
+
+
+
+
+工具方法：即可以给JQ用，也可以给JS来用。
+
+$.type():用来判断变量的类型。接受一个参数，参数为变量。功能很强大。
+
+$.isFunction():判断是不是函数，如果是则返回true，不是则返回false。
+$.isNumeric():判断是否是数字，以及可以转换成数字的东西。
+$.isArray():判断是否是数组。
+$.isWindow():判断是否是window。
+$.isEmptyObject():判断是否是空对象。比如  []  {}  （空的数组，空的对象之类的）
+$.isPlainObject():判断是否是对象自变量。 比如：{}  new Object  之类的定义的对象自变量。
+
+$.extend():对象的继承操作。插件的扩展。
+
+对于对象的继承，可以修改。比如定义一个自定义对象a，然后a赋值给一个自定义对象b，那么如果b里面属性修改后，a相关的属性也会改变。这是关于内存引用的问题。
+但是用了extend()方法以后，就可以打破这个引用。
+
+例：var a={name:"hello"};
+    var b={};
+    $.extend(b,a);
+    b.name="hi";
+    alert(a.name)   //hello
+
+注意：这个方法的默认是浅拷贝。只能控制住一层对象，对象套对象不能控制 。如果想深拷贝，这个方法的第一个参数要写成true，就可以了。
+
+例：  $.extend(true,b,a);
+
+$.proxy():改变this指向。
+例：function show(n1,n2) {alert(this);};
+    $.proxy(show,document,3,4)();        //注意 ，这里需要运行一下。传参直接后面括号传入也行，像这样传入proxy内部也行。$.proxy(show,document,3)(4);这样传入也行。
+
+小技巧：利用This改指向，更加方便 。
+
+练习：弹窗   整屏切换。
+
+
+
+
+
+
+
+
+
+
+
+
+
+第四课
+
+JQ中的运动：
+
+show ()  hide()  toggle(): 显示/隐藏 传入参数：fast/normal/ slow设置快慢。或直接写时间。毫秒。
+
+fadeIn()  fadeOut()  fadeToggle():淡入淡出。同样的接收参数。不过这个不写参数会默认一个数值。400MS
+
+slideUp()  slideDown()  slideToggle():向上收缩，向下展开。接收一个参数。默认值400ms。
+
+
+animate():
+
+
+
+接收的参数比较多：
+
+1、 :{}: CSS属性和运动的目标点。
+eg:$("#div1").animate({width:300,height:400,left:300});   //里面可以写一个JSON对象。
+
+2、运动的时间。默认：400ms   
+eg:$("#div1").animate({width:300,height:400,left:300},2000);
+
+3、运动的形式：swing(缓冲形式，慢快慢，默认形式) linear(匀速)
+eg:$("#div1").animate({width:300,height:400,left:300},2000,"linear");
+
+4、运动结束的回调函数。
+eg:$("#div1").animate({width:300,height:400,left:300},2000,"linear",function () {alert(1)});
+
+数值的运算：
+$("#div1").animate({width:"+=100"},2000,"linear");//这样的话，每点击一次就会增加100的宽度。
+
+参数的配置：
+$("#div1").animate({width:300},{
+
+	duration:1000,
+	easing:"linear",
+	conplete:function () {},
+	step:function (a,b) {};  //此函数用于检测运动，此处接收两个参数。a为值的变化。b为很多数值的组成。其中b下有一个pos属性，此值为0~1，
+	$("#div1").html(parseInt(b.pos*156876548)); //因为上面pos为0~1，所以想做一个数值的变化，就可以这样来做。不过第一个属性必须有一个值，哪怕是假值也行。
+
+});
+
+队列的问题：如果在点击以后分别写出来3个animate()，那么这3个animate()会按顺序执行。
+
+$("#input1").click(function () {
+
+	$("#div1").animate({width:400});
+	$("#div1").animate({height:400});
+	$("#div1").animate({left:400});
+
+});
+
+链式运动：
+
+$("#input1").click(function () {
+
+	$("#div1").animate({width:400}).animate({height:400});  //这样和上面的队列是一样的效果。	
+
+});
+
+延迟方法：delay()  接受一个数字参数，表示延迟时间。
+
+$("#input1").click(function () {
+
+	$("#div1").animate({width:400}).delay(1000).animate({height:400});  //这样会先走宽，然后延迟，再走高。	
+
+});
+JQ中的运动的停止方法：  
+
+stop():   finish():
+
+$("#input1").click(function () {
+
+	$("#div1").animate({width:400}).delay(1000).animate({height:400});
+
+});
+$("#input2").click(function () {
+
+	$("#div1").stop();   //默认只会停止当前的运动。不会影响后续运动。会停在当前位置。
+	$("#div1").stop(true);  //会停止后续运动。会停在当前位置。
+	$("#div1").stop(true,true);  //会停止当前运动到目标点。不会影响后续运动。
+	$("#div1").finish();   //会停止所有的运动 ，并停止在目标点。
+
+});
+
+小技巧：
+
+运动的队列问题：因为运动时间长的问题，有时鼠标反复移入移出会出来鼠标移出来了，他还在动。这时候，就可以给运动前面加一个stop()方法，在下次移入的时候清空以前的运动 。
+eg:
+
+$("#div1").mouseover(function () {
+
+	$(this).stop().animate({width:300,height:300});  //每次进入之前清空以前的运动 ，这样就可以避免以上的问题。
+
+});
+$("#div1").mouseout(function () {
+
+	$(this).stop().animate({width:200,height:200});
+
+});
+
+小实例：淘宝轮播图
+
+工具方法：
+
+$.parseJSON():将JSON字符串转成真正的JSON。
+例： var str="{'name':'hello'}";      //这里有可能是从后台获取到的数据。就需要转。
+	var json=$.parseJSON(str);
+	alert(json.name);
+
+
+
+$.parseHTML()  可以转换成原生的DOM元素。不常用。
+
+$.parseXML()   将XML文档转换成真正的XML。然后来获取里面的元素使用。不常用。
+
+$.isXMLDoc()   用来判断是XML还是HTML。不常用。
+
+
+工具方法：
+
+$.ajax():  前后端数据交互所采用的一种技术 。页面不用刷新，就可以“增删改查”后端的内容。
+就是通过前端的技术，得到后端的数据 。
+
+$("#input1").blur(function () {
+
+	$.ajax({
+
+		url:'user.php',
+		type:'GET',
+		//dataType:'xml',
+		data:{name:$(this).val()},
+		success:function () {
+
+			if(data==1) {
+			
+				$("#div1").html('可以注册');
+
+			}else if(data==0) {
+			
+				$("#div1").html('不可以注册');			
+
+			}
+
+		}
+		error:function () {           //这里是错误信息。参数很多。
+
+			if(err.status==404) { //这里可以设置跳转页面  };
+
+		};
+
+	});
+
+});
+
+
+error:里面有一些参数有用。  比如说readyState responseText status statusText  等。
+
+readyState:4
+
+responseText:[1,2,3]
+
+status:404
+
+statusText:
+
+dataType:  设置想要的数据格式，比如XML  JSON。如果返回的数据不是设置的格式，会接收不到，如果是设置的格式，会自动转换成相应的格式，不需要再parseJSON parseXML等转化。 
+
+async:  检测是否是异步。默认是异步的。异步就是不影响后续执行。如果想同步，改参数为false就好。
+
+
+
+常用参数：url  success  type  data  error  dataType  async
+
+
+
+eval
+
+
+ajax版本的选项卡：
+
+
+$.get() : 接收4个参数，url   data   success   dataType   dateType参数可选，如果失败可以写最后。
+eg:$.get('user2.php','{name:"hello"}','function () {}','JSON').error(function () {});
+
+
+
+$.post() :接收4个参数，url   data   success   dataType   dateType参数可选，如果失败可以写最后。
+eg:$.post('user2.php','{name:"hello"}','function () {}','JSON').error(function () {});
+
+这两个其实就是$.ajax()的简写方式。
+
+
+JQ插件：先引入JQ库，再引入插件库。然后正常用就可以了。
+
+$().xxx():实例的。   $.xxx():工具的。
+
+$.browser(): 判断浏览器的插件。
+
+$.cookie():
+
+e-calendar:
+
+
+
+
+练习：
+
+优酷电影频道轮播图
+
+评论载入数据（三个AJAX的应用）
+
+淘宝图片移动。
+
+
+
+
+
+
+第五课
+
+讲的前面的练习。
+
+
+
+
+第六课
+
+清空内容： $("#div1").html("")    $("#div1").empty();   
+
+删除节点： $("#div1").remove();   $("#div1").detach();
+
+           只会保留结构，没有行为   即保留结构，也保留行为。
+
+获取文本： $("#div1").text();
+            只是获取文本节点，不获取标签。如果传入参数的话，会全部解释成文本，不会有标签。
+	    会获取集合的所有文本内容。
+
+
+替换节点： $("#div1").replaceWith("#span");   $("#div1").replaceAll("#span")
+           DIV将被SPAN标签替换掉。             SPAN将被DIV标签替换掉。
+
+
+事件扩展： 
+
+hover():接收两个参数，第一个参数为鼠标移入时的变化 ，第二个参数表示鼠标移出的变化。
+
+eg: $("#div1").hover(function () {},function () {});
+
+hover()事件调用的其实是mouseenter()和mouseleave()两个事件。这两个事件和over和out的区别在于子级不会影响到父级。比如给父级加了一个移入移出事件，子级盖在其上，在鼠标移入到子级上的时候，父级还是一个移入的状态，不会因为移到子级上，父级发生移出事件。
+
+focus():获取到光标的时候发生一件事，只能加给输入框。不具备冒泡的行为。
+eg:$("#input1").on("focus",function () {alert(123);});
+
+focusin():
+可以加给任意的一个元素，具备冒泡的行为。可以冒泡到父级。触发父级的事件。(div里套input)
+eg:$("#div1").on("focusin",function () {alert(123);});
+
+focusout():
+同上。
+
+one():
+只能触发一次的操作行为。
+eg:$("#div1").one("click",function () {alert(123);});
+
+扩展on():
+1、on()里可以传入一个对象参数，然后用ev.data来获取到这个对象。
+eg:$("#div1").on("click",{name:"hello"},function () {alert(ev.data.name);});
+
+2、可以再传入一个过滤的参数，当两个条件都满足的时候，才会触发。这也是事件委托的原型。（delegate():事件委托）
+eg:$("#div1").on("click","input",{name:"hello"},function () {alert(123);});
+      某个元素     发生事件  某个元素的子元素  传入一个对象参数   事件发生时运行的函数。
+
+
+获取原生event:  ev只是JQ下的封装了的event对象，有一些东西并没有封装进去。
+ev.originalEvent:通过这样可以转成原生的event对象。
+eg:$("#div1").on("touchstart",function (ev) {
+
+	console.log(ev.originalEvent.changedTouches);
+
+});
+
+touchstart:手指按下触发。
+
+
+自定义事件：
+
+有一些不存在的事件，可以自定义出来使用，比如鼠标滚轮上下滚动事件
+自定义事件是通过主动触发的trigger来调用的。
+自定义事件是在系统事件的基础上进行的二次封装。
+
+
+$("img").on("scrollUp",function () {
+
+	$(this).css("width",700);
+
+});
+$("img").on("scrollDown",function () {
+
+	$(this).css("width",200);
+
+});
+
+
+
+
+
+$("img").on("DOMMouseScroll",function (ev) {
+
+	if(ev.originalEvent.detail>0) {       //这个值向下滚动就是3，向上滚动就是-3
+		$("img").trigger("scrollDown");
+	}
+	else{
+		$("img").trigger("scrollUp");
+	}
+
+});
+
+
+
+上半部分是自定义事件，然后下半部分是系统事件的调用。
+
+
+triggerHandler():  与trigger的区别在于，这个不会触发当前事件的默认行为。只会触发事件里面的句子。而trigger会。比如，获取光标后让背景色变红，那么只会让背景色变红，不会获取到光标。
+
+
+stopProppagation():阻止冒泡。比如一个DIV里面套一个input，然后给DIV加点击事件，如果正常情况下，点击input也会发生事件。
+如果给input也加上点击事件，然后ev.stopProppagation(),就可以阻止冒泡，他就不会触发DIV加的点击事件。
+注意：这个方法只会阻止父级及祖先级的冒泡行为。但是如果给自身加上行为以后，还是可以运行的。
+注意：这个不会有顺序问题。
+
+stopImmediatePropagation():这个方法不仅会阻止父级及祖先级冒泡，也会阻止自身的行为。
+注意：注意顺序的问题，如果行为在这个方法之前，他会先走行为，那这个方法就失效了。
+
+
+which:返回按键的键值。要加到mouseDown上。不能加给click。 鼠标的左中右键，分别是123
+
+
+$(function () {});    //当DOM加载完就会触发。这里注意一些问题，比如图片不属于DOM，如果想获取到图片的宽度值，那这个就会有问题，图片还没加载完，宽度就肯定不对。
+另外还有就是，图片的宽度、高度，iframe等等的一些操作会有问题。
+解决方法：图片会有一个load事件，可以load完成以后，再去获取它的宽度高度等等。
+eg:$(function () {
+
+	$("img").load(function () {
+
+		console.log($("img").width());		
+
+	});
+
+});
+
+
+$(window).load(function () {});     //当整个页面全部加载完以后才会触发。这个加载最完整，但是同时也造成了时间的浪费 。
+
+JQ的截至操作：
+
+nextUntil():下面的兄弟节点的截至操作。
+
+prevUntil():上面的兄弟节点的截至操作。
+
+parentsUntil(): 查找截至到与参数相符的所有祖先节点，传入一个标签，表示截止位置，查找到的节点为参数以内的所有祖先节点。并且传入的标签是不包含在内的。
+
+
+数据缓存：
+
+data():（三星）将一些数据与元素建立联系。数据和元素没有直接联系的关系，而是通过内部的cache对象，间接的联系到一起。
+eg:$("#div1").data("name","hello");             //设置数据
+	console.log($("#div1").data("name"));   //获取数据
+
+他和attr()的区别在于，如果大量设置数据的话，就需要用data()，如果只是少量数据的话，就可以用attr()。
+
+prop():也是给元素添加数据。这个。。待查。
+
+
+JSON形式的设置：
+
+可以将一些数据设置成JSON的形式，方便读写。
+
+eg:
+$("#div1").css("width","200px").css("height","200px");      //这里是普通的写法。
+$("#div1").css({width:"200px",height:"200px"});             //这个就是JSON的写法。
+比如on()也可以添加JSON的写法：
+$("#div1").on({click:function () {alert(1);},mouseover:function () {alert(2);}});
+
+回调形式的设置：
+
+可以以回调的形式来添加样式等等。
+eg:
+$("div").addClass("box");               //这是普通的写法。会添加class="box"
+$("div").addClass(function () {return "box"};);  //这是回调的写法，也会添加class="box"
+
+回调的好处：可以做更复杂的需求。可以用于addClass()   html()   val()   等等。
+eg:
+$("div").addClass(function (a,b) {return "box"+a};);  a:DIV的下标。 b:每个DIV的原有的class
+这样设置的话，就可以将每个DIV都设置上不同的class  如这里会是 box0 box1 box2等等。
+
+ 
+工具方法：
+
+$.merge():合并数组或者特殊的对象 ，一般是内部在用。
+eg: var c=$.merge(a,b);
+
+
+$.map():重新映射数组。 会将新建的C全部映射成返回的hello。他可以接受两个参数，
+eg:var a=['a','b','c'];
+   var c=$.map(a,function () {return "hello"});     //['hello','hello','hello']
+
+
+$.grep():对数据进行操作，结果为真的返回 ，结果为假的过滤。
+eg:var a=[5,10,15];
+   var c=$.grep(a,function (val,i) {return val>10});     //['15']
+
+$.unique():针对DOM元素的去重方式 。主要在内部用的。
+
+$.inArray():查找位置，类似indexOf，是针对数组的查询位置。
+eg:var arr=['a','b','c','d'];
+   console.log($.inArray("b",arr));   //1
+
+
+$.makeArray():把其它类型转成数组类型，常用于转集合,也可以转字符串。转成数组才会有数组的方法。其它的集合，都是类数组，只具备长度和下标，不具备方法。比如排序--arr.sort();
+eg:var div=$("div");
+   var arr=$.makeArray(div);
+
+$.trim():（三星）去掉字符串前后空格的方法。
+eg:var str="  hello  ";
+   console.log($.trim(str));   //hello
+
+
+ajax扩展：
+
+辅助：
+
+$.param():（三星）将对象，或者JSON对象转换成&连接的字符串。
+eg:var json={name:"hello",age="20"};
+   var str=$.param(json);
+   console.log(str);           //"name=hello&age=20"
+在ajax内部有一个参数data,这个参数既可以写成对象的形式，也可以写成这种&连接的字符串的形式。
+data:{name:"hello",age="20"}
+data:"name=hello&age=20"      
+其实根本原因就是，如果写成了对象的形式，他会在内部调用$.param()方法改写成&连接的字符串形式。
+
+
+
+serialize():（三星） 将form表单里的数据自动进行对应，然后写成&连接的字符串，如果ajax需要用到form表单里的数据的话，就可以用这个方法，自动将他拼接成&连接的字符串，就不用自己再拼接了。
+eg:
+<form>
+	<input type="text" name="a" value="1">
+	<input type="text" name="b" value="2">
+	<input type="text" name="c" value="3">
+</form>
+
+console.log($("form").serialize());     //a=1&b=2&c=3
+
+$.ajax({
+
+	data:$("form").serialize()
+
+});
+
+
+json? form?
+
+serializeArray():（三星）可以将form表单里的数据转换成数组的形式。
+eg:
+<form>
+	<input type="text" name="a" value="1">
+	<input type="text" name="b" value="2">
+	<input type="text" name="c" value="3">
+</form>
+
+console.log($("form").serializeArray());   
+//[{name:"a",value:"1"},
+   {name:"b",value:"2"},
+   {name:"c",value:"3"}
+  ]
+
+快捷方法：
+
+load():向标签内添加数据。多用于载入一些资源。接收两个参数。第一个参数是要添加的数据，数据的形式是标签的形式。如：<span>span</span>   第二个参数是接收第一个参数成功以后的回调函数。可以执行一些事情 。这个回调函数会有一些参数，参数a代表第一个参数。参数b代表一种状态。比如success(成功)。参数c代表一个ajax对象。
+eg: $("#div1").load("data.html",function (a,b,c) {});
+
+$.getScript():调用JS文件，一般用来按需加载JS文件。注意这是工具方法，只能用$.getScript()，不是$("#div1").getScript()。接收参数和load()事件一样。注意第一个参数是一个JS文件。或者说，第一个参数是一个包含JS代码的文件，比如PHP。
+eg: $.getScript("data.js",function (a,b,c) {});
+
+$.getJSON():调用JSON文件。一般用来按需加载JSON文件。注意这是工具方法，只能用$.getJSON()，不是$("#div1").JSON()。接收参数和load()事件一样。注意第一个参数是一个JSON文件。或者说，第一个参数是一个包含JSON代码的文件，比如PHP。
+eg: $.getScript("data.js",function (a,b,c) {});
+
+
+jsonp:用来做跨域操作的，在JQ中进行跨域的操作时，用的是jsonp的方式，动态的创建script标签。
+
+除了跨域的行为外，本地的操作方式都是通过xmlHttpRequery的方式。如：load getScript get post。
+eg:
+$.getJSON("data.php?callback=?",function (a,b,c) {
+
+	console.log(a);
+
+});
+
+
+ajax扩展：
+
+默认配置：
+
+$.ajaxSetup():整体的改变一些默认的行为。
+eg:
+$.ajaxSetup({
+
+	type:"POST",      //这样写下来以后，下面所有的ajax全部都会是POST的方式。
+	url:""            //这里写了URL以后，下面所有的ajax的URL都可以省略。
+
+});
+
+$.ajax({
+
+	url:"data.php",
+
+});
+
+全局事件：以下的这些全局事件需要加到document身上。注意：这些事件会影响到整体，如果需要局部操作，就需要用局部事件。局部事件写在ajax内部，success的下面。
+
+加到document上，参数的意义。
+
+$(document).ajaxStart():  请求开始时运行的内容。
+eg:
+$(document).ajaxStart(function () {
+
+	$("#div1").html("正在加载中。。。");
+
+});
+
+$(document).ajaxStop():  请求停止时运行的内容。
+
+$(document).ajaxSuccess():请求成功时运行的内容。
+
+$(document).ajaxError():请求失败时运行的内容。
+
+$(document).ajaxComplete():请求完成时运行的内容。
+
+$(document).ajaxSend():请求发送时运行的内容 。
+
+ajax扩展：
+
+属性：以下参数全部写在ajax内部，url之后。
+
+global,context:  global:是否是全局。  context:改变作用域。 eg:context:$("input"); 这个参数写在url下面。这个作用域现在是input了。
+
+jsonp,jsonpCallback:改callback的名字和callback对应的请求的名字。?callback=?，前面改等号左边的名字，后面改等号后面的名字。
+
+cache, timeout:  cache:带不带缓存。   timeout:延迟的时间。 
+
+processData:阻止data数据自动转化成&连接的字符串，以对象的形式传给后台。
+
+contentType:设置请求头信息。返回指定类型。
+
+参考：http://www.cnblogs.com/heyuquan/archive/2013/05/13/js-jquery-ajax.html
+
+
+
+
+
+
+
+第七课
+
+防止库之间的冲突：
+
+$.noConflict():在$符号被占用的时候，用其它符号来代替$，防止冲突。
+eg:var J=$.noConflict();
+   J().html();                     //这样就可以用J来代替$。
+
+
+
+
+遍历：（三星）
+
+$.each():他比原生的循环强大一些。他可以调出来JSON对象里面的值。就是结合了for循环和for-in循环。
+eg:
+var arr=['a','b','c'];
+$.each(arr,function (i,val) {
+
+	console.log(i);
+	console.log(val);
+
+});
+
+
+
+后退链式操作：
+
+end():找到当前集合的上一集合，然后后面跟其它的动作来操作。
+eg:$("#div1").next().css("background","red").end().css("color","blue"); //div的文字变蓝。
+
+后退添加链式操作：
+
+addBack():不仅有返回当前集合的上一集合的功能，还能进行添加的操作。
+eg:$("#div1").next().css("background","red").addBack().css("color","blue");    //DIV他DIV的下一个元素都会变蓝。
+
+
+add():将某个元素添加进某个行为链上。
+eg:$("div").add("span").css("background","red");  //在操作DIV的基础上，又添加了SPAN的操作。
+
+
+JQ中的队列：
+
+队列的工具方法：
+
+$.queue():入队操作。接收3个参数，第一个参数是操作的元素，第二个参数是队列的名字，第三个参数是要入队的函数。
+
+$.dequeue():出队操作。出队的时候，对队列的第一项进行执行。因为这里会执行，所以必须传函数。因为只有函数才能执行。其它的不能执行。
+eg: function a() {alert(1);};
+    function b() {alert(2);};
+    function c() {alert(3);};
+    $.queue(document,"miaov",a);  //入队操作。
+    $.queue(document,"miaov",b);  //入队操作。
+    $.queue(document,"miaov",c);  //入队操作。
+
+    $.dequeue(document."miaov");  //出队操作，会带着执行函数。这里弹出1
+    $.dequeue(document."miaov");  //出队操作，会带着执行函数。这里弹出2
+    $.dequeue(document."miaov");  //出队操作，会带着执行函数。这里弹出3
+
+
+队列的对象方法：
+
+queue():
+
+dequeue():
+
+记着入队以后要出队，否则就不能再继续了。
+
+eg:
+
+$(document).queue("miaov",a);    //入队方法
+$(document).dequeue("miaov");    //出队方法
+
+
+
+animate()方法在queue()里的名字叫"fx":  $(document).queue("fx",a);   $(document).dequeue("fx",a);
+
+
+JQ中的回调对象：针对函数的统一管理。
+
+$.Callbacks():回调对象（延迟对象）。
+eg:
+function a() {alert(1);};
+function b() {alert(2);};
+function c() {alert(3);};
+
+var cb=$.Callbacks();
+cb.add(a);   //添加项
+cb.add(b);   
+
+cb.fire();   //触发整个集合函数。  触发1，2
+
+cb.add(c);   
+
+cb.fire();   //触发整个集合函数。  触发1，2，3，反复的触发了1，2
+
+cb.remove(a); //删除集合中指定的项
+
+cb.fire();   //触发整个集合函数。  触发2，3，
+
+
+应用场景：服务于延迟对象。有时会用于管理作用域，作用方式之类的。
+
+管理作用域：
+
+var cb=$.Callbacks();
+
+function a() {alert(1);};
+(function () {
+
+	function b() {alert(2);};
+
+	cb.add(a);
+	cb.add(b);
+
+})();
+
+cb.fire();     //在内部定义，然后在外部触发就可以了。
+
+$.Callbacks()的四大参数：参数的位置在这里：$.Callbacks("once");
+
+once:只执行一次fire操作。
+
+memory:有记忆功能，后添加的函数也能执行。
+
+unique:去重。是去的函数的重，不是去fire的重。eg:cb.add(a);cb.add(a);  //就会去掉一次。
+
+stopOnFalse:在执行集合的时候，如果函数中有return false，则会在这里停止执行，并跳出整个集合操作。。
+
+注意：参数是可以组合运行的。eg: var cb=$.Callbacks("once memory");
+
+
+JQ中的延迟对象：（三星）应用于异步的ajax、定时器、动态创建script之类需要异步处理的东西。
+
+$.Deferred():
+eg:var dfd=$.Deferred();         //定义方法
+   setTimeout(function () {
+
+	alert(1);
+	//dfd.resolve();    //触发方法 （这里是解决状态。）解决对应成功，未解决对应不成功。
+	dfd.reject();              //触发方法 （这里是未解决状态。） 
+
+   },1000);
+
+   dfd.done(function () {        //定义方法内部内容。（这里是成功状态。）
+
+	alert(2);
+
+   });
+   dfd.fail(function () {        //定义方法内部内容。（这里是不成功状态。）
+
+	alert(3);
+
+   });
+
+状态的映射：resolve   done   reject   fail
+
+ajax的另一种写法：(针对延迟对象的开发。)
+
+$.ajax("XXX.php").done(function () {}),fail(function () {});
+
+ajax中的应用：
+
+$.when():保证若干个ajax都成功的时候,或者说都是解决状态的时候，再运行下面的函数。
+eg:$.when($.ajax("XXX.php"),$.ajax("YYY.php")).done(function () {}).fail(function () {});
+
+
+JQ源码架构：
+
+基于面向对象程序：
+
+实例方法：
+
+静态方法：
+
+this对象格式：这里面的内容是原生的，所以，通过$("div")获取到的元素，如果想给某一个加样式的话，里面的代码要加成原生的。eg:$("div")[1].style.background="red";
+
+对象格式：
+this={
+
+	0:div1,
+	1:div2,
+	2:div3,
+	length:3
+
+}
+
+下标：
+
+
+JQ插件编写：（三星）编写插件的JQ文件要存在另外一个script标签内。然后在原来的script标签内调用。在一个$.extend()方法内可以扩展很多个插件。
+
+$.fn.extend():  //扩展实例类插件。
+
+$.extend():     //写一个参数就是来扩展插件。  扩展工具类插件。
+这个写多个参数，后面的参数就会把前面的参数覆盖掉。
+eg:$.extend(a,b,c);   //如果C存在，C会把B覆盖掉，然后把A覆盖掉，最后的参数就是C。如果C不存在，B存在，那么B就会把A覆盖掉，最后的参数就是B。
+
+eg:
+$.type=function () {};
+$.trim=function () {};
+上面这两个可以写成下面这样。
+$.extend({
+
+   type:function () {},
+   trim:function () {}
+
+});
+
+
+eg2:
+jquery.prototype.css=function () {};
+jquery.prototype.html=function () {};
+上面这两个可以写成下面这样。
+$.fn.extend({
+
+   css:function () {},
+   html:function () {}
+
+});
+
+
+
+eg3:写一个去掉左空格的工具类方法。
+
+//$.leftTrim()
+
+$.extend({
+
+   leftTrim:function (str) {
+
+	return str.replace(/^\s+/g,'');
+
+   }
+
+});
+
+经过以上扩展插件以后，$.leftTrim()这个插件就可以用了。
+
+
+
+eg4:写一个获取长度的实例类方法。
+$.fn.extend({size2:function () {
+
+	return this.length;
+
+}});
+
+
+
+编写插件基本格式：
+
+jquery.e-calenda
+
+实例：编写选项卡插件：如何写JQ插件。
+
+写插件首先写一个闭包的形式：
+(function ($) {})(jquery)
+
+插件的另一种写法： $.fn.XXX=function () {};
+
+
+面向对象怎么写？
+
+编写弹窗插件。
+
+
+
+
+
+
+第八课
+
+Sizzle选择器：（三星）
+
+通用选择：*    这个会将所有的元素都选择上，然后进行操作，包括html body head 等等。
+
+子元素选择器：>  这个会将某个元素下的某个子元素选择上。子元素的子元素不会被选择。
+eg:$("#div1>span").css();
+   $("#div1").find(">span").css();   这个和上面的那个是等价的。 find()：选择某元素的子元素
+
+下一个兄弟节点选择器：+  这个会将某元素的“下一个兄弟节点”找到。这两个节点要相邻。
+eg:$("p+span").css();
+   $("p").find(+span).css();
+
+下面的所有兄弟节点选择器：~  这个会将某元素的“下面的所有兄弟节点”找到。节点不需要相邻。
+eg:$("p~span").css();
+   $("p").find(~span).css();
+
+
+
+基本筛选：
+
+:animated   (对运动的内容做出操作。)
+eg:$("#div1").animate({width:400},5000);
+   $(document).click(function () {
+
+       $("div:animated").css("background","blue");
+
+    });
+
+:eq()       (进行eq选择，和在外面的.eq(i)一个效果。一个道理 。)
+eg:$("#div1").animate({width:400},5000);
+   $(document).click(function () {
+
+       $("div:eq(1)").css("background","blue");
+
+    });
+
+:even       (选择下标为奇数的元素。)
+eg:$("#div1").animate({width:400},5000);
+   $(document).click(function () {
+
+       $("div:even").css("background","blue");
+
+    });
+
+:odd        (选择下标为偶数的元素。)
+eg:$("#div1").animate({width:400},5000);
+   $(document).click(function () {
+
+       $("div:odd").css("background","blue");
+
+    });
+
+:first      (找一个集合当中的第一项)
+
+:last       (找一个集合当中的最后一项)
+
+:gt()       （选择索引大于括号内参数的所有项。不包括参数项。）
+eg:$("#div1").animate({width:400},5000);
+   $(document).click(function () {
+
+       $("div:gt(2)").css("background","blue");
+
+    });
+
+:lt()       （选择索引小于括号内参数的所有项。不包括参数项。）
+eg:$("#div1").animate({width:400},5000);
+   $(document).click(function () {
+
+       $("div:lt(2)").css("background","blue");
+
+    });
+
+
+内容筛选：
+
+:contains()   (对内容进行匹配，接受的参数是该标签的文本内容或才该标签的子元素的文本内容，内容不必写全，只要能匹配到即可。这个参数不用加括号 。)
+eg:$("div:contains(div123)").css();
+
+:empty        （选择为空内容的标签。）
+eg:$("div:empty").css();
+
+:parent       （选择必须有内容的标签。）
+eg:$("div:parent").css();
+
+
+可见性筛选：
+
+:hidden        (选择隐藏的元素。)
+eg:$("div:hidden").css();
+
+:visible       (选择可见的元素。)
+eg:$("div:visible").css();
+
+
+子元素筛选：
+
+:first-child    (该元素的父级的第一个子元素，如果子元素是该元素的种类的其中之一，则选择上)
+eg:$("div span:first-child").css();
+
+:last-child     (该元素的父级的最后一个子元素，如果子元素是该元素的种类的其中之一则选择上)
+eg:$("div span:last-child").css();
+
+:first-of-type   (该元素的父级的第一个该种类的子元素。选择上。)
+eg:$("div span:first-of-type").css();
+
+:last-of-type   (该元素的父级的最后一个该种类的子元素。选择上。)
+eg:$("div span:last-of-type").css();
+
+:nth-child()    （该元素的父级的第参数个的子元素，如果选择的子元素是该元素的种类，就选择上。该方法接收一个参数，参数表示选择的第几个子元素。参数从1开始算起，不同于其它的从零开始算起。）
+eg:$("div span:nth-child(2)").css()   这里表示如果DIV的第二个子元素是span的话，就选择上。
+
+:nth-of-type()   (该元素的父级的第参数个该种类的子元素，选择上。接收一个参数，参数表示接收到的第几个该种类的子元素。参数从1开始算起，不同于其它的从零开始算起。)
+eg:$("div span:nth-of-type(2)").css();
+
+:only-child      (父标签中仅有一个子元素的情况下，而且这个子元素是该元素，则匹配到。如果子元素有若干个。则配不到。若该子元素不是该元素。也匹配不到。)
+eg:$("div span:only-child").css();
+
+:only-of-type    (匹配的类型当中是否只有一个子元素。且子元素为该元素。则匹配到。)
+eg:$("div span:only-of-type").css();
+
+
+表单筛选：
+
+:button      (筛选按钮)
+
+:checkbox    (筛选复选框)
+
+:radio       (筛选单选框)
+
+:checked     (筛选选中的)
+
+:disabled    (筛选禁用的)
+
+:enabled     (筛选启用的)
+
+:selected    (筛选下拉的)
+
+
+筛选方法：（三星）
+
+filter():  (筛选满足条件的元素。接收的参数不用必须为class，也可以用标签名。)
+eg:$("div").filter(".box").css();       //这里满足的是class="box"的DIV元素。
+
+mot():     (过滤掉满足条件的元素，对剩下的元素进行操作。接收的参数不用必须为class，也可以用标签名。)
+eg:$("div").not(".box").css();       //这里满足的是除了class="box"以外的其它元素。
+
+has():     （包含的关系，查找的是该元素的子元素里有没有与参数相匹配的元素。进行选择。接收的参数不用必须为class，也可以用标签名。）
+eg:$("div").has(".box").css();       //这里满足的是DIV的子元素里有class="box"的元素。
+
+注意：注意has()和find()方法的区别 ，has()方法最终还是针对前面获取到的元素，只是对前面获取到的元素集合进行了个筛选，操作的是这个元素本身。。而find()方法则是对相匹配到的元素进行操作，并不是前面调用这个方法的那个元素，操作的是这个方法匹配到的元素，而不是调用这个方法的元素本身。。
+
+is():       (用来判断参数内的元素是否在调用该方法的元素内部。如果是，则返回true ,不是则返回false)
+
+$("div").is(oDiv);            //这是一个判断的方法。
+
+
+
+
+JQ中的模板引擎：这也是一个插件。
+
+概念与作用：将视图和后台的数据进行分离。
+
+基于JQ的Jsviews模板:
+
+http://www.jsviews.com/
+
+
+1、如果script标签的type项指定了不是JS的类型，那么里面的代码是随便写的。不会执行。然后可以通过在这个script标签上加id选择器，这样可以通过ID选择器来获取到标签内的内容。
+eg:<script id="thsTmpl" type="text/x-jsrender">这里面随意写东西。。写DIV也没问题。反正不会执行。不过里面的代码可以通过id来获取到。一般用来充当JQ模板的视图模板。</script>
+
+2、{{:name}}   双大括号表示里面的内容是变量。
+
+3、一套模板可走两套数据。  var data=[{"name":"robert"},{"name":"susan"}];  这是两套数据，这两套数据会走两遍模板。
+
+注意：如果不能写死的东西，比如内容，那可以用循环的方式去处理。
+
+实例：用模板来结合数据和视图。主要目的就是为了将数据模块和视图模块进行分离。
+
+
+
+JQ下的单元测试Qunit:
+
+什么是单元测试，与功能测试和集成测试的区别，单元测试的好处。
+
+主要是测试css()  html()  attr()  click()  这些方法有没有问题。
+
+集成测试：跑页面，用软件。
+
+Qunit的使用：
+jquery.com  --  页面上方的Qu按钮(qunitjs.com)  --  把JQ源文件、样式、qunit.js拷过来。 --  body里面有两个DIV拷过来。这两个DIV放出错的内容。  --   在下面写上script空标签准备写方法。
+
+quint:     测试主体区域，测试的代码需要加到这里。
+
+quint-fixture:    进行DOM测试，DOM测试的代码需要加到这里。
+ 
+方法：
+
+QUnit.test():   参数为一个名字和一个回调函数，因为有可能会需要多个QUnit.test()，所以需要定义不同的名字。可以有第三个参数，第三个参数是备注。
+eg:QUnit.test("test",function () {});
+
+expect():     指定断言数量。
+eg:QUnit.test("test",function (assert) {
+
+	expect(3);        //这样就会报错。因为这个里面应该运行3个断言。
+	assert.ok();
+
+   });
+
+断言：   在上面方法的回调函数内写断言。（上面的方法的回调函数接收一个参数，叫assert，这个参数可写可不写，如果写上，再在函数内写断言时，要将断言加在这个参数后面，如果不写，可直接写断言。）
+eg:QUnit.test("test",function (assert) {
+
+	assert.ok();
+
+   });
+
+equal():用来作对比。
+eg:var a=123;
+   assert.equal(a,1234);   //false
+
+notEqual():用来作对比，和上面的相反。
+
+ok():  用来判断两个内容是否一样。
+eg: assert.ok(1=="1");    //true
+
+选项：
+
+Check for Globals:查找有没有全局的。一旦有全局变量，则返回错误。
+
+No try-catch:忽略测试平台，将问题交给控制台。（一般测试的情况下，问题会显示在测试平台上。控制台上是没有的。）
+
+查看jQuery库的单元测试案例.
+
+
+
+
+JQuery Mobile: 适合做规矩的页面，特别个性的不能做。最好不用，最好用原生的去写。移动端和PC端并没有太大的区别，主要在于移动端适配，移动端事件，HTML5,CSS3。下载的文件在官网左上角上。
+首先要引入三个文件，一个是JQ的PC端的JS文件，一个是JQ移动端的JS文件，一个是JQ移动端的CSS文件。
+
+基于jquery开发。
+用于创建移动WEB应用的开发框架。
+
+data-*:通过自定义属性的写法来实现相应的功能。
+
+data-role:定义页面。
+eg:<div data-role="page">
+
+	<div data-role="header"><h1>教程</h1></div>
+	<div data-role="content"><ul date-role="listview"><li><a href="#">教程一</a></li><li><a href="#">教程二</a></li></ul></div>
+	<div data-role="footer"><div data-role="navbar"><ul><li><a href="#">关于我们</a></li><li><a href="#">联系方式</a></li></ul></div></div>
+   
+   </div>
+
+page:         定义页面。
+
+header:       头部
+
+content:      主体
+
+footer:       脚部
+
+listview:     列表视图
+
+navbar:       内容居中之类的，好看。
+
+
+页面切换： 首先写上二级页。
+
+同一个页面，ID控制:ID定义在页面的带page标签的DIV上，然后在链接内定义href=“#id名”
+eg:
+<div id="index" data-role="page">
+
+	<div data-role="header">
+		<h1>教程</h1>
+	</div>
+	<div data-role="content">
+		<ul date-role="listview">
+			<li><a href="#jq" data-transition="slide">教程一</a></li>
+			<li><a href="#">教程二</a></li>
+		</ul>
+		<div>            //这里是划屏的块。需要先做好布局，然后再写JQ。
+			<ul>
+				<li><img src=""/></li>
+				<li><img src=""/></li>
+				<li><img src=""/></li>
+				<li><img src=""/></li>
+			</ul>
+		</div>
+	</div>
+	<div data-role="footer">
+		<div data-role="navbar">
+		<ul>
+			<li><a href="#">关于我们</a></li>
+			<li><a href="#">联系方式</a></li>
+		</ul>
+		</div>
+	</div>
+   
+   </div>
+
+<!--以下是二级页,在二级页上写上ID,然后在一级页上的链接上写上“#id名”，设置链接的属性可以设置为点击链接划屏等效果。-->
+
+<div id="jq" data-role="page" data-theme="b">
+
+	<div data-role="header">
+		<h1>jquery教程</h1>
+			<a href="#index" class="ui-btn-right" data-icon="arrow-r" data-iconpos:"notext" data-transition="slide" data-direction="reverse">后退</a>
+			<a href="#">后退2</a>
+	</div>
+	<div data-role="content">
+		<a href="#index" data-role="button" data-inline="true" data-rel="dialog">教程一</a>
+		<a href="#" data-role="button" data-inline="true" data-rel="dialog">教程二</a>
+	</div>
+	<div data-role="footer">
+		<div data-role="navbar">
+		<ul>
+			<li><a href="#">关于我们</a></li>
+			<li><a href="#">联系方式</a></li>
+		</ul>
+		</div>
+	</div>
+   
+   </div>
+
+
+切换效果：
+
+transition:slide      划屏效果。
+
+direction:reverse     多左向右划屏
+
+class:ui-btn-right    单按钮靠右。
+
+icon:arrow-r          图标形状按钮。
+
+iconpos:notext        不想加文字的情况下让图标漂亮一点。
+
+按钮效果：
+
+data-role:button      让他看起来更像按钮。
+
+data-inline:true      将内容显示成行内的形式。
+
+data-rel:dialog       点击以后出现弹窗
+
+
+主题：
+
+data-theme   这里设置主题颜色 ，可以给不同的位置加主题，不是必须为整个页面加的。值为a  b  c  d  之类的。
+
+事件操作：这两个是事件的操作。需要加到JS里面，上面的那些只要加到HTML里就可以了。
+
+swipeleft     向左划屏
+
+swiperight    向右划屏
+
+图片划屏操作效果演示。
+
+首先做好布局，和PC端一样的布局。
+
+然后去掉默认行为。
+
+$(function () {
+
+    var iNow=0;
+
+    $("#div1").mousedown(function () {
+
+	return false;                      //去掉默认行为。在移动端不是mousedown,而是touchstart  。
+
+    });
+    
+    $("#div1").on("swipeleft",function () {
+
+	if(iNow!=4) {
+		iNow++;
+	};
+	$(this).find("ul").animate({left:-iNow*470});   
+
+    });
+    $("#div1").on("swiperight",function () {
+
+	if(iNow!=0) {
+		iNow--;
+	};
+	$(this).find("ul").animate({left:iNow*470});   
+
+    }); 
+
+});
+
+参考：w3cshool.cc/jquerymobile/jquerymobile-tutorial.html
+
+
+
+
+
+第九课
+
+前部分讲了编写一个弹窗的插件。
+
+正课：JQUI概念：
+
+组件和插件的区别：组件就是插件的集合体。
+
+需要引入三个项，一个是JQ源文件，一个JQUI文件，一个是JQUI的样式文件。
+
+JQUI包含项：
+
+UI核心
+
+UI交互
+
+UI控件
+
+UI特效
+
+CSS主题
+
+依赖关系：UI特效是独立的，其它的都有相关的联系。
+
+
+UI特效：
+
+easing函数：http://www.w3cshool.cc/jqueryui/api-easings.html
+
+animate():平时只有匀速和慢快慢两种，如果引入了JQUI控件以后，在运动方式上，就可以选择多种运动方式。
+
+addClass():只有JQ时，都是直接变化，但是有了JQUI文件以后，这个变化就可以动态的了。
+
+removeClass():
+
+
+UI特效：
+
+show()\hide()\toggle():  这三个都可以调用。
+
+effects特效：
+
+blind 百叶窗 bounce 反弹 clip 剪切 drop 降落 explode 爆炸 fade 淡入淡出 fold 折叠 puff 膨胀 pulsate 心跳 scale 缩放 shake 震动 size 尺寸 slide 滑动 transfer 转移 
+
+方向：direction     这个可以设置上面动作的方向。参数是up和dowm,left和right
+
+effect():
+
+shake      抖动
+
+pulsate    闪烁
+
+bounce     碰撞
+
+
+UI交互：
+
+draggable()     拖拽
+
+droppable()     拖拽释放后发生事件
+
+resizable()     改变内容大小
+
+selectable()    选择
+
+sortable()      排序
+
+快速演示:
+http://www.w3cshool.cc/try/tryit.php?filename=jqueryui-api-draggable
+
+
+UI交互：
+
+有状态的插件：
+
+在初始化后，可获取和设置配置
+
+统一化的命名方式：
+
+结合性的交互方案：
+
+例如：draggable和sortable
+
+
+UI控件：
+
+accrdion()
+
+autocomplete()
+
+button()
+
+datepicker()
+
+dialog()
+
+menu()
+
+progressbar()
+
+selectmenu()
+
+slider()
+
+spinner()
+
+tabs()
+
+tooltip()
+
+
+UI控件：
+
+布局HTML:
+
+键盘控制:
+
+CSS样式:
+
+框架：http://api.jqueryui.com/theming/css-framework/
+
+
+
+UI核心
+
+选择器：
+
+:data()    选择到与参数匹配的，放到选择器里进行筛选,传入一个参数。这个参数是标签的一个属性。
+eg:$("li:data(name)").css("background","red");
+
+:focusable()   选择可以获取光标的元素。
+eg:$("ul").children(":focusable()").css("","");
+
+:tabbable()    选择能够获取到TAB键的元素。
+
+方法：
+
+disableSelection()    禁止选择。比如拖拽的时候可以加上避免误操作。
+eg:$("li").disableSelection();
+
+enableSelection()     可以选择。
+
+focus()               输入框自动获取光标。只能有一个获取光标，如果是一组元素的话，就是最后一个获取到光标，接受一个参数，表示延迟时间，延迟多久以后获取到光标。
+eg:$("input").focus();
+
+scrollParent()        查找有滚动距离的父元素，这个就是查找一个元素，然后查找到元素后加其它操作。查找的这个元素必须为当前元素的父元素，并且要有滚动距离。
+eg:$("input").scrollParent().css("border","1px solid black");
+
+jQuery.ui.keyCode     找到对应键盘的键值。
+
+这个对应的键值，一般情况下，用的是event对象来实现的。
+eg:
+$(document).keydown(function (ev) {
+
+	console.log(ev.which==13);
+
+});
+
+用JQUI就可以如下表示。注意：回车的字母是大写。
+eg:
+$(document).keydown(function (ev) {
+
+	console.log(ev.which==jQuery.ui.keyCode.ENTER);
+
+});
+
+
+
+UI核心：
+
+实用工具：
+
+mouse()
+
+内部使用，基于Widget Factory
+
+http://api.jqueryui.com/mouse/
+
+继承格式：$.ui.mouse
+
+
+position()    用来定位嵌套的元素的位置，常用于菜单位置的调整。
+
+my
+
+at
+
+of
+
+eg:$("#div2").position({
+
+	of:"#div1",             //这里是讲的相对于哪个元素进行定位，这个例子里DIV1是父元素
+	at:"right top",         //这里是定位的位置。
+	my:"right top"          //对齐的位置。
+
+   });
+
+
+UI核心：
+
+Widget Factory:
+
+编写出具备相同抽象化的插件
+
+命名空间
+
+继承方法
+
+http://api.jqueryui.com/jQuery.widget/
+
+私有和公有
+
+实例：编写widget进度条插件。
+
+eg:
+
+$.widget("miaov.myProgressBar",{
+
+    options:{
+
+	value:0,
+	ut:"%"
+
+    },
+
+    _create:function () {
+
+	var val=this.options.value+this.options.ut;
+	this.element.html(val);
+
+    }
+
+    _setOption:function (key,value) {
+
+	if(key=="value"){                //这里的value是下面的那个值为50的value
+
+		this.options.value=value;
+		var val=value+this.options.ut;
+		this.element.html(val);
+
+	}               
+
+    };
+
+});
+
+$("#div1").myProgressBar({value:50,ut:"px"});
+
+$("input").click(function () {
+
+    $("#div1").myProgressBar("option","value","80");
+
+});
+
+
+
+
+
+
+第十课
+
+
+
+
+第十一课
+
+第十课和第十一课是实战课，没有笔记。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

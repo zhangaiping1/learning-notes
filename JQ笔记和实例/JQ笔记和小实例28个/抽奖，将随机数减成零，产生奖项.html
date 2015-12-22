@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul {width:400px;}
+        li {width:100px; height:100px; border: 1px solid black; list-style-type: none;
+            float: left; margin-left: 20px;}
+        .active {background: red;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+
+</head>
+<body>
+<button>点击抽奖</button>
+<ul>
+    <li>一等奖</li>
+    <li>二等奖</li>
+    <li>三等奖</li>
+    <li>四等奖</li>
+    <li>五等奖</li>
+    <li>六等奖</li>
+    <li>七等奖</li>
+    <li>八等奖</li>
+    <li>九等奖</li>
+</ul>
+<script>
+    $("button").click(function () {                                 //点击开始抽奖
+        var isN=0;
+        var step=parseInt(Math.random()*20+5);                      //此处生成一个随机整数，在整数减到0时，抽奖结束，产生奖项。
+        var timer=setInterval(function () {                         //每过0.1秒执行一次这个函数。
+            $("li").attr("class","");                               //首先将所有的LI的class清空。
+            $("li").eq(isN).attr("class","active");                 //将下标为isN的LI的class设置成active。
+            isN=parseInt(Math.random()*9);                          //随机产生isN这个数，产生动感。其实这个数可以++，也会产生随机性的效果。
+
+            step--;                                                 //开始时生成的随机数--，此值为零时抽奖结束。
+           // if(isN==$("li").length){                              //这个是为了isN++准备的。如果isN随机产生，这个没有用。
+           //     isN=0;
+           // };
+            if(step==0){                                            //当开始时生成的随机数为零时，结束掉timer函数。
+                clearInterval(timer);
+                alert("您抽到了:"+$("li[class=active]").html());     //产生奖项。查找到class为active的LI项，获取到其HTML值。产生奖项。
+            };
+
+        },100);
+    })
+</script>
+</body>
+</html>

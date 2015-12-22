@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div {width:200px; height:200px; border: 1px solid black; background: green;}
+        .div1 {background: red;}
+
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+
+</head>
+<body>
+    <div>
+
+    </div>
+    <button>点击换色</button>
+    <script>
+
+        $("button").click(function () {
+            $("div").toggleClass("div1");           //使用toggleClass()切换class
+        });
+
+    </script>
+</body>
+</html>

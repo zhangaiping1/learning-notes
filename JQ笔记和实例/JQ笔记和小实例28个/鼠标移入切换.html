@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+    <title>CSS第一题</title>
+</head>
+<style>
+    * {margin: 0; padding:0;}
+    #parent {width:470px; height:150px; border: 1px solid black; position: absolute; left:50%; top:50%; margin-left: -230px; margin-top: -375px; overflow: hidden;}
+    #parent2 {position: relative;}
+    ul {list-style: none;}
+    #ul2 {width:150px; height:30px; position: absolute; left:320px; bottom:-150px; z-index: 9999;}
+    #ul2 li { display: inline-block; width:20px; height:20px; border: 1px solid black; text-align: center; background:#ccc;cursor: pointer;}
+    #ul2 .active {background:red;}
+    #ul1 {width:2500px; height:200px; position: absolute;}
+    #ul1 li {width:470px; height:150px; float: left;}
+</style>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+    $(function () {
+
+        $("#ul2 li").mouseover(function () {
+
+            $("#ul1").stop().animate({left:-470*$(this).index()},400);
+            $(this).attr("class","active").siblings().attr("class","");
+
+        });
+
+    });
+</script>
+<body>
+    <div id="parent">
+        <div id="parent2">
+        <ul id="ul2">
+            <li id="li6" class="active">1</li>
+            <li id="li7">2</li>
+            <li id="li8">3</li>
+            <li id="li9">4</li>
+            <li id="li10">5</li>
+        </ul>
+        <ul id="ul1">
+            <li id="li1" style="background: url('images/1.jpg')"></li>
+            <li id="li2" style="background: url('images/2.jpg')"></li>
+            <li id="li3" style="background: url('images/3.jpg')"></li>
+            <li id="li4" style="background: url('images/4.jpg')"></li>
+            <li id="li5" style="background: url('images/5.jpg')"></li>
+        </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+    <title></title>
+    <style>
+    div {width:100px; height:100px; border:1px solid black;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+
+
+
+
+            $.extend({                                 //定义工具方法.         $.xxx();
+
+                leftTrim:function (str) {              //此处是方法名。
+
+                    return str.replace(/^\s+/g,'');    //方法内容。
+
+                }                                      //调用方法的话，需要在另起一个script标签。$.方法名();记得如果在HEAD部分一定要加$(function () {});
+
+            });
+
+
+
+
+            $.fn.extend({                              //此处定义实例方法。  $("XXX").XXX();
+
+                divLen:function () {                   //此处是方法名。
+
+                    return this.length;                //方法内容。
+
+                }
+
+            });
+
+    </script>
+    <script>
+        $(function () {
+
+        var str="   hello   ";
+        console.log("("+$.leftTrim(str)+")");
+
+
+
+
+
+        console.log($("div").divLen());                 //调用方法的话，需要另起一个script标签。$("XXX").方法名();    记得如果在HEAD部分一定要加$(function () {});
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div>1</div>
+<div>2</div>
+<div>3</div>
+<div>4</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+    <title>CSS第一题</title>
+    <style>
+        #div1 {width:200px; height:200px; border: 1px solid black;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+
+            $("#btn1").click(function () {                //当按钮被点击的时候.
+
+                $.ajax({                                  //JQ中的AJAX
+
+                    url: "/ajax/a1.txt",                  //这里是URL
+                    type:"get",                           //这里是发送的方式
+
+                    success:function (data) {             //参数为返回的数据
+
+                        $("#div1").html(data);            //将返回的数据添加到DIV内.
+
+                    }
+
+
+                });
+
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+<button id="btn1">点击出数据</button>
+<div id="div1"></div>
+
+</body>
+</html>

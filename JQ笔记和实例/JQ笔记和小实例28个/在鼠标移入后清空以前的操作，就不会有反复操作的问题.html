@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1 {width:200px; height:200px; background: red; display: none;}
+        #div2 {width:200px; height:20px; background: green;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+        /*$(function (){
+            $("#div1").mouseover(function () {
+
+            $(this).slideUp(1000);
+
+            });
+            $("#div1").mouseout(function () {
+
+            $(this).slideDown(1000);
+
+            });
+        });*/
+
+        $(function (){                             //因为上面的做法会导致在鼠标反复操作并移出后还会反复的操作。所以进行下面的设置。添加.stop()方法，在下一次进入的时候清空以前的操作。这样就不会有问题。
+            $("#div2").mouseover(function () {
+
+                $("#div1").stop().slideDown();
+
+            });
+            $("#div2").mouseout(function () {
+
+                $("#div1").stop().slideUp();
+
+            });
+        });
+    </script>
+
+</head>
+<body>
+<div id="div2"></div>
+<div id="div1">123</div>
+
+</body>
+</html>

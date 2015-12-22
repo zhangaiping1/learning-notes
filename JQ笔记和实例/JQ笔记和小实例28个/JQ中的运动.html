@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {margin:0; padding:0;}
+        #div1 {width:200px; height:200px; background: red; position: absolute;}                               <!--要想下面的动作里的left值有效果，这里必须设置定位才行。 -->
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+        $(function () {
+
+            $("#button1").click(function () {
+
+                //$("#div1").toggle(500);
+                //$("#div1").fadeToggle(500);
+                //$("#div1").slideToggle(500);
+                //$("#div1").animate({width:400,height:400,left:200},1000,"linear",function (){alert(1);});     //linear 必须要加引号。
+                //$("#div1").animate({width:400,height:400,left:200},1000,function (){alert(1);});     //默认是慢快慢的运动节奏。
+
+
+                /*$("#div1").animate({width:400,height:400,left:200},{                    //此处主要测试参数的配置。以下方式配置的参数，会得到一个b.pos的参数，这个参数为0~1随机变化数。可以进行一些数字的效果。
+                                                                                        //此处的参数a，是animate里面的第一个参数的变化值。  比如此处就是200~400的变化值。
+                    duration:2000,
+                    easing:"linear",
+                    conplete:function () {alert(1);},
+                    step:function (a,b) {
+                        $("#div1").html(parseInt(b.pos*1000000));
+                    },
+                });*/
+                /*$("#div1").animate({width:400});                                  //此处设置了3个，他会一个一个的执行。所以可以写成下面的链式操作。
+                $("#div1").animate({height:400});
+                $("#div1").animate({left:200});
+*/
+                //$("#div1").animate({width:400}).animate({height:400}).animate({left:200});       //此处和上面是一样的效果。
+                //$("#div1").animate({width:400}).delay(1000).animate({height:400}).delay(1000).animate({left:200});       //此处和上面是一样的效果。里面的.delay(1000)  是延迟效果。延迟1秒以后继续运行 。
+
+                $("#div1").animate({width:400},3000).delay(1000).animate({height:400},3000).delay(1000).animate({left:200},3000);
+
+            });
+            $("#button2").click(function () {
+
+                //$("#div1").stop();     //停止当前动作，停止到当前位置，不影响后续动作。
+                //$("#div1").stop(true);   //停止所有动作，停止到当前位置 。停止后续动作。
+                //$("#div1").stop(true,true); //停止当前动作，停止到目标位置，停止后续动作。
+                $("#div1").finish();     //停止所有动作，停止到目标位置。
+
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <button id="button1">点击切换</button><button id="button2">点击停止</button>
+<div id="div1">1</div>
+</body>
+</html>

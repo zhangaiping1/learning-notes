@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="textml; charset=utf-8" />
+    <title></title>
+    <style>
+        div {width:200px; height:200px; border: 1px solid black; display: none;}
+        .active {background: red;}
+    </style>
+    <script src="js/jquery-1.11.1.js"></script>
+    <script>
+
+        (function ($) {                                                                     //这里是插件的起始端，注意这样写可以避免和外面的$发生冲突。
+
+            $.fn.extend({                                                                   //开始写实例方法插件。
+
+                qh:function () {                                                            //插件名为qh
+
+
+                    $(this).click(function () {                                             //当前元素被点击的时候发生一件事儿。
+
+                        $(this).attr("class","active").siblings().attr("class","");         //当前元素改变class
+                        $("div").eq($(this).index()).attr("style","display:block").siblings("div").attr("style","display:none");    //以当前元素为下标的DIV元素改变display,因为display在style里，所以前面是style。
+
+                    });
+
+                }
+
+            });
+
+        })(jQuery);
+
+    </script>
+    <script>
+
+        $(function () {                                                                    //下面这句是动态的将标签添加进网页内,使用append方法。
+
+            $("body").append('<input type="button" value="1" class="active"/><input type="button" value="2"/><input type="button" value="3"/><input type="button" value="4"/><div style="display: block;">1111</div><div>2222</div><div>3333</div><div>4444</div>');
+
+
+            $("input").qh();                                                               //这里在按钮上调用了上面定义的插件。
+
+        });
+
+    </script>
+
+</head>
+<body>
+    <!--<input type="button" value="1" class="active"/>
+    <input type="button" value="2"/>
+    <input type="button" value="3"/>
+
+    <div style="display: block;">1111</div>
+    <div>2222</div>
+    <div>3333</div>-->
+</body>
+</html>
