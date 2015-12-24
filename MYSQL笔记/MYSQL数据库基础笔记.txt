@@ -1,0 +1,208 @@
+第一课
+简介
+
+第二课
+安装MYSQL
+
+
+第三课
+
+三种常用的连接方式：应用程序驱动、MYSQL命令行、MYSQLGUI工具
+
+一、使用应用程序连接MYSQL：应用程序使用驱动（connector/driver）客户端连接MYSQL
+MYSQL驱动程序涵盖各种主流语言。
+
+二、使用命令行连接MYSQL：
+1、安装MYSQL客户端软件包：mysql-client-version
+2、设计环境变量：Export PATH=$PATH:/usr/local/mysql/bin
+3、验证命令行工具安装成功：
+
+命令行连接MYSQL的两种方式：1、Socket连接（本地连接） 2、TCP/IP连接（远程连接）
+当应用程序和数据库在一台机器上时，用本地连接，当不在一台机器上时，用远程连接。
+
+windows下连接入MYSQL:DOS模式下---进入MYSQL安装目录bin目录中---mysql -hlocalhost -P3306 -uroot -p---回车输入密码。
+
+两个常用命令：
+
+status:可以查看MYSQL的版本，编码，运行时间
+show processlist:可以查看当前数据库的连接状态。
+
+
+使用命令行连接MYSQL的注意事项：
+socket个般存储路径为：/tmp/mysql.sock
+socket文件权限要求为：777,不要更改权限
+不要将密码直接输入在命令行里，存在安全风险
+
+三、使用图形客户端连接MYSQL（GUI）：
+常用的图形客户端工具：
+Navicat:
+MYSQLWorkBench:下面讲这个工具的应用。
+首先新建一个MYSQL连接---点击connections后面的加号，然后填写项目名称、连接方式、IP、端口、帐户、密码。
+study---Stancdard(IP/IP)--10.120.150.239---3306---netease---netease---确定。
+
+查看表：创建好以后，就可以双击打开。在某个库下面，就可以查看有哪些表---选择到相应的库，然后输入select * from netease.question---点击上面的执行。
+
+数据的导出：点击Data Export---选择要导出的数据库的某个表---选择Export Dump Project Folder---填写好要导出的路径---点击右下角的start Exprot
+
+数据的导入：点击Data Import/Restore---(首先删除表)输入drop table netease.question---（查看这个表）select@from netease.question---Data Import/Restore---Import from Self-Contained File---选择要导入的文件---在下方选择要导入的库---点击Start Import
+
+
+
+第四课
+
+SQL语言:
+数据存放在表中。
+表的每一行被称为记录。
+表中所有记录都有相同的字段（列）
+
+SQL语言是什么：一种特殊目的的编程语言，用于关系型数据库中的标准数据存取操作。
+SQL语言干什么：用SQL创建表，定义表中的字段，向表中增、删、改、查记录。并且操作数据库中的一切。
+SQL语言的分类：
+      SQL语句的分类                            大致用途
+DDL(Data Definition Language)        创建表，删除表，修改表。。
+DML(Data Manipulation language)      向表中插入记录，修改或者删除表中的记录。。。
+select                               根据条件从表中查询出想要得到的记录。
+DCL(Data Control Language)           控制数据库的访问权限等设置
+TCL(Transaction Control Language)    控制事务进展
+
+数据定义（DDL）：create table(创建表)/drop table(删除表)/alter table(修改表)
+数据操作（DML）：select from table(查询表中数据)/insert into table(插入表中数据)/update table set(更新表中数据)/delete from table(删除表中记录或删除整张表中的数据)
+权限管理（DCL）：grant/revoke
+事务控制（TCL）：commit/rollback
+
+要创建一个表，首先要有一个database,可以用show databases命令来查看有哪些database
+用use XXX(database name) 来进入相应的database
+创建表要用create table xxx(语句。XXX表示表名，后面紧跟一个括号，放数据。
+id int(10),             创建每个细项，细项要指定类型，括号的内容是限制长度，结束用逗号表示。
+name varchar(20),
+age int(10),
+primary key(id));       创建完细项以后，要在细项中选择一个主键（惟一的，不可重复），选择好以后，括上另外半个括号，用分号结束。
+
+创建结束以后，可以用show create table xxx;来查看。
+
+DDL:
+新增一个字段：alter table 表名 add column 字段名 字段类型(20);
+修改字段：    alter table 表名 modify column 字段名 字段类型(40);
+删除字段：    alter table 表名 drop column 字段名;
+
+删除整表：    drop table 表名;
+查看表：      show tables
+
+DML: 
+插入记录：insert into 表名(id,name,age) values(1,'pw',28);
+插入一个完整的记录可以省去字段：insert into 表名 values(2,'nss',29);     主键不可重复。
+
+查询所有字段：select * from 表名;
+只查询某些字段：select name from 表名;
+只查询ID等于1的字段：select name from 表名 where id=1;
+
+更新字段：update 表名 set age=29 where id=1;
+
+删除表中的数据：delete from 表名 where id=1;
+
+小结：SQL语句包括三个部分：必须包含关键字部分+用户自定义+用户可选
+
+
+
+
+第五课
+
+认识DBA
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
