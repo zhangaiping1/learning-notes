@@ -212,8 +212,38 @@ View(视图)/Trigger(触发器)/Function(函数)/Procedure(存储过程):
 
 如何创建索引（一）：
 help create index:
+
+
+CREATE [UNIQUE|FULLTEXT|SPATIAL] INDEX index_name
+    [USING index_type]
+    ON tbl_name (index_col_name,...)
+ 
+index_col_name:
+    col_name [(length)] [ASC | DESC]
+
+
+如果只是key的话，就是普通索引。（表级创建）
+如create table t(id int, key keyid (id));
+
+
 如何创建索引（二）：
 help alter table:
+
+
+
+使用alter的方法创建索引
+alter table table_name add index index_name (column_list) ;
+alter table table_name add unique (column_list) ;
+alter table table_name add primary key (column_list) ;
+查询索引
+SHOW INDEX FROM table_name;
+删除索引
+drop index index_name on table_name ;
+alter table table_name drop index index_name ;
+alter table table_name drop primary key ;
+
+
+
 
 约束：
 生活中的约束有哪些：
@@ -339,6 +369,191 @@ Trigger俗称触发器，指可以在数据写入表A之前或者之后可以做一些其它动作。
 Function:MYSQL提供了很多很多函数，基本可以满足应用。如果不满足，就需要自定义一部分函数。
 Procedure（存储过程）:存储的一部分指令集。通过传入参数，返回想要得到的结果。
 
+
+
+
+以下是imooc.com关于约束的讲解：
+
+第2-12课:
+
+主键：
+每张数据表只能存在一个主键
+主键保证记录的唯一性
+主键自动为NOT NULL
+AUTO_INCREMENT必须和主键一起使用，但是主键不必与AUTO_INCREMENT一起使用。
+
+eg:
+create table tb3(
+id smallint unsigned auto_increment promary key,
+username varchar(30) not null,
+);
+
+show columns from tb3;
+
+insert tb3 (username) values ('tom');
+insert tb3 (username) values ('rose');
+insert tb3 (username) values ('dimitar');
+
+select * from tb3;
+
+
+eg2:
+create table tb4 (
+id smallint unsigned primary key,
+username varchar(20) not null
+);
+
+show columns from tb4;
+
+insert tb4 values(4,'tom');
+insert tb4 values(22,'john');
+
+insert tb4 values (22,'rose');
+
+
+
+
+第2-13课
+
+unique key:
+唯一约束：
+唯一约束可以保证记录的唯一性
+唯一约束的字段可以为空值（NULL）(虽然可以为空值，但是空值只能有一个。)
+每张数据表可以存在多个唯一约束
+
+创建一个即有主键，也有唯一约束的例子：
+eg:
+create table tb5 (
+id smallint unsigned auto_increment primary key,
+username varchar(20) not null unique key,
+age tinyint unsigned);
+
+show columns from tb5;
+
+insert into tb5 (username,age) values('tom',22);
+insert into tb5 (username,age) values('tom',22);----会报错。因为唯一约束。
+
+在忘记写的时候如何添加唯一约束：
+alter table tb5 add unique key (username);
+
+
+
+
+
+第2-14课
+
+default:
+默认约束：
+当插入记录时，如果没有明确为字段赋值，则自动赋予默认值。
+
+eg:
+create table tb6(
+id smallint unsigned auto_increment primary key,
+username varchar(20) not null unique key,
+sex enum('1','2','3') default '3'
+);
+
+show columns from tb6;
+
+insert into tb6 (username) values('tom');
+
+
+
+
+
+第3-2课
+
+foreign key:
+外键约束：
+作用：
+保持数据一致性，完整性
+实现一对一或一对多关系。
+
+外键约束的要求：
+1、父表和子表必须使用相同的存储引擎，而且禁止使用临时表。
+2、数据表的存储引擎只能为InnoDB。
+3、外键列和参照列必须具有相似的数据类型。其中数字的长度或是否有符号位必须相同，而字符的长度则可以不同。
+4、外键列和参照列必须创建索引。如果外键列不存在索引的话，MYSQSL将自动创建索引。参照列如果不提前创建，则不会，但是注意，如果加过主键的话，会自动创建索引。
+
+如果默认创建的表不是InnoDB怎么办？可以修改MYSQL配置文件my.ini内部的default-storage-engine=INNODB
+
+eg:
+create table provinces(
+id smallint unsigned promary key auto_increment,
+pname varchar(20) not null
+);
+
+show create table provinces;
+
+create table users(
+id smallint unsigned primary key auto_increment,
+username varchar(10) not null,
+pid bigint,
+foreign key (pid) references provinces(id)
+);
+---报错，因为pid的数据类型和父表的数据类型不同。
+另外，符号不同的话，也会报错。
+
+create table users(
+id smallint unsigned primary key auto_increment,
+username varchar(10) not null,
+pid smallint unsigned,
+foreign key (pid) references provinces(id)
+);
+
+show indexes from provinces\G;
+
+show indexes from users\G;
+
+show create table users;---这样也可以查看是否有索引，带key的字段，就是带了索引。
+
+
+
+
+第3-3课
+
+外键约束的参照操作：
+
+1、cascade:父表删除或更新时，自动删除或更新子表中匹配的行。
+2、set null:从父表删除或更新行，会设置子表中的外键列为NULL。如果使用该选项，必须保证子表列没有指定not null.
+3、restrict:拒绝对父表的删除或更新操作。 
+4、no action:标准SQL的关键字，在MYSQL中与restrict相同。
+
+eg:
+参照列不变，还是上面那个。
+下面创建带有外键列的表：
+create table users1(
+id smallint unsigned primary key auto_increment,
+username varchar(10) not null,
+pid smallint unsigned,
+foreign key (pid) references provinces (id) on delete cascade
+);
+
+
+show create table users1;
+
+分别在两张表中插入记录：（必须先在父表中插入，才能再在子表中插入）
+
+insert into provinces (pname) values('a'); 
+insert into provinces (pname) values('b');
+insert into provinces (pname) values('c');
+
+select * from provinces;
+
+insert into users1 (username,pid) values('tom',3);
+insert into users1 (username,pid) values('john',7);----报错，在父表中不存在这个ID
+insert into users1 (username,pid) values('john',1);
+insert into users1 (username,pid) values('rose',3);
+
+select * from users1;
+
+delete from provinces where id=3;
+
+select * from provinces;
+
+select * from users1;
+
+因为引擎的关系，所以很少使用物理的外键约束，多使用逻辑的外键约束。
 
 
 
