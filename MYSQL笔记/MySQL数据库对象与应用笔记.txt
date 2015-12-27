@@ -558,7 +558,163 @@ select * from users1;
 
 
 
+第3-5课
 
+修改数据表---添加单列：
+语法：alter table tbl_name add column col_name column_definition [ first | after col_name ]
+eg:alter table users1 add column age tinyint unsigned not null default '10';
+alter table users1 add column password varchar(32) unsigned not null after username;
+alter table users1 add column truename varchar(20) not null first;
+
+添加多列：
+语法：alter table tbl_name add[column] (col_name column_definition,...)
+添加多列不能指定添加的位置，只能添加在最后，而且列要用括号括起来，并且中间要用逗号隔开。
+
+删除列：
+alter table tbl_name drop [column] col_name;
+eg:alter table users1 drop column truename;
+
+删除多列：
+eg:alter table users1 drop password,drop age;
+alter table users1 drop pid,add aa varchar(10) unsigned not null default '20';
+
+
+第3-6课
+
+添加主键约束：
+alter table tbl_name add [constraint [symbol]] primary key [index_type] (index_col_name,...)
+
+eg:
+create table users2(
+username varchar(10) not null,
+pid smallint unsigned
+);
+
+show create table users2;
+
+alter table users2 add column id smallint unsigned ;
+
+show columns from users2;
+
+alter table users2 add constraint PK_users2_id primary key (id);
+
+show columns from users2;
+
+
+添加唯一约束：
+alter table tbl_name add [constraint [symbol]] unique [index|key] [index_name] [index_type] (index_col_name,...)
+
+eg:
+alter table users2 add unique (username);
+
+show create table users2;
+
+
+添加外键约束：
+
+alter table tbl_name add [constraint [symbol]] foreign key [index_name] (index_col_name,...) references_definition
+
+eg:
+alter table users2 add forergn key (pid) references provinces(id);
+
+show create table users2;
+
+
+添加、删除默认约束：
+alter table tbl_name alter [column] col_name {set default literal| drop default}
+
+eg:
+alter table users2 add age tinyint unsigned not null;
+
+show columns from users2;
+
+alter table users2 alter age set default 15;
+
+show columns from users2;
+
+alter table users2 alter age drop default;
+
+
+
+删除约束：
+
+删除主键约束：
+alter table tab_name drop primary key 
+
+eg:
+alter table users2 drop primary key;
+
+show columns from users2;
+
+删除唯一约束：
+
+alter table tbl_name drop {index|key} index_name
+
+eg:
+show indexes from users2\G;
+
+alter table users2 drop index username;
+
+show columns from users2;
+
+show indexes from users2\G;
+
+删除外键约束：
+alter table tbl_name drop foreign key fk_symbol   
+首先要查看到外键的名称，然后删除外键，删除完外键以后，还有个索引，再删除索引，就完成了。
+
+eg:
+show create table users2;
+
+alter table users2 drop foreign key users2_ibfk_1;
+
+show create table users2;
+
+alter table users2 drop index pid;
+
+show create table users2;
+
+
+
+第3-8课
+
+修改列定义：可以用modify修改列的类型，位置等，但是如果从大类型修改到小类型，容易造成数据的丢失。
+            修改列名字用change
+
+alter table tbl_name modify [column] col_name column_definition [first|after col_name]
+
+eg:
+alter table users2 modify column id samllint unsigned not null first;
+
+show columns from users2;
+
+修改列名称：change即可以修改列名称，也可以修改列属性。
+alter table tbl_name change [column] old_col_name new _col_name column_definition [first|after col_name]
+eg:
+alter table users2 change pid pi_d smallint unsigned not null;
+
+
+修改数据表名：
+方法1：
+alter table tbl_name rename[to|as] new_tbl_name
+
+方法2：
+rename table tbl_name to new_tbl_name [,tbl_name2 to new_tbl_name2]...
+
+
+方法1eg:
+alter table users2 rename users3;
+
+show tables;
+
+方法2eg:
+rename table users3 to users2;
+
+show tables;
+
+注意：尽量少使用列的更名和表的更名，其它地方引用的话，会出错。
+
+小结：修改定义用modify ，修改列名用change，修改表名用rename;
 
 
 
