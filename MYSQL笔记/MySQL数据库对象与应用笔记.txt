@@ -719,6 +719,257 @@ show tables;
 
 
 
+第4-2课
+
+记录的增删改查：
+插入：
+insert [into] tbl_name [(col_name)] {values|value} ({expr|default},...),(...),...
+eg:
+create table users(
+id samllint unsigned primary key auto_increment,
+username varchar(20) not null,
+password varchar(32) not null,
+age tinyint unsigned not null, default 10,
+sex boolean
+);
+
+insert users values(null,'tom','123',25,1);
+
+select * from users;
+
+如果想为自动编号的记录赋值，可以赋值为null或者default
+
+insert users values(null,'john','456',25,1);
+
+insert users values(default,'tom','123',25,1);
+
+当列的值和赋值的值不匹配，则会返回错误。
+
+值可以以表达式来表示：(数学表达式、字符表达式、函数)
+insert users values(null,'rose',3*7-5,1);
+
+如果某个列的值存在默认值， 并且想将默认值赋值给这个记录的话，可以填写default
+eg:
+insert users values(null,'tom','123',default,1);
+
+select * from users;
+
+可以一次性的写入多条记录。两个值之间用逗号分隔。
+
+insert users values(null,'tom',md5('123'),default,0),(null,'dilit',md5('456'),default,1);
+
+
+
+第4-2课 ***********************
+
+插入记录insert set:
+insert [into] tbl_name set col_name={expr|default},...
+说明：与第一种方式的区别在于，此方法可以使用子查询（subquery）
+eg:
+insert users set username='ben',password='456';
+
+select * from users;
+
+
+插入记录select:
+insert[into] tbl_name [(col_name,...)] select ...
+说明：此方法可以将查询结果插入到指定的数据表。
+
+
+第4-3课
+
+更新记录（单表更新）
+单表更新记录update:
+update [low_priority] [ignore] table_reference set col_name1={expr1|default} [,col_name2={expr2|default}]...[where where_condition]
+
+eg:
+update users set age=age+5;
+
+select * from users;
+
+update users set age=age-id,sex=0;
+
+select * from users;
+
+update users set age=age+10 where id % 2 = 0;
+
+select * from users;
+
+
+第4-4课
+
+删除记录（单表删除）：
+delete from tbl_name [where where_condition]
+
+eg:
+delete from users where id=6;
+
+select * from users;
+
+insert users values(null,'111','222',33,null);
+
+select * from users;
+
+
+
+第4-5课
+
+查询表达式解析：
+
+select select_expr [,select_expr...][
+
+from table_references
+[where where_condition]
+[group by {col_name | position} [asc|desc],...]
+[having where_condition]
+[order by {col_name | expr | position} [asc | desc],...]
+[limit {[offset,] row_count | row_count offset offset}]
+]
+
+eg:
+select version();
+select now();
+
+
+查询表达式：
+每一个表达式表示想要的一列，必须有至少一个。
+多个列之间以英文逗号分隔。
+星号(*)表示所有列。tbl_name.*可以表示命名表的所有列。
+查询表达式可以使用[AS]alias_name为其赋予别名。
+别名可用于group by ,order by 或having子句。
+
+查询具体某一列或某些列：
+select id,username from users;
+
+在多表连接的情况下查询某一列或某些列的方法：
+select users.id,users.username from users;
+
+查询表达式可以使用[AS]alias_name为要查询字段的结果集赋予别名。
+select id as userid,username as uname from users;
+
+
+
+第4-7课
+
+where语句进行条件查询：
+条件表达式：
+对记录进行过滤，如果没有指定where子句，则显示所有记录。
+在where表达式中，可以使用MYSQL支持的函数或运算符。
+
+
+
+第4-8课
+
+group by 语句对查询结果分组：
+[group by {col_name | position} [asc | desc],...]
+
+eg:
+select * from users;
+
+select sex from users group by sex;
+
+select sex from users group by 1;
+1指的是这个select语句中第一个出现的字段。在这里1就是sex，因为sex出现在了这个查询语句所查询的字段的第一位(其实也没有其它的位了)。
+
+
+
+第4-9课
+
+having语句设置分组条件：
+[having where_condition]
+
+eg:
+select sex from users group by 1 having age >35;---报错，因为字段不符。
+select sex,age from users group by 1 having age>35;
+
+select sex from users group by 1 having count(id) >=2;---可以接受函数。
+
+
+
+第4-10课
+
+order by 语句对查询结果排序：
+[order by {col_name | expr | position} [asc | desc],...]
+
+eg:
+select * from users;
+
+select * from users order by id desc;
+
+select * from users order by age;
+
+select * from users order by age,id desc;
+
+
+
+第4-11课
+
+limit语句限制查询数量：
+限制查询结果返回的数量：
+[limit {[offset,] row_count | row_count offset offset}]
+
+eg:
+select * from users;
+
+从第一条开始返回，返回两条记录：
+select * from users limit 2;
+
+从第3条开始返回，返回两条记录：(注意：结果集是从0开始记数的)
+select * from users limit 2,2;
+
+
+
+限制返回记录的时候，限制的是查询好的结果集，并不是原表数据。
+select * from users order by id desc;
+
+select * from users order by id desc limit 2,2;
+
+
+
+
+返回前面学习的内容，插入记录：
+insert [into] tbl_name set col_name={expr | default},...
+说明：与第一种方式的区别在于，此方法可以使用子查询（subquery）
+insert[into] tbl_name [(col_name,...)] select ...
+将获取到的内容插入到指定的数据表中。
+可以将查找的结果存储到指定的数据表:
+
+insert new_tbl_name(new_columns) select old_columns from old_tbl_name;
+
+eg:
+create table test (
+id tinyint unsigned primary key auto_increment,
+username varchar(20)
+);
+
+select * from test;
+
+insert test select username from users where age>=30;
+
+insert test(username) select username from users where age>=30;
+
+select * from test;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
