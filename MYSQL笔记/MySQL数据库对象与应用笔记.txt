@@ -953,6 +953,382 @@ select * from test;
 
 
 
+第5-1课
+
+子查询、连接：
+数据准备：
+
+设置以gbk的方式来显示：
+eg:set names gbk
+只是在客户端以GBK的方式来查看，并不影响数据库的编码方式。
+
+是不是在not null以后才能default 0 ？
+
+
+
+
+第5-2课
+
+子查询简介：
+子查询(subquery)是指出现在其他SQL语句内的SELECT子句。
+例如：
+select * from t1 where col1=(select col2 from t2);
+这句语句中，select * from t1，称为outer query/outer statement
+select col2 from t2，称为subquery
+
+子查询指嵌套在查询内部，且必须始终出现在圆括号内。
+子查询可以包含多个关键字或条件，
+如distinct、group by 、order by 、limit、函数等。
+子查询的外层查询可以是：select 、insert、update、delete、set或do.
+
+这里的查询并不是指查找，而是所有SQL语句的统称。
+
+子查询返回值：
+子查询可以返回标量、一行、一列或子查询。
+
+
+
+同学5-3课
+
+由比较运算符引发的子查询：
+=、>、<、>=、<=、<>、!=、<=>
+语法结构：
+operand comparison_operator subquery
+
+avg():聚和函数，目的是为了求平均值。
+round(x,y):四舍五入函数。接受两个参数，第一个参数是要四舍五入的数，第二个参数是小数点后面的位数。
+
+select avg(goods_price) from tdb_goods;
+
+select round(avg(goods_price),2) from tdb_goods;
+
+select goods_id,goos_name,goods_price from tdb_goods where goods_price>=5636.36;
+
+查找所有大于等于平均值的数据。
+select goods_id,goods_name,goods_price from tdb_goods where goods_price>=(select round(avg(goods_price),2) from tdb_goods);
+
+查找所有的超级本
+select goods_price from tdb_goods where goods_cate='超级本';
+
+查找哪些商品的价格大于这些超级本。
+select goods_id,goods-name,goods_price from tdb_goods where price>(select goods_price from tdb_goods where goods_cate='超级本')---报错，因为子查询返回结果多行。
+
+用ANY、SOME、或ALL修饰的比较运算符
+operand comparison_operator any (subquery)   对比任意值
+operand comparison_operator some (subquery)  对比任意值
+operand comparison_operator all(subquery)    对比全部的值。
+
+运算符/关键字           any           some             all
+> >=                    最小值        最小值           最大值
+< <=                    最大值        最大值           最小值
+=                       任意值        任意值                 
+<> !=                                                  任意值
+
+注：这里的值是子查询返回的值。
+
+eg:
+select * from tdb_goods where goods_price> any (select goods_price from tdb_goods where goods_cate='超级本');
+
+select * from tdb_goods where goods_price> all (select goods_price from tdb_goods where goods_cate='超级本');
+
+
+第5-4课
+由[not] in/exists引发的子查询。
+in/not in:
+语法结构：
+operand comparison_operator [not] in (subquery)
+=any 运算符与in等效
+！=all或<>all运算符与not in 等效。
+
+eg:
+select * from tdb_goods where goods_price in (select goods_price from tdb_goods where goods_cate='超级本');
+
+
+exists/not exists:
+如果子查询返回任何行，exists将返回true,否则返回false.
+
+
+第5-5课 使用insert...select插入记录：
+
+select * from tdb_goods\G;
+
+创建一个商品的分类表：
+create table if not exists tdb_goods_cates (
+cate_id smalllint unsigned primary key auto_increment,
+cate_name varchar(40) not null
+);
+
+select goods_cate from tdb_goods group by goods_cate;
+
+select * from tdb_goods_cates;
+
+
+
+查看数据表结构：
+desc tdb_goods_cates;
+
+insert tdb_goods_cates(cate_name) select goods_cate from tdb_goods group by goods_cate;
+
+select * from tdb_goods_cates;
+
+
+
+下一步应该参照分类列来更新商品表
+
+
+
+第5-6课
+多表更新
+update table_references
+set col_name1={expr1 | default}
+[,col_name2={expr2 | default}]...
+[where where_condition]
+
+表的参照关系（table_references）:
+table_reference
+{[inner | cross] join | {left | right} [outer] join}
+table_reference
+on conditional_expr
+
+连接类型：
+inner join,内连接：在MYSQL中，join、cross join和inner join是等价的。
+left[outer] join,左外连接：
+right[outer] join,右外连接：
+
+eg:
+update tdb_goods inner join tdb_goods_cates on goods_cate=cate_name 
+set goods_cate=cate_id;
+
+select * from tdb_goods\G;
+
+
+第5-7课
+多表更新之一步到位：
+
+create...select:
+创建数据表同时将查询结果写入到数据表：
+create table [if not exitst] tbl_name
+[(create_definition,...)]
+select_statement
+
+select brand_name from tdb_goods group by brand_name;
+
+create table tdb_goods_brands (
+brand_id smallint unsigned primary key auto_increment,
+brand_name varchar(40) not null
+)
+select brand_name from tdb_goods group by brand_name;
+
+show tables;
+
+select * from tdb_goods_brands\G;
+
+select * from tdb_goods\G;
+
+select * fromt tdb_goods_brands\G;
+
+下面再次进行多表的更新：
+
+show columns from tdb_goods;
+
+show columns from tdb_goods_brands;
+
+update tdb_goods inner join tdb_goods_brands on brand_name=brand_name
+set brand_name=brand_id;----报错，因为字段模糊不清，可以用两种方式来解决，一种是起别名，另一种是在前面加上表名。
+
+下面用起别名的方法：
+
+update tdb_goods as g inner join tdb_goods_grands as b on g.brand_name=b.brand_name set g.brand_name=b.brand_id;
+
+
+select * from tdb_goods\G;
+
+show columns from tdb_goods;
+
+alter table tdb_goods
+change goods_cate cate_id smallint unsigned not null,
+change brand_name grand_id smallint unsigned not null;
+
+show columns from tdb_goods;
+
+select * from tdb_goods\G;
+
+插入两条记录：
+
+insert tdb_goods_cates(cate_name) values('路由器'),('交换机'),('网卡');
+insert tdb_goods_brands(brand_name) values('海尔'),('清华同方'),('神舟');
+
+insert tdb_goods(goods_name,cate_id,brand_id,goods_price) values('laserjet pro p1606dn 黑白激光打印机','12','4','1894');
+
+select * from tdb_goods_cates;
+
+
+
+select * from tdb_goods\G;
+
+
+
+
+
+第5-8课
+
+连接的语法结构：
+连接：
+MYSQL在select语句、多表更新、多表删除语句中支持join操作。
+
+表的参照关系（table_references）:
+table_reference
+{[inner | cross] join | {left | right} [outer] join}
+table_reference
+on conditional_expr
+
+小结：a表连接b表，on 两表的关系
+
+数据表参照：
+table_reference
+tbl_name [[as] alias] | table_subquery [as] alias
+数据表可以使用tbl_name as alias_name
+或tbl_name alias_name赋予别名。
+table_subquery可以作为子查询使用在from子句中，
+这样的子查询必须为其赋予别名。
+
+
+
+第5-9课
+
+内连接inner join
+
+连接类型：
+inner join,内连接：在MYSQL中，join、cross join和inner join是等价的。
+left[outer] join,左外连接：
+right[outer] join,右外连接：
+
+连接条件：
+使用on关键字来设定连接条件，也可以使用where来代替。
+通常使用on关键字来设定连接条件。
+使用where关键字进行结果集记录的过滤。
+
+内连接：
+显示左表及右表符合连接条件的记录。
+
+show columns from tdb_goods;
+
+show columns from tdb_goods_cates;
+
+select goods_id,goods_name,cate_name from tdb_goods inner join tdb_goods_cates on tdb_goods.cate_id = tdb_goods_cates.cate_id;
+
+select * from tdb_goods_cates;
+
+
+
+
+第5-10课
+
+外连接 outer join:
+左外连接：
+显示左表的全部记录及右表符合连接条件的记录。
+
+select goods_id,goods_name,cate_name from tdb_goods left join tdb_goods_cates on tdb_goods.cate_id = tdb_goods_cates.cate_id;
+
+右外连接：
+显示右表的全部记录及左表符合连接条件的记录。
+
+select goods_id,goods_name,cate_name from tdb_goods right join tdb_goods_cates on tdb_goods.cate_id = tdb_goods_cates.cate_id\G;
+
+
+第5-11课
+
+多表连接：
+
+select goods_id,goods_name,cate_name,brand_name,goods_price from tdb_goods as g inner join tdb_goods_cates as c on g.cate_id = c.cate_id 
+inner join tdb_goods_brands as b on g.brand_id = b.brand_id\G;
+
+
+
+第5-12课
+关于连接的几点说明：
+
+a left join b join_condition
+数据表B的结果集依赖数据表A。
+数据表A的结果集根据左连接条件依赖所有数据表（B表除外）。
+左外连接条件决定如何检索数据表B（在没有指定where条件的情况下）。
+如果数据表A的某条记录符合where条件，但是在数据表B不存在符合连接条件的记录，将生成一个所有列为空的额外的B行。
+
+外连接：
+如果使用内连接查找的记录在连接数据表中不存在，并且在where子句中尝试以下操作：col_name is null时，如果col_name被定义为not null ，MYSQL将在找到符合连接条件的记录后停止搜索更多的行。
+
+
+
+第5-13课
+
+无限级分类表设计：
+
+show columns from tdb_goods_cates;
+
+select * from tdb_goods_cates;
+
+CREATE TABLE tdb_goods_types(
+     type_id   SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+     type_name VARCHAR(20) NOT NULL,
+     parent_id SMALLINT UNSIGNED NOT NULL DEFAULT 0
+  ); 
+
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('家用电器',DEFAULT);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电脑、办公',DEFAULT);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('大家电',1);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('生活电器',1);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('平板电视',3);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('空调',3);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电风扇',4);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('饮水机',4);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电脑整机',2);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电脑配件',2);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('笔记本',9);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('超级本',9);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('游戏本',9);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('CPU',10);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('主机',10);
+
+
+show columns from tdb_goods_types;
+
+select * from tdb_goods_types;
+
+自身连接：
+同一个数据表对其自身进行连接。
+
+select s.type_id, s.type_name,p.type_name from tdb_goods_types as s left join tdg_goods_types as p on s.parent_id = p.type_id;
+
+select * from tdb_goods_types;
+
+select p.type_id,p.type_name,s.type_name from tdb_goods_types p left join tdb_goods_types s on s.parent_id=p.type_id;
+
+
+select p.type_id,p.type_name,s.type_name from tdb_goods_types p left join tdb_goods_types s on s.parent_id=p.type_id group by p.type_name;
+
+select p.type_id,p.type_name,s.type_name from tdb_goods_types p left join tdb_goods_types s on s.parent_id=p.type_id group by p.type_name order by p.type_id;
+
+select p.type_id,p.type_name,count(s.type_name) child_count from tdb_goods_types p left join tdb_goods_types s on s.parent_id=p.type_id group by p.type_name order by p.type_id;
+
+
+
+第5-14课
+
+多表删除
+
+delete tbl_name[.*][,tbl_name[.*]]...
+from table_references
+[where where_condition]
+
+select * from tdb_goods\G;
+
+select goods_id,goods_name from tdb_goods group by goods_name;
+
+select goods_id,goods_name from tdb_goods group by goods_name having count(goods_name) >=2;
+
+delect t1 from tdb_goods as t1 left join (select goods_id,goods_name from tdb_goods group by goods_name having count(goods_name)>=2) as t2 on t1.goods_name=t2.goods_name where t1.goods_id>t2.goods_id;
+
+select * from tdb_goods\G;
 
 
 
