@@ -1073,7 +1073,7 @@ select * from tdb_goods_cates;
 
 
 
-下一步应该参照分类列来更新商品表
+下一步应该参照分类表来更新商品表
 
 
 
@@ -1144,6 +1144,8 @@ update tdb_goods as g inner join tdb_goods_grands as b on g.brand_name=b.brand_n
 select * from tdb_goods\G;
 
 show columns from tdb_goods;
+
+这里要进行表结构的修改了，因为字段还是varchar类型，要修改成数字类型。
 
 alter table tdb_goods
 change goods_cate cate_id smallint unsigned not null,
@@ -1329,6 +1331,19 @@ select goods_id,goods_name from tdb_goods group by goods_name having count(goods
 delect t1 from tdb_goods as t1 left join (select goods_id,goods_name from tdb_goods group by goods_name having count(goods_name)>=2) as t2 on t1.goods_name=t2.goods_name where t1.goods_id>t2.goods_id;
 
 select * from tdb_goods\G;
+
+
+第5大课小结：
+
+首先要进行多表的更新，最少要有2张表，表创建好以后这里需要update tbl_name set XXX=XXX;  中间tbl_name因为是多表，所以需要表的对应关系，tbl1 inner join tbl2 on xxx=xxx; 总的大格式就是update tbl1 inner join tbl2 on xxx=xxx set xxx=xxx;这样就创建好了多表的对应关系。
+
+在更新完成以后，A表的这个字段就和B表的这个字段相等了，再调用的时候，直接on XXX=XXX就行。
+这里在更新完成以后，可以将字段名字改一下，方便对照 。
+
+
+如果要进行多表的查找，就按单表的查找，然后加上连接就可以。
+格式：select * from tbl_name1 inner join tbl_name2 on xxx=xxx;
+
 
 
 
