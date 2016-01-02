@@ -997,12 +997,14 @@ operand comparison_operator subquery
 
 avg():聚和函数，目的是为了求平均值。
 round(x,y):四舍五入函数。接受两个参数，第一个参数是要四舍五入的数，第二个参数是小数点后面的位数。
+count(*):计算行数，如果传入的参数是具体的字段，则计算不为空的行数。
+
 
 select avg(goods_price) from tdb_goods;
 
 select round(avg(goods_price),2) from tdb_goods;
 
-select goods_id,goos_name,goods_price from tdb_goods where goods_price>=5636.36;
+select goods_id,goods_name,goods_price from tdb_goods where goods_price>=5636.36;
 
 查找所有大于等于平均值的数据。
 select goods_id,goods_name,goods_price from tdb_goods where goods_price>=(select round(avg(goods_price),2) from tdb_goods);
@@ -1149,7 +1151,7 @@ show columns from tdb_goods;
 
 alter table tdb_goods
 change goods_cate cate_id smallint unsigned not null,
-change brand_name grand_id smallint unsigned not null;
+change brand_name brand_id smallint unsigned not null;
 
 show columns from tdb_goods;
 
@@ -1245,6 +1247,7 @@ select goods_id,goods_name,cate_name from tdb_goods right join tdb_goods_cates o
 select goods_id,goods_name,cate_name,brand_name,goods_price from tdb_goods as g inner join tdb_goods_cates as c on g.cate_id = c.cate_id 
 inner join tdb_goods_brands as b on g.brand_id = b.brand_id\G;
 
+注：当两个表对应上以后，就可以根据对应关系去查看另一个表上的对应行的信息。
 
 
 第5-12课
@@ -1299,7 +1302,7 @@ select * from tdb_goods_types;
 自身连接：
 同一个数据表对其自身进行连接。
 
-select s.type_id, s.type_name,p.type_name from tdb_goods_types as s left join tdg_goods_types as p on s.parent_id = p.type_id;
+select s.type_id, s.type_name,p.type_name from tdb_goods_types as s left join tdb_goods_types as p on s.parent_id = p.type_id;
 
 select * from tdb_goods_types;
 
@@ -1343,6 +1346,199 @@ select * from tdb_goods\G;
 
 如果要进行多表的查找，就按单表的查找，然后加上连接就可以。
 格式：select * from tbl_name1 inner join tbl_name2 on xxx=xxx;
+
+单表的自身连接：可以想像成旁边有一张一模一样的表，然后分开父表和子表以后，进行连接。
+
+
+
+
+第6-1课
+
+字符和函数：
+分别是：字符函数、数值运算符与函数、比较运算符与函数、日期时间函数、信息函数、聚合函数、加密函数
+
+
+
+第6-2课
+字符函数：
+
+函数名称                             描述：
+concat()                             字符连接
+concat_wa()                          使用指定的分隔符进行字符连接
+format()                             数字格式化
+lower()                              转换成小写字母
+upper()                              转换成大写字母
+left()                               获取左侧字符
+right()                              获取右侧字符
+
+concat():字符连接
+
+select concat('imooc','mysql');
+
+create table test(
+first_name varchar(20) not null,
+last_name varchar(20) not null
+);
+
+insert into test values('a','b'),('c','d');
+
+select concat(first_name,'-',last_name) as fullname from test;
+
+
+concat_ws():使用指定的分隔符进行字符连接，最少接收三个参数，第一个参数是分隔符，剩下的两个参数是需要连接的字符。
+
+select concat_ws('|','a','b');
+
+format():将数字格式化成每千分位分隔一个逗号，传入两个参数，第一个参数是数字，第二个参数是小数点位数，这个函数会进行四舍五入。
+
+select format(12560.75,2);
+
+lower():将字母转换成小写
+
+upper():将字母转换成大写
+
+left():获取左侧字符，传入两个参数，第一个参数是从哪个字符串获取，第二个参数是取几位。
+right():获取右侧字符，传入两个参数，第一个参数是从哪个字符串获取，第二个参数是取几位。
+
+select left('mysql',2);   //my
+
+
+
+名称                           描述
+length()                       获取字符串长度
+ltrim()                        删除前导空格
+rtrim()                        删除后续空格
+trim()                         删除前导和后续空格
+substring()                    字符串截取
+[not]like                      模式匹配
+replace()                      字符串替换
+
+eg:
+select length(ltrim('  mysql    '));       //9
+
+trim()除了能删除空格，还能删除特定的字符：分别是前导特殊字符，后续特殊字符，全部特殊字符。
+eg:
+select trim(leading '?' from '??mysql???');     //mysql???
+
+select trim(trailing '?' from '??mysql???');     //??mysql
+
+select trim(both '?' from '??mysql???');     //mysql
+
+
+replace():替换字符串中的字符，接收三个参数，分别是字符串，要替换的字符，替换成的字符。
+eg:
+select replace('??my??sql???','?','');
+
+substring():字符串的截取，接收三个参数，分别是字符串，从第几位截，截几位。注意，这里的截取第一位是1，不是0.截取位置可以为负数。
+eg:
+select substring('mysql',1,2);
+
+[not]like():模式匹配   
+eg:
+select 'mysql' like 'm%';           //1       这里的%表示任意位数的字符，就像*号一样。
+
+查看名字当中包含o的：
+select * from test where first_name like '%o%';
+
+查看名字当中包含%的：
+select * from test where first_name like '%1%%' escape '1';
+
+注：%:任意个字符      _:任意一个字符
+
+
+
+第6-3课
+数值运算符和函数
+
+名称                         描述
+ceil()                       进一取整  （向上取整）变大
+div                          整数除法   eg:3 div 4   //0
+floor()                      舍一取整  （向下取整）变小
+mod                          取余数     eg:5 mod 3   //2
+power()                      幂运算     eg:select power(3,3)   //27
+round()                      四舍五入   eg:select round(3.652,2)  //3.65
+truncate()                   数字截取   eg:select truncate(125.89,1) //125.8
+
+
+第6-4课
+比较运算符和函数
+
+名称                             描述
+[not]between...and...            [不]在范围之内
+[not]in()                        [不]在列出值范围内
+is[not]null                      [不]为空
+
+between...and...:在不在这个范围之内
+eg:
+select 35 between 1 and 22;    //0
+
+in(): 在不在这几个数字里面。
+eg:
+select 10 in(5,10,15,20);      //1
+
+is null:是不是空
+eg:
+select null is null;           //1
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
