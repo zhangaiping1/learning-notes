@@ -1378,7 +1378,7 @@ delimiter //
 create procedure removeUserAndReturnUserNums(in p_id int unsigned,out userNums int unsigned)
 begin
 delete from users where id=p_id;
-select count(id) from users into userNums;
+select count(id) from users into userNums;     //into是写入的意思
 end
 //
 delimiter ;
@@ -1393,6 +1393,209 @@ select @nums;
 局部变量只能在begin..end之间有效。
 
 set @i=7;  这种叫用户变量，跟MYSQL客户端绑定，只对当前用户使用的客户端有效。
+
+
+
+第8-7课
+创建带有多个OUT类型参数的存储过程
+
+row_count():可以取得上次插入、更新、删除的记录总数。
+
+create table test(
+id smallint unsigend primary key auto_increment,
+username varchar(10) not null
+);
+
+insert test(username) values('a'),('b'),('c');
+
+select row_count();       //3
+
+select * from test;
+
+update test set username =concat(username,'--imooc') where id<=2;
+
+select row_count();      //2
+
+
+ROW_COUNT()可以返回前一个SQL进行UPDATE，DELETE，INSERT操作所影响的行数
+
+
+自定义函数，可以按照年龄来删除用户，并且可以返回删除的用户数和剩余的用户数。
+
+delimiter //
+
+create procedure removeUserByAgeAndReturnInfos(in p_age smallint unsigned,out deleteUsers smallint unsigned,out userCounts smallint unsigned)
+begin
+delete from users where age=p_age;
+select row_count() into deleteUsers;
+select count(id) from users into userCounts;
+end
+//
+
+delimiter ;
+
+select count(id) from users where age=20;
+
+call removeUserByAgeAndReturnInfos(20,@a,@b);
+
+select @a,@b;
+
+call removeUserByAgeAndReturnInfos(23,@a,@b);
+
+select @a,@b;
+
+
+
+第8-8课
+存储过程与自定义函数的区别
+1、存储过程实现的功能要复杂一些，而函数的针对性更强。
+2、存储过程可以返回多个值，函数只能有一个返回值。
+3、存储过程一般独立的来执行，而函数可以作为其他SQL语句的组成部分来出现。
+
+
+
+第9-1课
+MYSQL存储引擎
+
+上一讲的课程回顾：
+
+1、存储过程：是SQL语句和控制语句的预编译集合，以一个名称存储并作为一个单位处理。
+2、参数：输入类型，输出类型，输入&&输出
+3、创建：create...procedure...
+4、注意事项：
+   一、创建存储过程或者自定义函数时需要通过delimiter语句修改定界符。
+   二、如果函数体或过程体有多个语句，需要包含在begin...end语句块中。
+   三、存储过程通过call来调用。
+
+
+第9-2课
+存储引擎简介
+
+查看数据表的创建命令：show create table tbl_name
+会得到数据表的创建命令，其中创建后面的子句，就是存储引擎 ，比如innoDB等。
+
+存储引擎：
+MYSQL可以将数据以不同的技术存储在文件（内存）中，这种技术就称为存储引擎。
+每一种存储引擎使用不同的存储机制、索引技巧、锁定水平、最终提供广泛且不同的功能。
+
+MYSQL支持的存储引擎：
+MyISAM
+InnoDB
+Memory
+CSV
+Archive
+
+
+
+第9-3课
+相关知识点之并发处理：
+
+并发控制：当多个连接对记录进行修改时保证数据的一致性和完整性。
+
+锁：
+共享锁（读锁）：在同一时间段内，多个用户可以读取同一个资源，读取过程中数据不会发生任何变化。
+
+排他锁（写锁）：在任何时候只能有一个用户写入资源，当进行写锁时会阻塞其他的读锁或者写锁操作。
+
+锁颗粒：
+表锁，是一种开销最小的锁策略。
+行锁，是一种开销最大的锁策略。
+
+
+
+第9-4课
+相关知识点之事务处理
+
+事务：
+事务用于保证数据库的完整性。
+
+事务的特性：
+原子性(Atomicity)
+一致性(Consistency)
+隔离性(Isolation)
+持久性(Durability)
+
+
+第9-5课
+相关知识点之外键和索引
+
+外键：
+是保证数据一致性的策略。
+
+索引：
+是对数据表中一列或多列的值进行排序的一种结构。
+
+
+第9-6课
+各种存储引擎的特点：
+特点              MyISAM             InnoDB             Memory              Archive
+存储限制          256TB              64TB               有                  无
+事务安全          -                  支持               -                   -
+支持索引          支持               支持               支持                -
+锁颗粒            表锁               行锁               表锁                行锁
+数据压缩          支持               -                  -                   支持
+支持外键          -                  支持               -                   -
+
+MyISAM:适用于事务的处理不多的情况。
+InnoDB:适用于事务处理比较多，需要有外键支持的情况 。
+
+
+
+第9-7课
+设置存储引擎：
+
+修改存储引擎的方法：
+1、通过修改MYSQL配置文件实现：default-dtorage-engine=engine
+
+2、通过创建数据表命令实现：
+create table table_name(...)engine=engine;
+
+3、通过修改数据表命令实现：
+alter table table_name engine [=] engine_name;
+
+
+知识点：
+存储引擎：
+MyISAM:存储限制可达256TB，支持索引、表级锁定、数据压缩。
+InnoD:存储限制为64TB，支持事务和索引，锁颗粒为行锁。
+
+
+
+
+第10-1课
+课程介绍：
+
+
+
+第10-2课
+管理工具之phpmyadmin:
+
+
+
+第10-3课
+管理工具之navicat for mysql
+
+
+
+第10-4课
+管理工具之MYSQL workbench
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
