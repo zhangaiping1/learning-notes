@@ -1,0 +1,193 @@
+第1-1课
+PHP与MYSQL--天生的完美搭档
+
+第2-1课
+连接数据库
+
+PHP内置MYSQL函数：
+mysql_connect   --建立数据库连接
+
+建立好一个叫info的数据库，地址在localhost路径下，然后用PHP来连接这个数据库
+
+建立一个test.php的文件。
+<?php 
+    mysql_connect('localhost','root','123');   //接收三个参数，第一个参数是数据库地址，第二个参数是用户名，第三个参数是密码。
+                                               //1、连接成功的时候，返回MYSQL连接标志符。2、连接失败的时候返回false
+?>
+
+将上面的结果保存在一个变量里，并且做一个判断是否连接成功。
+<?php 
+header("Content-type:text/html;charset=utf-8");  //这句话的意思是保证编码方式是uft8
+if($con=mysql_connect('localhost','root','123')){
+	echo "连接成功";
+}else{
+	echo "连接失败";
+}
+?>
+
+
+第2-2课
+PHP支持哪些数据库
+
+
+第2-3课
+数据库扩展
+
+mysql扩展进行数据库连接的方法：
+$link = mysql_connect('mysql_host','mysql_user','mysql_password');
+
+mysqli扩展：
+$link=mysqli_connect('mysql_host','mysql_user','mysql_password');
+
+PDO扩展：
+$dsn = 'mysql:dbname=testdb;host=127.0.0.1';
+$user = 'dbuser';
+$password = 'dbpass';
+$dbh = new PDO($dsn,$user,$password);
+
+
+第2-4课
+连接MYSQL数据库
+建立连接首先要进行地址，用户，密码的连接。
+mysql_connect('localhost','root','123');
+
+然后要进行数据库的选择：
+mysql_select_db('code1');
+
+然后要进行编码的设置：
+mysql_query("set names 'utf8'");
+
+
+第2-6课
+关闭数据库
+mysql_close()  //关闭数据库连接
+
+<?php 
+header("Content-type:text/html;charset=utf-8");  //这句话的意思是保证编码方式是uft8
+if($con=mysql_connect('localhost','root','123')){
+	echo "连接成功";
+}else{
+	echo "连接失败";
+}
+mysql_close($con);
+?>
+
+
+第2-7课
+打开数据库：
+
+mysql_selct_db()   //选择数据库，1、当选择成功的时候，返回true。2、当选择失败的时候返回false。
+
+<?php 
+header("Content-type:text/html;charset=utf-8");  //这句话的意思是保证编码方式是uft8
+if($con=mysql_connect('localhost','root','123')){
+	echo "连接成功";
+}else{
+	echo "连接失败";
+}
+
+if(mysql_select_db('info')){     
+	echo"选择数据库成功";
+}else{
+	echo"选择数据库失败";
+}
+
+mysql_close($con);
+?>
+
+
+第2-9课
+执行SQL语句
+
+mysql_query()   //执行一条SQL语句  在执行insert的时候，1、当插入成功，返回true。2、插入失败返回false。
+
+<?php 
+header("Content-type:text/html;charset=utf-8");  //这句话的意思是保证编码方式是uft8
+if($con=mysql_connect('localhost','root','123')){
+	echo "连接成功";
+}else{
+	echo "连接失败";
+}
+
+if(mysql_select_db('info')){     
+	echo"选择数据库成功";
+}else{
+	echo"选择数据库失败";
+}
+if(mysql_query('insert into test(name) values("abc")')){
+	echo"插入成功";
+} else{
+	echo mysql_error();        //这是提供的一个出错以后的提示，不用传入参数，当MYSQL出错时，会返回错误提示。
+	echo"插入失败";
+}
+mysql_close($con);
+?>
+
+
+第2-10课
+执行MYSQL查询
+
+mysql_query() 可以执行SQL语句。
+
+如果执行的语句是查询语句，会返回一个资源句柄，可以通过该资源获取查询结果集中的数据。
+$res=mysql_query('select * from user limit 1');
+$row=mysql_fetch_array($res);
+var_dump($row);
+
+默认的，PHp使用最近的数据库连接执行查询，但如果存在多个连接的情况，则可以通过参数指令从那个连接中进行查询。
+$link1 = mysql_connect('localhost','code1','');
+$link2 = mysql_connect('localhost','code1','',true);   //开户一个新的连接
+$res = mysql_query('select * from user limit 1',$link1);  //从第一个连接中查询数据
+
+
+第2-11课
+插入新数据到MYSQL中
+
+通常数据都是存储在变量或者数组中，因此SQL语句需要先进行字符串拼接得到。
+$name='李四';
+$age=18;
+$class='高三一班';
+$sql='insert into user(name,age,class) values($name,$age,$class)';
+mysql_query($sql);
+
+在MYSQL中，执行插入语句以后，可以得到自增的主键ID，通过PHP的mysql_insert_id函数可以获取该ID。
+
+$uid = mysql_insert_id();
+
+这个ID作用非常大，可以用来判断是否插入成功，或者作为关联ID进行其他的数据操作。
+
+
+第2-13课
+总结：
+
+mysql_connect():
+作用：建立数据库连接
+参数：数据库服务器地址，数据库用户名，密码
+返回值：1、当连接成功的时候返回mysql连接标识符。
+	2、当连接失败的时候返回false。
+
+mysql_select_db():
+作用：选择数据库
+参数：数据库名称，（MYSQL连接标识符，可选）
+返回值：1、当选择成功的时候返回true。
+	2、当选择失败的时候返回false。
+
+mysql_query():
+作用：执行一条MYSQL查询
+参数：SQL命令，（MYSQL连接标识符，可选）
+返回值：1、当执行成功的时候，目前我们知道的是，insert成功，返回true。
+	2、当执行失败的时候返回false。
+
+mysql_error():
+作用：返回上一个MYSQL操作产生的文本错误信息
+参数：（可选MYSQL连接标识符）
+返回值：1、返回上一个MYSQL操作产生的文本错误信息。
+
+mysql_close():
+作用：函数关闭非持久的MYSQL连接
+参数：MYSQL连接标识符
+返回值：1、关闭成功true
+	2、关闭失败false
+
+
+
