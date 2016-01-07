@@ -216,3 +216,112 @@ while($row=mysql_fetch_row($q)){
 如何反复的执行mysql_fetch_row()则会按照顺序一条一条的提取数据库的数据。
 
 
+
+第3-3课
+mysql_fetch_array()以混合数组形式获取数据：
+
+mysql_fetch_row()和mysql_fetch_array()的区别：
+1、mysql_fetch_row()取一条数据产生一个索引数组。
+2、mysql_fetch_array()取一条数据产生个索引数组和一个关联数组。
+这样的话，如果想取内容的话，就可以通过键名来取了。
+不过mysql_fetch_row()要比mysql_fetch_array()快很多。
+eg:
+$arr=mysql_fetch_array($query);
+echo $arr['name'];
+
+
+mysql_fetch_array()接收两个参数，第二个参数是设置输出的数组类型：
+1、mysql_assoc   --关联数组
+2、mysql_num     --数字数组（索引数组）
+3、mysql_both    --默认
+
+
+
+第3-4课
+mysql_fetch_assoc()以关联数组形式获取数据
+
+基本上和mysql_fetch_array('资源标识符',mysql_assoc);一样的效果。
+
+也是每次从结果集里取一条数据，同样也可以通过while循环将数据全部取出来 。
+
+
+第3-7课
+mysql_fetch_object()以对象形式获取数据
+
+$query=mysql_query('select * from fruitshop');
+$arr=mysql_fetch_object($query);
+print_r($arr);         //打印这个对象的所有属性。
+echo $arr->name;            //取该对象的某个属性。
+
+
+也可以循环取得对象的某个属性。
+while($arr=mysql_fetch_object($query)) {
+	echo $arr->name;
+	echo '<br />';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
