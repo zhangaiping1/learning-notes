@@ -51,7 +51,7 @@ $dbh = new PDO($dsn,$user,$password);
 建立连接首先要进行地址，用户，密码的连接。
 mysql_connect('localhost','root','123');
 
-然后要进行数据库的选择：
+然后要进行数据库的选择：这里选择的是数据库，并不是数据表。
 mysql_select_db('code1');
 
 然后要进行编码的设置：
@@ -86,7 +86,7 @@ if($con=mysql_connect('localhost','root','123')){
 	echo "连接失败";
 }
 
-if(mysql_select_db('info')){     
+if(mysql_select_db('info')){     //这里选择的是数据库，并不是表。
 	echo"选择数据库成功";
 }else{
 	echo"选择数据库失败";
@@ -99,7 +99,40 @@ mysql_close($con);
 第2-9课
 执行SQL语句
 
+有时数据库会显示汉字为问号，设置方法如下：
+
+http://www.2cto.com/database/201412/358422.html
+
+下面我介绍这种方法，一劳永逸。
+
+phpmyadmin 创建数据库的默认编码是：latin1_swedish_ci
+
+修改默认编码的方法是
+
+1.登录phpmyadmin
+
+2.在导航部分点：变量
+
+3.Ctrl+F 查找：latin1_swedish_ci
+
+4.把所有的带有latin1_swedish_ci 修改为 想要的编码，我设置为：utf8_general_ci
+
+走你！吐舌头
+
+然后可以在sql命令控制台输入 ：show variables like '%char%';
+
+如果发现还不是的话，输入下面的句子：
+
+命令行输入 set character_set_database=utf8;
+
+再次输入 set character_set_server=utf8;（这两个不一样啊、注意一下）
+
+
+
+
 mysql_query()   //执行一条SQL语句  在执行insert的时候，1、当插入成功，返回true。2、插入失败返回false。
+
+show variables like '%char%'    这是测试字符集的语句，要保证字符集正确。
 
 <?php 
 header("Content-type:text/html;charset=utf-8");  //这句话的意思是保证编码方式是uft8
@@ -230,10 +263,10 @@ $arr=mysql_fetch_array($query);
 echo $arr['name'];
 
 
-mysql_fetch_array()接收两个参数，第二个参数是设置输出的数组类型：
-1、mysql_assoc   --关联数组
-2、mysql_num     --数字数组（索引数组）
-3、mysql_both    --默认
+mysql_fetch_array()接收两个参数，第二个参数是设置输出的数组类型：注意：参数要大写。。
+1、MYSQL_ASSOC   --关联数组
+2、MYSQL_NUM     --数字数组（索引数组）
+3、MYSQL_BOTH    --默认
 
 
 
@@ -259,6 +292,68 @@ while($arr=mysql_fetch_object($query)) {
 	echo $arr->name;
 	echo '<br />';
 }
+
+
+
+第4-1课
+mysql_num_rows()获取结果集中行的数目
+可以用在测试条件里，比如如果获取到的结果集数量为零，则停止输出。把这个函数写入到if的判断条件中。如果为零，则为false，则输出else里的内容 。
+
+eg: echo mysql_num_rows($query);
+
+
+
+第4-3课
+mysql_result()获取结果集中一个字段的值。
+
+mysql_result(结果集,想要得到的结果的行号,字段名（偏移量）);
+
+偏移量的意思就是第几个字段。也是从零开始。
+
+eg:
+$query=mysql_query('select count(*) from test');
+echo mysql_result($query,0);
+
+$query= mysql_query('select * from test');
+echo mysql_result($query,2,'name');
+
+
+
+第4-4课
+mysql_affected_rows()获取前一次操作受影响的记录行数。接受一个参数，参数是连接标识符。
+
+注：只能记录上一次的操作，如果连续两条操作的话，只能记录一条。
+
+连接标识符：就是连接数据库成功以后返回的那个连接标识符。
+$con=mysql_connect('localhost','root','000000');
+这个$con就是连接标识符。
+
+eg:
+$con=mysql_connect('localhost','root','000000');
+if(mysql_query('update test set num=3 where id=1')){
+	
+
+	echo '修改成功，修改的条件为';
+	echo mysql_affected_rows($con);//参数为连接标识符。
+}else{
+	echo '修改失败';
+}
+
+
+在PHP插入内容的时候，注意MYSQL语句内的转义：
+
+mysql_query("insert into test (name,kc,price) values(\'梨\',2,3);");
+
+
+
+
+
+
+
+
+
+
+
 
 
 
