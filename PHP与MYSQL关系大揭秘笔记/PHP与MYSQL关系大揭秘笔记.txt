@@ -296,7 +296,7 @@ while($arr=mysql_fetch_object($query)) {
 
 
 第4-1课
-mysql_num_rows()获取结果集中行的数目
+mysql_num_rows()获取结果集中行的数目,注意，是结果集中的行数。
 可以用在测试条件里，比如如果获取到的结果集数量为零，则停止输出。把这个函数写入到if的判断条件中。如果为零，则为false，则输出else里的内容 。
 
 eg: echo mysql_num_rows($query);
@@ -343,6 +343,159 @@ if(mysql_query('update test set num=3 where id=1')){
 在PHP插入内容的时候，注意MYSQL语句内的转义：
 
 mysql_query("insert into test (name,kc,price) values(\'梨\',2,3);");
+
+
+
+
+第5-1课
+文章发布系统的架构分析和设计
+
+后台管理系统：1、文章管理列表 2、文章发布程序 3、文章修改程序 4、文章删除程序
+
+前台展示系统：1、文章列表 2、文章内容页
+
+数据库表设计：
+表名：article ,用于存放文章。
+
+字段           类型            空    默认  注释  
+id             int(11)         否          文章编号（自增长）
+title          char(100)       否          文章标题
+author         char(50)        否          文章作者
+description    varchar(255)    否          文章简介
+content        text            否          文章内容
+dateline       int(11)         否     0    发布时间
+
+目录规划、程序文件规划及命名:
+article-----------------------------文章发布系统根目录
+  admin-----------------------------后台系统目录
+     article.add.php----------------文章添加界面
+     article.add.handle.php---------文章添加处理程序
+     article.modify.php-------------文章修改界面
+     article.modify.handle.php------文章修改处理程序
+     article.del.handle.php---------文章删除处理程序
+     article.manage.php-------------文章管理列表
+  article.list.php------------------前台文件展示列表
+  article.show.php------------------前台文章内容页
+  config.php------------------------配置文件
+  connect.php-----------------------MYSQL连接初始化程序
+
+
+
+第5-2课
+创建配置文件和初始化文件
+
+文件发布系统-mysql连接、初始化程序
+
+文件编写的意义：统一配置、方便管理、减少代码冗余
+
+配置文件编写：config.php
+
+MYSQL初始化程序文件编写：connect.php
+
+
+config.php:为防止后期会修改，所以定义为常量。
+<?php
+	header("Content_type:text/html;charset=utf-8");
+	define('HOST','127.0.0.1');
+	define('USERNAME','root');
+	define('PASSWORD','000000');
+
+?>
+
+
+connect.php:
+<?php
+
+	require_once('config.php');//将上一个已经写好的PHP文件包含进来
+	//连库
+	$con=mysql_connect(HOST,USERNAME,PASSWORD);
+	//选库
+	mysql_select_db('info');
+	//字符集
+	mysql_quert('set names utf8');
+
+?>
+
+
+
+第5-3课
+发布文章
+
+文章发布界面编写：article.add.php
+
+文章发布处理程序的编写：article.add.handle.php
+
+程序测试：
+
+article.add.php:这个页面其实就是一个HTML页面，带一个表单，将内容填写进去，然后提交给处理程序处理。
+
+其它的页面都是普通的HTML，中间的主要部分是一个form表单，带上id,name,method,action等。method指向提交方式。action指向处理页面。
+
+form表单下，是table/tr/td/等等。td下面有input 代有type,name,id属性。
+
+最后有个按钮，type=submit，是个提交按钮。
+
+
+article.add.handle.php:上个页面将内容填写好以后提交到这个页面进行处理。这个页面必须存为（utf-8 无签名）格式
+
+
+
+<?php
+	require_once('../connect.php');
+	//把传递过来的信息入库，在入库之前对所有的信息进行校验。下面这是简单的校验，还可以校验是否有非法字符。
+	if(!(isset($_POST['title'])&&(!empty($_POST['title'])))){
+		echo "<script>alert('标题不能为空');window.location.href='article.add.php'</script>";
+	}
+	//print_r($_POST);
+	$title=$_POST['title'];
+	$author=$_POST['author'];
+	$description=$_POST['description'];
+	$content=$_POST['content'];
+	$dateline=time();//用这个函数来获取时间戳。
+	$insertsql="insert into article (title,author,description,content,dateline)values('$title','$author','$description','$content',$dateline)";   //$dateline因为是数字，不用加引号。
+
+	echo $insertsql;        //测试语句是否正确，将语句打印出来以后，复制进数据库进行插入测试。如果成功，删除这条语句，继续进行。
+	if(mysql_query($insertsql)){
+		echo "<script>alert('插入成功');window.location.href='article.add.php'</script>";
+	}else{
+		echo "<script>alert('插入失败');window.location.href='article.add.php'</script>";
+	}
+	
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
