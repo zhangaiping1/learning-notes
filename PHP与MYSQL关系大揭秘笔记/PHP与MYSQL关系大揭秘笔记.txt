@@ -421,6 +421,8 @@ connect.php:
 ╣з5-3©н
 ╥╒╡╪ндуб
 
+PHP $_POST ╧Ц╥╨сцсзйу╪╞лА╫╩ method="post" ╣д HTML ╠М╣╔╨С╣д╠М╣╔йЩ╬щ║ё
+
 ндуб╥╒╡╪╫ГцФ╠Юп╢ё╨article.add.php
 
 ндуб╥╒╡╪╢╕юМЁлпР╣д╠Юп╢ё╨article.add.handle.php
@@ -462,6 +464,312 @@ article.add.handle.php:ио╦ЖрЁцФ╫╚дзхщлНп╢╨црт╨СлА╫╩╣╫уБ╦ЖрЁцФ╫Ьпп╢╕юМ║ёуБ╦ЖрЁцФ╠
 	}
 	
 ?>
+
+
+
+╣з5-4©н
+пч╦дндуб
+
+ндубпч╦д╫ГцФ╠Юп╢ё╨article.modify.php
+
+ндубпч╦д╢╕юМЁлпР╣д╠Юп╢ё╨article.modify.handle.php
+
+article.nodify.php: 
+<?php
+
+require_once('../connect.php');    //тьхКйЩ╬щ©Б
+
+$id = $_GET['id'];
+
+$query = mysql_query("select * from article where id=$id");   //╡Иур╣╫оЮ╧ь╣дйЩ╬щ
+
+$data = mysql_fetch_assoc($query);     //в╙╩╩Ёи╤тс╕╣дйЩвИ║ё
+
+?>
+
+<html>
+<head></head>
+<body>
+<form id='form1' name='form1' method='post' action='article.modify.handle.php'>
+<input type='hidden' name='id' value='<?php echo $data['id']?>'/>    //уБюОйгр╩╦ЖрЧ╡ьсРё╛╟ОжЗ╫╚IDж╣╢╚╣щ╦Ь╢╕юМЁлпРх╔╢╕юМ║ё
+<input type="text" name="title" id="title" value="<?php echo $data['title']?>"/>
+<textarea name='description' id='description' cols='60' rows='5'><?php echo $data['description']?></textarea>    //уБюОйга╫жж╡ЕхКйЩ╬щ╣д╥╫╥╗ё╛хГ╧Шспvalueж╣ё╛╬мсцvalueж╣ё╛хГ╧Шйга╫╦Ж╠у╨о╠Йг╘ё╛╬мтза╫╦Ж╠у╨м╠Йг╘ж╝╪Д╡ЕхК║ё
+
+</form>
+</body>
+
+</html>
+
+
+article.modify.handle.php:
+
+<?php
+	require_once('../connect.php');
+	$id = $_POST['id'];
+	$title = $_POST['title'];
+	$author = $_POST['author'];
+	$description = $_POST['description'];
+	$content = $_POST['content'];
+	$dateline = time();
+	$updatesql = "update article set id = $id,title = '$title', author = '$author',description = '$description',content = '$content',dateline=$dateline where id=$id";
+	if(mysql_query($updatesql)){
+		echo "<script> alert('пч╦дндубЁи╧╕');window.location.href='article.manage.php';</script>";
+	}else{
+		echo"<script> alert('пч╦дндубй╖╟э');window.location.href='article.manage.php';</script>";
+	}
+
+
+?>
+
+
+
+╣з5-5©н
+и╬ЁЩндуб
+
+ндуби╬ЁЩ╢╕юМЁлпРё╨article.del.handle.php
+
+article.del.handle.php:
+
+<?php
+	require_once('../connect.php');
+	$id = $_GET['id'];
+	$deletesql = "delete from article where id=$id";
+	if(mysql_query($deletesql)){
+		echo "<script>alert('и╬ЁЩндубЁи╧╕');window.location.href='';</script>";
+	}else{
+		echo "<script>alert('и╬ЁЩндубй╖╟э');window.location.href='';</script>";
+	}
+
+
+?>
+
+╦д╨цIDрт╨С©иртуБяЫ╡Бйтё╨
+localhost/article/admin/article.del.handle.php?id=7
+
+в╒рБPHP╣╔рЩ╨еюО╣ддзхщ╩А╠╩╣╠нд╠╬йДЁЖ ё╛╤Ьк╚рЩ╨е╩╧йг╠Да©║ё
+
+
+хГ╧ШрЁцФбрбКакё╛╪г╣цр╙╟ярЁцФ╢ФЁиUTF8нчг╘цШ╦Яй╫
+
+
+
+╣з5-6©н
+ндуб╧эюМап╠М
+
+article.manage.php:
+
+<?php
+	require_once('../onnect.php');
+	$sql="select * from article order by dateline desc";
+	$query = mysql_query($sql);
+	if($query&&mysql_num_rows($query)){
+		while($row = mysql_fetch_assoc($query)){
+			$data[] = $row;      //хГ╧Ш╢Ьр╩╦Жжпю╗╨ерт╨Сё╛©ирттзц©╢н╦Ёж╣╣дй╠╨Рвт╤╞иЗЁир╩╦Жпб╣доб╠Й║ёуБ╬мйгр╩╦Ж╤Чн╛йЩвИё╛х╩╨СюОцФ╟Эю╗╨э╤Ю╦Жр╩н╛йЩвИ║ё
+		}
+	}else{
+		$data = array();
+	}
+?>
+
+
+<html>
+<head></head>
+<body>
+<?php
+	if(!empty($data)){
+		foreach($data as $value){
+	
+?>
+<tr>
+<td bgcolor = "#fff">$nbsp;<?php echo $value['id']?></td>
+<td bgcolor = "#fff">$nbsp;<?php echo $value['title']?></td>
+<td bgcolor = "#fff"><a href="article.del.handle.php?id=<?php echo $value['id']?>">и╬ЁЩ</a><a href="article.modify.php?id=<?php echo $value['id']?>">пч╦д</a></td>
+</tr>
+<?php }?>
+</body>
+</html>
+
+
+
+╣з5-7©н
+вэ╫Аё╨
+
+mysql╨╞йЩё╨
+
+mysql_connect():а╛©Б
+mysql_select_db():я║©Б
+mysql_query():ж╢ппSQLсО╬Дё╛иХжцвж╥Ш╪╞
+mysql_error():╢Рс║оЮ╧ь╣д╢МнС
+mysql_fetch_assoc():╢с╫А╧Ш╪╞юОх║ЁЖйЩ╬щ
+mysql_num_rows():╪Л╡Б╫А╧Ш╪╞йг╥Ян╙©у
+
+вэ╫А╨Сл╗©╙╥╒аВЁлё╨
+рЩхКMYSQLеДжцнд╪Ч╪╟ЁУй╪╩╞ЁлпР----©╙╥╒лМ╪с╫ГцФ---©╙╥╒лМ╪с╢╕юМЁлпР---©╙╥╒пч╦д╫ГцФ---©╙╥╒пч╦д╢╕юМЁлпР---©╙╥╒и╬ЁЩ╢╕юМЁлпР---©╙╥╒╧эюМап╠М
+
+
+
+╣з6-1©н
+ндубап╠МрЁё╨
+
+г╟л╗---ндубап╠М---ндубдзхщ
+	ндуб╪ЛкВ
+	╧ьсзнрцг
+	а╙о╣нрцг
+
+ндубап╠МрЁё╨
+article.list.php:
+
+<?php
+	require_once('connect.php');
+	$sql = "select * from article order by dateline desc";
+	$query = mysql_query($sql);
+	if($query && mysql_num_rows($query)){
+		while($row = mysql_fetch_assoc($query)){
+			$data = $row;
+		}
+	}
+?>
+
+<html>
+<head></head>
+<body>
+//рРн╙й╣╪й╣ддзхщйгпХр╙я╜╩╥у╧й╬ЁЖю╢╣д║ёкЫртуБюОр╙╦Ы╬щр╩╦Жндуб©Ию╢п╢р╩╦Жя╜╩╥
+<?php
+	if(enpty($data)){
+		echo "╣╠г╟ц╩спндуб";
+	}else{
+		foreach($data as $value){
+	
+?>
+
+<h1 calss="title"><?php echo $value['title']?></h2>
+<a href="article.show.php?id=<?php echo $value['id']?>"></a>
+
+
+//тз©И╫АйЬ╣д╣ь╥╫п╢╫АйЬ╥Ш
+<?php 
+	}
+	}
+?>
+
+</body>
+</html>
+
+
+
+╣з6-2©н
+ндубоЙгИрЁ
+
+article.show.php
+
+<?php 
+
+	require_once('connect.php');
+	$id=$_GET['id'];
+	$sql = "select * from article.where id=$id";
+	$query = mysql_query($sql);
+	if($query&&mysql_num_rows($query)){
+		$row = mysql_fetch_assoc($query);
+
+	}else{
+		echo "ндуб╡╩╢Фтз";
+		exit;
+	}
+
+?>
+
+<h1 class="title"><?php echo $row['title']?></h1>
+
+
+н╙╥юж╧╠Пхк╣д╥г╥╗в╒хКё╨
+
+$id = intval($_GET['id']);
+
+
+
+╣з6-3©н
+ндуб╪ЛкВ╧╕дэ
+
+article.search.php
+й╣жйиойг╟яarticle.list.phpюО╣дSQLсО╬Дё╛тЖ╪сак╪ЛкВлУ╪Ч║ё
+юЩхГ select * from article where title like "╡Ия╞ж╣%"
+
+
+<?php
+	require_once('connect.php');
+	$key = $_GET['key'];
+	$sql = "select * from article where title like '$key%' order by dateline desc";
+	$query = mysql_query($sql);
+	if($query && mysql_num_rows($query)){
+		while($row = mysql_fetch_assoc($query)){
+			$data = $row;
+		}
+	}
+?>
+
+<html>
+<head></head>
+<body>
+<form method = "get" action = "article.search.php">
+<fieldset>
+<input type="text" id="s" name="key" value=""/>
+<input type="submit" id="x" value="Search"/>
+</fieldset>
+
+</form>
+
+</body>
+</html>
+
+
+╣з6-4©н
+╧ьсзнрцг╨ма╙о╣нрцг
+
+╧ьсзнрцгё╨about.php
+а╙о╣нрцгё╨contact.php
+
+йвохр╙╫╚уБа╫╦ЖрЁцФ╣ддзхщ╥е╣╫йЩ╬щ©Бжп║ё
+
+<?php
+	require_once('connect.php');
+	$sql = "select * from introduce";
+	$query = mysql_query($sql);
+	if($query && mysql_num_rows($query)){
+		$about = mysql_result($query,0,'about');
+	}
+?>
+
+<html>
+<head></head>
+<body>
+	<div>
+		<?php echo $about?>
+	</div>
+</body>
+</html>
+
+а╙о╣нрцг╨м╧ьсзнрцг╣дяЫй╫йгр╩яЫ╣д║ё
+
+
+
+╣з6-5©н
+вэ╫Аё╨
+
+г╟л╗ндубу╧й╬о╣мЁ©╙╥╒аВЁлё╨
+рЩхКMYSQLеДжцнд╪Ч╪╟ЁУй╪╩╞ЁлпР---©╙╥╒ндубап╠МрЁ---©╙╥╒ндубоЙгИрЁ---ндуб╪ЛкВ╧╕дэ---©╙╥╒╧ьсзнрцгрЁ---©╙╥╒а╙о╣нрцгрЁ
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
