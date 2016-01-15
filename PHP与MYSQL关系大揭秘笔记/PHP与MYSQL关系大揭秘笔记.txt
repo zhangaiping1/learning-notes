@@ -395,7 +395,7 @@ MYSQL³õÊ¼»¯³ÌÐòÎÄ¼þ±àÐ´£ºconnect.php
 
 config.php:Îª·ÀÖ¹ºóÆÚ»áÐÞ¸Ä£¬ËùÒÔ¶¨ÒåÎª³£Á¿¡£
 <?php
-	header("Content_type:text/html;charset=utf-8");
+	header("Content_type:text/html;charset=utf-8");     //¼ÇµÃÕâÒ»ÐÐÒª¼ÓÉÏ¡£
 	define('HOST','127.0.0.1');
 	define('USERNAME','root');
 	define('PASSWORD','000000');
@@ -410,11 +410,65 @@ connect.php:
 	//Á¬¿â
 	$con=mysql_connect(HOST,USERNAME,PASSWORD);
 	//Ñ¡¿â
-	mysql_select_db('info');
+	mysql_select_db('info');             //ÕâÀïÊÇÑ¡ÔñµÄÊý¾Ý¿â£¬²»ÊÇÊý¾Ý±í¡£
 	//×Ö·û¼¯
-	mysql_quert('set names utf8');
+	mysql_quert('set names utf8');      //Õâ¸ö¿É´óÐ´£¬¿ÉÐ¡Ð´
 
 ?>
+
+require_once() Óï¾äÔÚ½Å±¾Ö´ÐÐÆÚ¼ä°üº¬²¢ÔËÐÐÖ¸¶¨ÎÄ¼þ¡£´ËÐÐÎªºÍ require() Óï¾äÀàËÆ£¬Î¨Ò»Çø±ðÊÇÈç¹û¸ÃÎÄ¼þÖÐµÄ´úÂëÒÑ¾­±»°üº¬ÁË£¬Ôò²»»áÔÙ´Î°üº¬¡£
+
+
+
+
+
+½ÓÏÂÀ´ÓÐ¿ÉÄÜÐèÒª²åÈëÒ»Ð©±íµ¥µÄÖªÊ¶£º
+
+<form action="http://www.xxx.com/action/xxx.php" method="POST">  //ÕâÀïÊÇ±íµ¥µÄ¿ªÊ¼¡¢±íµ¥ÒÔÊ²Ã´ÐÎÊ½·¢ËÍ¸øË­´¦Àí¡£
+
+</form>          //ÕâÀïÊÇ±íµ¥µÄ½áÊø¡£
+
+<input type="text" name="fullname">   //ÕâÀïtypeÖ¸¶¨ÀàÐÍ£¬nameÖ»ÊÇÒ»¸öÃû×Ö£¬µ«ÊÇ·þÎñÆ÷½Å±¾½«Ê¹ÓÃËû¡£
+·þÎñÆ÷ÈçºÎÊ¹ÓÃname:Ìá½»±íµ¥Ê±£¬ä¯ÀÀÆ÷»áÊ¹ÓÃÕâÐ©Î¨Ò»µÄÃû×Ö´ò°üËùÓÐµÄÊý¾Ý¡£ÐÎ³ÉÒ»Ò»¶ÔÓ¦µÄÀàËÆÊý×é£¬È»ºó´«µÝ¸ø·þÎñÆ÷£¬·þÎñÆ÷½Å±¾ÒªÇóÕâÐ©±íµ¥Êý¾ÝÓÐÏàÓ¦µÄ±êÇ©£¨ÀàËÆÊý×é£©£¬ÕâÑùËü²ÅÄÜ·ÖÇåË­ÊÇË­¡£
+
+<input type="submit">                 //ÕâÀïÊÇÒ»¸öÌá½»°´Å¥¡£±ØÐëÒªÖ¸¶¨"submit"×÷Îª<input>ÔªËØµÄtypeÊôÐÔÖµ¡£
+
+<input type="radio" name="hotornot" value="hot">    //µ¥Ñ¡¿òtypeÊÇradio£¬Ò»×é¹ØÁªµÄÑ¡ÏîÒªÓÐÏàÍ¬µÄnameÖµ
+<input type="checkbox" name="spice" value="salt">   //¸´Ñ¡¿òtypeÊÇcheckbox,Ò»×é¹ØÁªµÄÑ¡ÏîÒªÓÐÏàÍ¬µÄnameÖµ
+
+»¹ÓÐÓÃÓÚ²Ëµ¥µÄ<select>,ÓÃÓÚ¶àÐÐÎÄ±¾µÄ<textarea>
+
+<textarea name="conments" rows="10" cols="48"></textarea>   //Õâ¸ö±êÇ©ÓÐ¿ªÊ¼ºÍ½áÊøÁ½¸ö£¬ÓÃnameÊôÐÔÎªÔªËØÖ¸¶¨Ò»¸öÎ¨Ò»µÄÃû×Ö£¬rowsËûcolsÊôÐÔÎªËûÉè¶¨¿í¸ß£¬Ò²¿ÉÒÔÓÃCSSÉè¶¨£¬Á½¸ö±êÇ©Ö®¼äµÄÄÚÈÝ»á³ÉÎªÎÄ±¾ÓòÖÐµÄ³õÊ¼ÎÄ±¾¡£
+
+<select name="characters">
+	<option value="aa">aa</option>
+	<option value="bb">bb</option>
+</select>                                 //ÏÂÀ­²Ëµ¥ÒªÍ¨¹ýselect½áºÏoptionÒ»ÆðÀ´×ö¡£
+ÏÂÀ­²Ëµ¥Íù·þÎñÆ÷·¢ËÍÐÅÏ¢Ê±£¬»áÑ¡ÔñselectµÄnameÃûÁ¬½ÓÉÏÏÂÀ­ÏîµÄvalueÖµ£¬½øÐÐ·¢ËÍ¡£
+
+±íµ¥ÄÚ£¬Èç¹ûÐèÒªµã»÷ÎÄ×Ö¹ØÁªµ½ÏàÓ¦µÄÑ¡Ïî£¬Ó¦¸ÃÏÈÎªinputÔªËØÌí¼ÓID×Ö¶Î£¬È»ºó½«ÎÄ×Ö²¿·ÖÌí¼Ólabel±êÇ©£¬½«forÊôÐÔÉèÖÃ³ÉID×Ö¶Î¡£
+
+fieldsetºÍlegend:¿ÉÒÔÓÃÕâÁ½¸ö±êÇ©°üº¬ÆðÀ´input£¬»á×ö³ÉÓÐ¿ò°üÎ§²¢ÔÚ¿òÉÏÐ´×ÖµÄÐ§¹û¡£
+<fieldset>
+<legend>xxx</legend>
+<input type="checkbox">
+</fieldset>
+
+Ìá½»ÎÄ¼þ£º<input type="file" name="doc">    //±ØÐëÓÃPOST·½·¨
+
+¶àÑ¡²Ëµ¥£ºÔÚselect ±êÇ©ÄÚÌí¼ÓmultipleÊôÐÔ¡£  <select name="characters" multiple></select>
+
+ÌáÊ¾ÄÚÈÝ£ºÎªinputÔªËØÌí¼ÓplaceholderÊôÐÔ£¬¿ÉÒÔÌí¼ÓÒ»¸ö»ÒÉ«µÄÌáÊ¾ÄÚÈÝ¡£<input type="text" placeholder="xx">
+
+±ØÐëÊäÈëÄÚÈÝ£ºÎª±íµ¥Ìí¼ÓrequiredÊôÐÔ£¬¿ÉÒÔÉèÖÃÊÇ·ñ±ØÐëÊäÈë <input type="text" required>
+
+
+
+
+POSTÓëGETµÄÇø±ð£º
+POST:POST»á´ò°üÄãµÄ±íµ¥±äÁ¿£¬ÔÚºóÌ¨°ÑËüÃÇ·¢ËÍµ½·þÎñÆ÷¡£Èç¹û²»ÏëÈÃ±ðÈË¿´µ½ÐÅÏ¢£¬±ÈÈçÕÊºÅÃÜÂëÖ®ÀàµÄ£¬¾ÍÒªÓÃPOST¡£µ«ÊÇËûÃÇÃ»°ì·¨ÔÚÕâ¸öÒ³Ãæ¼ÓÊéÇ©£¬ÕâÑùÏëµÃµ½·µ»ØÒ³Ãæ£¬¾Í±ØÐëÃ¿´Î¶¼ÌîÐ´Õâ¸ö·¢ËÍÒ³Ãæ¡£
+GET:GETÒ²»á´ò°üÄãµÄ±íµ¥±äÁ¿£¬µ«»á°ÑÕâÐ©Êý¾Ý×·¼Óµ½URLµÄ×îºó£¬È»ºóÏò·þÎñÆ÷·¢ËÍÒ»¸öÇëÇó¡£ÕâÑùµÄºÃ´¦ÊÇ¿ÉÒÔ¼ÓÊéÇ© £¬Ã¿´Î´ò¿ªÊéÇ©¾Í¿ÉÒÔµÃµ½ÏëÒªµÄÒ³Ãæ£¬»µ´¦¾ÍÊÇÐÅÏ¢»áÐ¹Â¶£¬ÒòÎªÐÅÏ¢ÊÇ¼Óµ½URLºóÃæµÄ¡£
+
 
 
 
@@ -445,7 +499,12 @@ article.add.handle.php:ÉÏ¸öÒ³Ãæ½«ÄÚÈÝÌîÐ´ºÃÒÔºóÌá½»µ½Õâ¸öÒ³Ãæ½øÐÐ´¦Àí¡£Õâ¸öÒ³Ãæ±
 <?php
 	require_once('../connect.php');
 	//°Ñ´«µÝ¹ýÀ´µÄÐÅÏ¢Èë¿â£¬ÔÚÈë¿âÖ®Ç°¶ÔËùÓÐµÄÐÅÏ¢½øÐÐÐ£Ñé¡£ÏÂÃæÕâÊÇ¼òµ¥µÄÐ£Ñé£¬»¹¿ÉÒÔÐ£ÑéÊÇ·ñÓÐ·Ç·¨×Ö·û¡£
-	if(!(isset($_POST['title'])&&(!empty($_POST['title'])))){
+	if(!(isset($_POST['title'])&&(!empty($_POST['title'])))){   
+
+                 //isset()ÔÚphpÖÐÓÃÀ´¼ì²â±äÁ¿ÊÇ·ñÉèÖÃ£¬¸Ãº¯Êý·µ»ØµÄÊÇ·ñ²¼¶ûÖµ£¬¼´true/false¡£
+                 //empty()º¯ÊýÓÃÀ´²âÊÔ±äÁ¿ÊÇ·ñÒÑ¾­ÅäÖÃ¡£Èô±äÁ¿ÒÑ´æÔÚ¡¢·Ç¿Õ×Ö·û´®»òÕß·ÇÁã£¬Ôò·µ»Ø false Öµ£»·´Ö®·µ»Ø true¡£ÖµµÄ
+                 //ÉÏÃæÁ½¸öº¯ÊýµÄÇø±ð£ºemptyÅÐ¶ÏÀ¨ºÅÄÚÊÇ·ñÎª¿Õ£¬issetÅÐ¶ÏÊÇ·ñÒÑ¾­¶¨ÒåÀ¨ºÅÄÚµÄ²ÎÊý£¬¼´Ê¹ÊÇ¿Õµ«ÊÇ²ÎÊý¶¨Òå¹ýÁË
+
 		echo "<script>alert('±êÌâ²»ÄÜÎª¿Õ');window.location.href='article.add.php'</script>";
 	}
 	//print_r($_POST);
@@ -474,7 +533,7 @@ article.add.handle.php:ÉÏ¸öÒ³Ãæ½«ÄÚÈÝÌîÐ´ºÃÒÔºóÌá½»µ½Õâ¸öÒ³Ãæ½øÐÐ´¦Àí¡£Õâ¸öÒ³Ãæ±
 
 ÎÄÕÂÐÞ¸Ä´¦Àí³ÌÐòµÄ±àÐ´£ºarticle.modify.handle.php
 
-article.nodify.php: 
+article.modify.php: 
 <?php
 
 require_once('../connect.php');    //ÔØÈëÊý¾Ý¿â
@@ -563,7 +622,7 @@ article.manage.php:
 	$sql="select * from article order by dateline desc";
 	$query = mysql_query($sql);
 	if($query&&mysql_num_rows($query)){
-		while($row = mysql_fetch_assoc($query)){
+		while($row = mysql_fetch_assoc($query)){   //Èç¹ûÓÐÊý¾Ý¿âÓÐÊä³öµÄ½á¹û¼¯£¬ÄÇÃ´Õâ¸öÑ­»·¾Í»áÑ­»·ÏÂÈ¥£¬Èç¹ûÃ»ÓÐ½á¹û¼¯ÁË£¬¾Í»áÍ£Ö¹£¬¾Í²»»áÔÙÓÐÒ»×éÊý×é¸³Öµµ½ÏÂÃæµÄ¶þÎ¬Êý×éÀï¡£
 			$data[] = $row;      //Èç¹û´øÒ»¸öÖÐÀ¨ºÅÒÔºó£¬¿ÉÒÔÔÚÃ¿´Î¸³ÖµµÄÊ±ºò×Ô¶¯Éú³ÉÒ»¸öÐÂµÄÏÂ±ê¡£Õâ¾ÍÊÇÒ»¸ö¶þÎ¬Êý×é£¬È»ºóÀïÃæ°üÀ¨ºÜ¶à¸öÒ»Î¬Êý×é¡£
 		}
 	}else{
@@ -577,13 +636,13 @@ article.manage.php:
 <body>
 <?php
 	if(!empty($data)){
-		foreach($data as $value){
+		foreach($data as $value){       //½«ÉÏÃæµÄ¶þÎ¬Êý×éÕ¹¿ª£¬½«Ò»Î¬Êý×éÄÚµÄÖµÐ´ÈëÒ³Ãæ¡£
 	
 ?>
 <tr>
 <td bgcolor = "#fff">$nbsp;<?php echo $value['id']?></td>
 <td bgcolor = "#fff">$nbsp;<?php echo $value['title']?></td>
-<td bgcolor = "#fff"><a href="article.del.handle.php?id=<?php echo $value['id']?>">É¾³ý</a><a href="article.modify.php?id=<?php echo $value['id']?>">ÐÞ¸Ä</a></td>
+<td bgcolor = "#fff"><a href="article.del.handle.php?id=<?php echo $value['id']?>">É¾³ý</a><a href="article.modify.php?id=<?php echo $value['id']?>">ÐÞ¸Ä</a></td>   //½«IDÐ´Èëµ½µØÖ·À¸£¬·½±ãÓÃ$_GET['id']À´»ñÈ¡£¬ÒòÎªÕâ¸ö»ñÈ¡µ½µÄÒ²ÊÇÒ»¸öÊý×é£¬ËùÒÔÕâÀïÒªÓÃÖÐÀ¨ºÅ¡£
 </tr>
 <?php }?>
 </body>
@@ -600,7 +659,7 @@ mysql_connect():Á¬¿â
 mysql_select_db():Ñ¡¿â
 mysql_query():Ö´ÐÐSQLÓï¾ä£¬ÉèÖÃ×Ö·û¼¯
 mysql_error():´òÓ¡Ïà¹ØµÄ´íÎó
-mysql_fetch_assoc():´Ó½á¹û¼¯ÀïÈ¡³öÊý¾Ý
+mysql_fetch_assoc():´Ó½á¹û¼¯ÀïÈ¡³öÊý¾Ý£¬²¢ÐÎ³ÉÒ»Î¬Êý×é¡£
 mysql_num_rows():¼ì²â½á¹û¼¯ÊÇ·ñÎª¿Õ
 
 ×Ü½áºóÌ¨¿ª·¢Á÷³Ì£º
@@ -635,7 +694,7 @@ article.list.php:
 <body>
 //ÒòÎªÊµ¼ÊµÄÄÚÈÝÊÇÐèÒªÑ­»·Õ¹Ê¾³öÀ´µÄ¡£ËùÒÔÕâÀïÒª¸ù¾ÝÒ»¸öÎÄÕÂ¿éÀ´Ð´Ò»¸öÑ­»·
 <?php
-	if(enpty($data)){
+	if(empty($data)){
 		echo "µ±Ç°Ã»ÓÐÎÄÕÂ";
 	}else{
 		foreach($data as $value){
