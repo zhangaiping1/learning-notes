@@ -48,6 +48,36 @@ CSS3：高级的浏览器用CSS3，低级的浏览器用切的图片。
 
 IE的调试：IE8以上都带有调试工具。IE6则需要安装原生的浏览器并安装调试工具。如果只是想看的话就装个IETester吧。
 
+9、HTML简介
+
+ICO图标是用的LINK引入的。
+
+10、标签
+
+文档章节：body header nav aside article section footer hx
+
+标题：h1~h6 
+
+超链接：a   可以用target来指定打开的位置，可以设置为一个名称，将会在所以名称的iframe标签中打开。
+
+eg:
+<a href="xxx" target="inner"></a>
+<iframe name="inner"></iframe>
+
+也可以用来创建锚点:
+<a href="#pay"></a>
+<div id="pay"></div>
+
+强调：em、strong
+
+引用：cite、q
+
+代码：code
+
+格式化：b、i
+
+
+
 
 
 
