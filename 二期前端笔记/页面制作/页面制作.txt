@@ -76,6 +76,135 @@ eg:
 
 格式化：b、i
 
+保留格式：pre
+
+大段引用：blockquote  这个标签里面有cite属性，这个属性可以引用一个地址。
+
+嵌入页面：iframe  <iframe src="http://www.163.com"></iframe>，在嵌入的这个页面进行操作，不会影响当前页面。
+例：在当前页面中放入播放器，然后再嵌入一个新的页面，在新的页面操作的同时，播放器并不会停止播放。
+
+嵌入外部资源：object、embed
+
+<object type="application/x-shockwave-flash">
+	<param name="movie" value="http://reader.swf">
+	<param name="flashvars" value="book.pdf">
+
+</object>
+
+
+<embed type="application/x-shockwave-flash" src="http://reader.swf" width="640" height="480">
+
+视频、音频：video、audio
+
+<video controls="controls" poster="/img/poster.jpg">
+	<source src="movie.mp4" type="video/mp4">
+	<source src="movie.webm" type="video/webm">
+	<source src="movie.ogg" type="video/ogg">
+	<track kind="subtitles" src="video.str" label="English">
+	您的浏览器不支持video标签。
+</video>
+
+嵌入资源：canvas、svg
+
+canvas是位图，而svg是矢量图。
+
+热点区域：map、area
+
+表格：table
+caption(表格标题) thead(表格头部) tbody(表格主体) tfoot(表格底部)
+tr(表格的行) th(表头的单元格) td(普通单元格)
+可以用colspan属性来进行跨列。可以用rowspan属性来进行跨行。
+
+表单：form
+form有两个属性:action(提交到某个位置) method(提交的方式)
+表单的分区：fieldset
+fieldset内还能用legend设置分区的标题。
+
+表单的内容:input
+input有两个重要属性：name(名称) value(值)  这两个是提交到后台的重要数据。
+
+提交与重置：input标签的type类型为submit和reset
+如果想更好的语义化，可以用button标签来表示。一样的type类型为submit和reset
+
+提示信息：label  
+label的for属性和对应的表单标签的id属性要对应。
+
+默认选中的话，可以加checked属性。
+
+11、实体字符
+
+value属性里面也可以用实体字符。
+
+12、CSS简介
+
+浏览器私有属性：
+chrome、safari:-webkit-
+firefox:       -moz-
+IE:            -ms-
+opera:         -o-
+
+eg:
+.pic{
+	-webkit-transform:rotate(-3deg);
+	-moz-transform:rotate(-3deg);
+	-ms-transform:rotate(-3deg);
+	-o-transform:rotate(-3deg);
+	transform:rotate(-3deg);
+}
+
+@规则：
+
+@media:响应式
+@keyframes:动画
+@font-face:外部字体
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
