@@ -1,89 +1,89 @@
-2�����ߡ���塢��ͼ
+2、工具、面板、视图
 
-�������ǿ��Դ洢�ģ����������
+工作区是可以存储的，这个不错。
 
-3��������ȡɫ
+3、测量、取色
 
-��סshift���Ǽ�ѡ����סalt���Ǽ�ѡ��
+按住shift键是加选，按住alt键是减选。
 
-�������С���ұ�����С����ʾ�Ŀ��Ⱦ������ҵ��ܿ��ȡ�
+左边拉个小框，右边拉个小框，显示的宽度就是左右的总宽度。
 
-4����ͼ
+4、切图
 
-�����Ե�ͼƬ��background��  �����Ե�ͼƬ��img��ǩ��
+修饰性的图片用background。  内容性的图片用img标签。
 
-�����Ե�ͼƬ��Ϊpng�� �����Ե�ͼƬ��Ϊjpg��
+修饰性的图片存为png， 内容性的图片存为jpg。
 
-��ͼ�꣬�����ȿ�һ����ŷ�Χ��Ȼ����ħ����ѡ��
+切图标，可以先框一个大概范围，然后用魔棒减选。
 
-��Ƭ�����ʺ��ڿ���һ���еĻҳ��
+切片工具适合于可以一刀切的活动页。
 
-5������
+5、保存
 
-6.�޸ġ�ά��
+6.修改、维护
 
-7��ͼƬ���Ż���ϲ�
+7、图片的优化与合并
 
-ͼƬ·����ʽ��background:url(images/btn.jpg) no-repeat 0 0;
+图片路径格式：background:url(images/btn.jpg) no-repeat 0 0;
 
-��Ϊ���뷽�㣬������в����ļ�����ԭ�����ԲŻ����ͼƬ��ƴ�ϡ�
+因为引入方便，浏览器有并行文件数等原因，所以才会进行图片的拼合。
 
-ѹ��ͼƬ���ߣ�
+压缩图片工具：
 
-����minimage       ����tinypng
+无损：minimage       有损：tinypng
 
-ͼƬ֮����뱣����϶����ֹͼ������Ҫ�Ŵ������
+图片之间必须保留空隙，防止图标有想要放大的需求。
 
-��������ݷ�����
+浏览器兼容方案：
 
-IE6��֧�ְ�͸�������Դ������ļ����߼����������PNG24���ͼ����������PNG8��
+IE6不支持半透明：可以存两份文件，高级的浏览器用PNG24，低级的浏览器用PNG8。
 
-CSS3���߼����������CSS3���ͼ�����������е�ͼƬ��
+CSS3：高级的浏览器用CSS3，低级的浏览器用切的图片。
 
-���Ž���������߼��������Բ�ǣ��ǵͼ����������������ֱ�ǡ�
+优雅降级：比如高级浏览器是圆角，那低级的浏览器就让他是直角。
 
-8�����������Թ���
+8、开发、调试工具
 
-���Թ���--����Ŵ�--���Ԫ��--���Կ�����Ԫ�صĴ��롣
+调试工具--点击放大镜--点击元素--可以看到该元素的代码。
 
-IE�ĵ��ԣ�IE8���϶����е��Թ��ߡ�IE6����Ҫ��װԭ�������������װ���Թ��ߡ����ֻ���뿴�Ļ���װ��IETester�ɡ�
+IE的调试：IE8以上都带有调试工具。IE6则需要安装原生的浏览器并安装调试工具。如果只是想看的话就装个IETester吧。
 
-9��HTML���
+9、HTML简介
 
-ICOͼ�����õ�LINK����ġ�
+ICO图标是用的LINK引入的。
 
-10����ǩ
+10、标签
 
-�ĵ��½ڣ�body header nav aside article section footer hx
+文档章节：body header nav aside article section footer hx
 
-���⣺h1~h6 
+标题：h1~h6 
 
-�����ӣ�a   ������target��ָ���򿪵�λ�ã���������Ϊһ�����ƣ��������������Ƶ�iframe��ǩ�д򿪡�
+超链接：a   可以用target来指定打开的位置，可以设置为一个名称，将会在所以名称的iframe标签中打开。
 
 eg:
 <a href="xxx" target="inner"></a>
 <iframe name="inner"></iframe>
 
-Ҳ������������ê��:
+也可以用来创建锚点:
 <a href="#pay"></a>
 <div id="pay"></div>
 
-ǿ����em��strong
+强调：em、strong
 
-���ã�cite��q
+引用：cite、q
 
-���룺code
+代码：code
 
-��ʽ����b��i
+格式化：b、i
 
-������ʽ��pre
+保留格式：pre
 
-������ã�blockquote  �����ǩ������cite���ԣ�������Կ�������һ����ַ��
+大段引用：blockquote  这个标签里面有cite属性，这个属性可以引用一个地址。
 
-Ƕ��ҳ�棺iframe  <iframe src="http://www.163.com"></iframe>����Ƕ������ҳ����в���������Ӱ�쵱ǰҳ�档
-�����ڵ�ǰҳ���з��벥������Ȼ����Ƕ��һ���µ�ҳ�棬���µ�ҳ�������ͬʱ��������������ֹͣ���š�
+嵌入页面：iframe  <iframe src="http://www.163.com"></iframe>，在嵌入的这个页面进行操作，不会影响当前页面。
+例：在当前页面中放入播放器，然后再嵌入一个新的页面，在新的页面操作的同时，播放器并不会停止播放。
 
-Ƕ���ⲿ��Դ��object��embed
+嵌入外部资源：object、embed
 
 <object type="application/x-shockwave-flash">
 	<param name="movie" value="http://reader.swf">
@@ -94,51 +94,51 @@ eg:
 
 <embed type="application/x-shockwave-flash" src="http://reader.swf" width="640" height="480">
 
-��Ƶ����Ƶ��video��audio
+视频、音频：video、audio
 
 <video controls="controls" poster="/img/poster.jpg">
 	<source src="movie.mp4" type="video/mp4">
 	<source src="movie.webm" type="video/webm">
 	<source src="movie.ogg" type="video/ogg">
 	<track kind="subtitles" src="video.str" label="English">
-	�����������֧��video��ǩ��
+	您的浏览器不支持video标签。
 </video>
 
-Ƕ����Դ��canvas��svg
+嵌入资源：canvas、svg
 
-canvas��λͼ����svg��ʸ��ͼ��
+canvas是位图，而svg是矢量图。
 
-�ȵ�����map��area
+热点区域：map、area
 
-����table
-caption(�������) thead(����ͷ��) tbody(��������) tfoot(����ײ�)
-tr(�������) th(��ͷ�ĵ�Ԫ��) td(��ͨ��Ԫ��)
-������colspan���������п��С�������rowspan���������п��С�
+表格：table
+caption(表格标题) thead(表格头部) tbody(表格主体) tfoot(表格底部)
+tr(表格的行) th(表头的单元格) td(普通单元格)
+可以用colspan属性来进行跨列。可以用rowspan属性来进行跨行。
 
-������form
-form����������:action(�ύ��ĳ��λ��) method(�ύ�ķ�ʽ)
-�����ķ�����fieldset
-fieldset�ڻ�����legend���÷����ı��⡣
+表单：form
+form有两个属性:action(提交到某个位置) method(提交的方式)
+表单的分区：fieldset
+fieldset内还能用legend设置分区的标题。
 
-����������:input
-input��������Ҫ���ԣ�name(����) value(ֵ)  ���������ύ����̨����Ҫ���ݡ�
+表单的内容:input
+input有两个重要属性：name(名称) value(值)  这两个是提交到后台的重要数据。
 
-�ύ�����ã�input��ǩ��type����Ϊsubmit��reset
-�������õ����廯��������button��ǩ����ʾ��һ����type����Ϊsubmit��reset
+提交与重置：input标签的type类型为submit和reset
+如果想更好的语义化，可以用button标签来表示。一样的type类型为submit和reset
 
-��ʾ��Ϣ��label  
-label��for���ԺͶ�Ӧ�ı�����ǩ��id����Ҫ��Ӧ��
+提示信息：label  
+label的for属性和对应的表单标签的id属性要对应。
 
-Ĭ��ѡ�еĻ������Լ�checked���ԡ�
+默认选中的话，可以加checked属性。
 
-11��ʵ���ַ�
+11、实体字符
 
-value��������Ҳ������ʵ���ַ���
+value属性里面也可以用实体字符。
 
-12��CSS���
+12、CSS简介
 
-�����˽�����ԣ�
-chrome��safari:-webkit-
+浏览器私有属性：
+chrome、safari:-webkit-
 firefox:       -moz-
 IE:            -ms-
 opera:         -o-
@@ -152,103 +152,103 @@ eg:
 	transform:rotate(-3deg);
 }
 
-@����
+@规则：
 
-@media:��Ӧʽ
-@keyframes:����
-@font-face:�ⲿ����
+@media:响应式
+@keyframes:动画
+@font-face:外部字体
 
-13��ѡ����
+13、选择器
 
-!important:���������������õ�����£��������ַ���������Ȩ�ء�
+!important:其它方法都不适用的情况下，才用这种方法来提升权重。
 
-14���ı�
+14、文本
 
-����������õ�Ϊem���߰ٷֱȵĻ�����Ƚϵ�Ԫ���Ǹ�Ԫ�ء�
+字体如果设置的为em或者百分比的话，相比较的元素是父元素。
 
-���ֵ���д��font-style font-weight font-size/line-height font-family
+文字的缩写：font-style font-weight font-size/line-height font-family
 eg: font:italic bold 20px/1.5 arial,serif;
-font���������ִ�С�����������������
+font属性里文字大小和字体是两个必填项。
 
-�Ƿ�͸����color�����1��ʾ��͸����0.5��ʾ͸��һ�롣����ֱ��д��color:transparent����ʾȫ͸����
+是否透明在color属性里：1表示不透明，0.5表示透明一半。或者直接写成color:transparent，表示全透明。
 eg:color:rgba(255,0,0,0.5);
 
-���ֶ��룺text-align:left|right|center|justify(���˶���)
-���˶��벢���Ὣ��ĸ���ĺܿ������������ո�
+文字对齐：text-align:left|right|center|justify(两端对齐)
+两端对齐并不会将字母拉的很开，而是拉开空格。
 
-��ֱ���룺vertical-align
+垂直对齐：vertical-align
 vertical-align:baseline|sub|super|top|text-top|middle|bottom|text-bottom|<percentage>|<length>
-               ���߶��� �±� �ϱ� ���� �ı����� ����  �ײ�    �ı��ײ�    �ٷֱ�(line-height)  ��ֵ
-������ֵ��ʱ�򣬾�����baselineΪ��㣬���������õ���ֵ��
-���ǰٷֱȵ�ʱ�򣬲�������line-height
+               基线对齐 下标 上标 顶部 文本顶部 居中  底部    文本底部    百分比(line-height)  数值
+当是数值的时候，就是以baseline为起点，向上走设置的数值。
+当是百分比的时候，参照物是line-height
 
-����������text-indent
+首行缩进：text-indent
 
-������һ���ܴ�ĸ�ֵ�������������֣�����������������ڣ����ǲ���ʾ��Ч����
+可以设一个很大的负值，用以隐藏文字，可以做到代码里存在，但是不显示的效果。
 
-�Ƿ�����ʽ��white-space
+是否保留格式：white-space
 white-space:normal|nowrap|pre|pre-wrap|pre-line
-normal:�ϲ��ո񣬺ϲ����У��Զ����С�
-nowrap:�ϲ��ո񣬺ϲ����У�ǿ��һ�С�
-pre:�����ո񣬱������У�ǿ��һ�С�
-pre-wrap:�����ո񣬱������У��Զ����С�
-pre-line:�ϲ��ո񣬱������У��Զ����С�
+normal:合并空格，合并换行，自动换行。
+nowrap:合并空格，合并换行，强制一行。
+pre:保留空格，保留换行，强制一行。
+pre-wrap:保留空格，保留换行，自动换行。
+pre-line:合并空格，保留换行，自动换行。
 
-�����ʻ���:word-wrap
+长单词换行:word-wrap
 word-wrap:normal|break-word
-          ������   ����
+          不换行   换行
 
-���ⵥ�ʻ��У�word-break
+任意单词换行：word-break
 word-break:normal|keep-all|break-all
-           ������ ������   ������ĸ����
+           不换行 不换行   任意字母换行
 
-������Ӱ��text-shadow
-text-shadow:none|[<length>{2,3} && <color>?]#   ǰ����ֵ��X��ƫ������Y��ƫ������������ֵ��ģ���뾶�����һ��ֵ����Ӱ��ɫ��
+文字阴影：text-shadow
+text-shadow:none|[<length>{2,3} && <color>?]#   前两个值是X轴偏移量，Y轴偏移量，第三个值是模糊半径，最后一个值是阴影颜色。
 eg:
 text-shadow:1px 2px #f00;
 text-shadow:1px 2px 3px #f00;
 
-���ֻ��ߣ�text-decoration
+文字划线：text-decoration
 text-decoration:none |[underline||overline||line-through]
-                ������  �»���     �ϻ���    �л���
+                不加线  下划线     上划线    中划线
 
-�Ų��µ�ʱ���õ��㣺text-overflow
+放不下的时候用点点点：text-overflow
 text-overflow:clip|ellipsis
-              ����  �ӳɵ���
-���������Ҫ�����������������һ��ʹ�ã�
+              不加  加成点点点
+这个属性需要配合着下面两个属性一起使用：
 overflow:hidden;
 white-space:nowrap;
 
-���Σ�cursor
+手形：cursor
 cursor:[<url>,]*[auto|default|none|help|pointer|zoom-in|zoom-out|move]
-        �Զ���ͼƬ �Զ� ��ͷ  ��ʧ �ʺ� ����    �Ŵ�  ��С��   �����ߵļ�ͷ
+        自定义图片 自动 箭头  消失 问号 手形    放大镜  缩小镜   往两边的箭头
 eg:cursor:url(xx.cur),pointer;
 
-ǿ�Ƽ̳У�inherit
-�����д��ֵ���������ô��Ԫ�ؽ���ǿ�Ƽ̳и�Ԫ�ص���ʽ��
+强制继承：inherit
+如果填写的值是这个，那么该元素将会强制继承父元素的样式。
 eg:font-size:inherit;
 
-15����ģ��
+15、盒模型
 
-width��height:�������Ϊ�ٷֱȣ�����Ԫ���Ǹ�Ԫ�ء�
+width、height:如果设置为百分比，参照元素是父元素。
 
-ע�⣺����Ԫ�����޷����ÿ��ߵġ�
+注意：行内元素是无法设置宽高的。
 
-�ĸ��߿���Էֱ����á�����߿����ʽ������ͨ��border-style�����ã�ֵ������1~4����
+四个边框可以分别设置。比如边框的样式，可以通过border-style来设置，值可以是1~4个。
 
-Բ�Ǳ߿�border-radius
+圆角边框：border-radius
 eg:
 border-radius:10px;
 border-radius:0px 5px 10px 15px/20px 15px 10px 5px;
-border-radius:50%;(����һ����Բ���ٷֱȵĲ������������Ŀ��߶ȡ�)
-border-top-left-radius:10px;(��ֻ��������һ�����Ͻǡ�)
+border-radius:50%;(这是一个正圆，百分比的参照物是自身的宽高度。)
+border-top-left-radius:10px;(这只是设置了一个左上角。)
 
-���������overflow
+溢出处理：overflow
 overflow:visible|hidden|scroll|auto
-         ����    ����    ����  �Զ��������ٲ�����ʾ�����������ݶ�ͻ���ʾ��������
-���꣺��������ˮƽ���򳬳����ߴ�ֱ���򳬳���ô��(overflow-x,overflow-y)
+         可视    隐藏    滚动  自动（内容少不会显示滚动条，内容多就会显示滚动条）
+引申：单独设置水平方向超出或者垂直方向超出怎么办(overflow-x,overflow-y)
 
-��width��height���õ��Ǻ�ģ�͵ı߿��С��box-sizing(��������Ӧʽ)
+让width和height设置的是盒模型的边框大小：box-sizing(常用于响应式)
 box-sizing:content-box|border-box|inherit
 eg:
 width:150px;
@@ -257,58 +257,58 @@ padding:50px;
 border:5px solid blue;
 box-sizing:border-box;
 
-����Ӱ��box-shadow
+盒阴影：box-shadow
 box-shadow:none|<shadow>[,<shadow>]*
 <shadow>:inset?&&<length>{2,4}&&<color>?
 eg:
 box-shadow:4px 6px 3px 3px red;
-           ˮƽƫ�� ��ֱƫ�� ģ���뾶 ��Ӱ��С ��Ӱ��ɫ
+           水平偏移 垂直偏移 模糊半径 阴影大小 阴影颜色
 box-shadow:3px 3px 5px 2px;
 
-box-shadow:inset 0px 0px 5px red;(����Ӱ)
-           ����Ӱ
+box-shadow:inset 0px 0px 5px red;(内阴影)
+           内阴影
 
-box-shadow:3px 3px 5px 2px��inset 0px 0px 5px red; (����Ӱ�����ⶼ��)
+box-shadow:3px 3px 5px 2px，inset 0px 0px 5px red; (多阴影，内外都有)
 
-ע����Ӱ��ռ�ռ�
+注：阴影不占空间
 
-���������outline
-��ռ�ռ䣬��border���⡣
+描绘轮廓：outline
+不占空间，在border以外。
 outline:[<outline-width>||<ouline-style>||<outline-color>]|inherit
 outline-width:<length>
 outline-style:solid|dashed|dotted
-outline-color:<color>|invert(�෴ɫ)
+outline-color:<color>|invert(相反色)
 eg:
 outline:5px dashed blue;
 
-16������
+16、背景
 
-����ͼƬ�������ö��url����������ͼƬ������������ϲ㣬����������²㡣
-ƽ�̣�����д����ֵ����һ��ֵ��X��ƽ����ʽ���ڶ���ֵ��Y��ƽ����ʽ��
-�������ı���ͼƬ�����ţ�ƽ�̵�ʱ��Ϳ��԰ѵ�һ��ֵ�͵ڶ���ֵ�ö��Ÿ������γɷֱ��Ӧ����ͼƬ������ƽ��ֵ
+背景图片可以设置多个url，会引入多个图片，先引入的在上层，后引入的在下层。
+平铺：可以写两个值，第一个值是X轴平铺形式，第二个值是Y轴平铺形式。
+如果引入的背景图片是两张，平铺的时候就可以把第一组值和第二组值用逗号隔开，形成分别对应两张图片的两组平铺值
 
-�����Ƿ������ֹ�����background-attachment
+背景是否随文字滚动：background-attachment
 background-attachment:<attachment>[,<attachment>]*
 <attachment> = scroll|fixed|local
 eg:
 background-attachment:local;
 
-����ͼ��λ��
-��ֵ���ĸ�ֵ��ʱ��
-background-position:right 10px top 20px; (���Ҳ�10PX�����ϲ�20PX)
+背景图定位：
+当值是四个值的时候：
+background-position:right 10px top 20px; (距右侧10PX，距上侧20PX)
 
-���Խ��䣺linear-gradient()
+线性渐变：linear-gradient()
 background-image:linear-gradient([[<angle>| to <side-or-corner>],]?<color-stop>[,<color-stop>]+)
 
-angle:�Ƕ�
-side-or-corner:���Է���
-color-stop:��ɫ�Ķϵ�
+angle:角度
+side-or-corner:线性方向
+color-stop:颜色的断点
 
 <side-or-corner> = [left|right]||[top|bottom]
 
 <color-stop> = <color> [<percentage> | <length>]?
 
-percentage:λ��
+percentage:位置
 
 eg:
 background-image:linear-gradient(red,blue);
@@ -318,7 +318,7 @@ background-image:linear-gradient(0deg,red,blue);
 background-image:linear-gradient(red,green,blue);
 background-image:linear-gradient(red,green 20%,blue);
 
-���򽥱䣺radial-gradient()
+径向渐变：radial-gradient()
 
 eg:
 background-image:radial-gradient(closest-side,red,blue);
@@ -329,29 +329,31 @@ background-image:radial-gradient(100px 50px,red,blue);
 background-image:radial-gradient(100px 50px at 0 0,red,blue);
 background-image:radial-gradient(red,green 20%,blue);
 
-�ظ�����/���򽥱䣺repeat-*-gradient
+重复线性/径向渐变：repeat-*-gradient
 eg:
 background-image:repeating-linear-gradient(red,blue 20px,red 40px);
 
 background-image:repeating-radial-gradient(red,blue 20px,red 40px);
 
-����ͼƬ���½�λ�ã�background-origin
+背景图片右下角位置：background-origin
 background-origin:<box>[,<box>]*
 <box>=border-box|padding-box|content-box
-Ĭ����padding-box
+默认是padding-box
 eg:
 background-origin:border-box;
 
-�ü�������background-clip��ֻҪ������ĳ���������������content-box�ڣ�
-Ĭ����border-box
+裁剪背景：background-clip（只要背景在某个区域出来，比如content-box内）
+默认是border-box
 eg:
 background-clip:content-box;
 
-������С��background-size
-���Ҫ���óɰٷֱȵĻ�������Ԫ���Ǹ�����Ԫ�أ�������������߱�����ͼƬ��ͬ�Ļ���ͼƬ�п��ܻ���Ρ�
+背景大小：background-size
+如果要设置成百分比的话，参照元素是父容器元素，如果父容器宽高比例与图片不同的话，图片有可能会变形。
 
-����������д��
-���������λ�ͱ�����С��д��һ�𣬾���/������ǰ����Ƕ�λ��������Ǵ�С��
+背景属性缩写：
+如果背景定位和背景大小缩写到一起，就用/隔开，前面的是定位，后面的是大小。
+这里如果出现一个content-box,那么，即是background-origin，也是background-clip。
+这里如果出现两个content-box，那么，第一个是background-origin，第二个是background-clip。
 eg:
 background:url(red.jpg) 0 0/20px 20px no-repeat,url(blue.jpg) 50% 50%/contain no-repeat content-box green;
 
@@ -423,9 +425,9 @@ background:url(red.jpg) 0 0/20px 20px no-repeat,url(blue.jpg) 50% 50%/contain no
 
 
 
-Բ�Ǳ߿�border-radius
-������Ӱ��text-shadow
-����Ӱ��box-shadow
+圆角边框：border-radius
+文字阴影：text-shadow
+盒阴影：box-shadow
 
 
 
