@@ -1,4 +1,4 @@
-2、工具、面板、视图
+﻿2、工具、面板、视图
 
 工作区是可以存储的，这个不错。
 
@@ -356,6 +356,59 @@ background-clip:content-box;
 这里如果出现两个content-box，那么，第一个是background-origin，第二个是background-clip。
 eg:
 background:url(red.jpg) 0 0/20px 20px no-repeat,url(blue.jpg) 50% 50%/contain no-repeat content-box green;
+
+17、布局
+
+设置元素的显示方式：display
+display:block|inline|inline-block|none
+
+display:block(块级元素)
+1、默认宽度为父元素宽度
+2、可设置宽高
+3、换行显示
+
+display:inline(行级元素)
+1、默认宽度为内容宽度
+2、不可设置宽高
+3、同行显示
+4、超出部分的内容换行显示（若元素超出父元素界限，则超出部分的内容换行显示。）
+
+display:inline-block(行内块)
+1、默认宽度为内容宽度
+2、可设置宽高
+3、同行显示
+4、整块换行（若元素超出父元素界限，则整块换行显示。）
+
+display:none(不显示)
+1、设置元素不显示（彻底消失）
+
+display:none vs visibility:hidden
+display:none(彻底消失，不占据空间)
+visibility:hidden(消失，但是还占据着空间)
+
+块级元素水平居中：
+html:
+<div>
+<div class="content">content area</div>
+</div>
+css:
+.content {margin: 0 auto; width:978px;}
+
+居中导航：
+html:
+<ul>
+<li><a href="#">推荐</a></li>
+<li><a href="#">歌单</a></li>
+</ul>
+css:
+ul {text-align:center; height:30px; line-height:30px;}
+li,a {display:inline-block; width:80px; height:100%;}
+li {margin:0 10px;}
+
+
+
+
+
 
 
 
