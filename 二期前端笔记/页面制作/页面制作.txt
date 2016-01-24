@@ -162,6 +162,311 @@ eg:
 
 !important:其它方法都不适用的情况下，才用这种方法来提升权重。
 
+14、文本
+
+字体如果设置的为em或者百分比的话，相比较的元素是父元素。
+
+文字的缩写：font-style font-weight font-size/line-height font-family
+eg: font:italic bold 20px/1.5 arial,serif;
+font属性里文字大小和字体是两个必填项。
+
+是否透明在color属性里：1表示不透明，0.5表示透明一半。或者直接写成color:transparent，表示全透明。
+eg:color:rgba(255,0,0,0.5);
+
+文字对齐：text-align:left|right|center|justify(两端对齐)
+两端对齐并不会将字母拉的很开，而是拉开空格。
+
+垂直对齐：vertical-align
+vertical-align:baseline|sub|super|top|text-top|middle|bottom|text-bottom|<percentage>|<length>
+               基线对齐 下标 上标 顶部 文本顶部 居中  底部    文本底部    百分比(line-height)  数值
+当是数值的时候，就是以baseline为起点，向上走设置的数值。
+当是百分比的时候，参照物是line-height
+
+首行缩进：text-indent
+
+可以设一个很大的负值，用以隐藏文字，可以做到代码里存在，但是不显示的效果。
+
+是否保留格式：white-space
+white-space:normal|nowrap|pre|pre-wrap|pre-line
+normal:合并空格，合并换行，自动换行。
+nowrap:合并空格，合并换行，强制一行。
+pre:保留空格，保留换行，强制一行。
+pre-wrap:保留空格，保留换行，自动换行。
+pre-line:合并空格，保留换行，自动换行。
+
+长单词换行:word-wrap
+word-wrap:normal|break-word
+          不换行   换行
+
+任意单词换行：word-break
+word-break:normal|keep-all|break-all
+           不换行 不换行   任意字母换行
+
+文字阴影：text-shadow
+text-shadow:none|[<length>{2,3} && <color>?]#   前两个值是X轴偏移量，Y轴偏移量，第三个值是模糊半径，最后一个值是阴影颜色。
+eg:
+text-shadow:1px 2px #f00;
+text-shadow:1px 2px 3px #f00;
+
+文字划线：text-decoration
+text-decoration:none |[underline||overline||line-through]
+                不加线  下划线     上划线    中划线
+
+放不下的时候用点点点：text-overflow
+text-overflow:clip|ellipsis
+              不加  加成点点点
+这个属性需要配合着下面两个属性一起使用：
+overflow:hidden;
+white-space:nowrap;
+
+手形：cursor
+cursor:[<url>,]*[auto|default|none|help|pointer|zoom-in|zoom-out|move]
+        自定义图片 自动 箭头  消失 问号 手形    放大镜  缩小镜   往两边的箭头
+eg:cursor:url(xx.cur),pointer;
+
+强制继承：inherit
+如果填写的值是这个，那么该元素将会强制继承父元素的样式。
+eg:font-size:inherit;
+
+15、盒模型
+
+width、height:如果设置为百分比，参照元素是父元素。
+
+注意：行内元素是无法设置宽高的。
+
+四个边框可以分别设置。比如边框的样式，可以通过border-style来设置，值可以是1~4个。
+
+圆角边框：border-radius
+eg:
+border-radius:10px;
+border-radius:0px 5px 10px 15px/20px 15px 10px 5px;
+border-radius:50%;(这是一个正圆，百分比的参照物是自身的宽高度。)
+border-top-left-radius:10px;(这只是设置了一个左上角。)
+
+溢出处理：overflow
+overflow:visible|hidden|scroll|auto
+         可视    隐藏    滚动  自动（内容少不会显示滚动条，内容多就会显示滚动条）
+引申：单独设置水平方向超出或者垂直方向超出怎么办(overflow-x,overflow-y)
+
+让width和height设置的是盒模型的边框大小：box-sizing(常用于响应式)
+box-sizing:content-box|border-box|inherit
+eg:
+width:150px;
+height:150px;
+padding:50px;
+border:5px solid blue;
+box-sizing:border-box;
+
+盒阴影：box-shadow
+box-shadow:none|<shadow>[,<shadow>]*
+<shadow>:inset?&&<length>{2,4}&&<color>?
+eg:
+box-shadow:4px 6px 3px 3px red;
+           水平偏移 垂直偏移 模糊半径 阴影大小 阴影颜色
+box-shadow:3px 3px 5px 2px;
+
+box-shadow:inset 0px 0px 5px red;(内阴影)
+           内阴影
+
+box-shadow:3px 3px 5px 2px，inset 0px 0px 5px red; (多阴影，内外都有)
+
+注：阴影不占空间
+
+描绘轮廓：outline
+不占空间，在border以外。
+outline:[<outline-width>||<ouline-style>||<outline-color>]|inherit
+outline-width:<length>
+outline-style:solid|dashed|dotted
+outline-color:<color>|invert(相反色)
+eg:
+outline:5px dashed blue;
+
+16、背景
+
+背景图片可以设置多个url，会引入多个图片，先引入的在上层，后引入的在下层。
+平铺：可以写两个值，第一个值是X轴平铺形式，第二个值是Y轴平铺形式。
+如果引入的背景图片是两张，平铺的时候就可以把第一组值和第二组值用逗号隔开，形成分别对应两张图片的两组平铺值
+
+背景是否随文字滚动：background-attachment
+background-attachment:<attachment>[,<attachment>]*
+<attachment> = scroll|fixed|local
+eg:
+background-attachment:local;
+
+背景图定位：
+当值是四个值的时候：
+background-position:right 10px top 20px; (距右侧10PX，距上侧20PX)
+
+线性渐变：linear-gradient()
+background-image:linear-gradient([[<angle>| to <side-or-corner>],]?<color-stop>[,<color-stop>]+)
+
+angle:角度
+side-or-corner:线性方向
+color-stop:颜色的断点
+
+<side-or-corner> = [left|right]||[top|bottom]
+
+<color-stop> = <color> [<percentage> | <length>]?
+
+percentage:位置
+
+eg:
+background-image:linear-gradient(red,blue);
+background-image:linear-gradient(to top,red,blue);
+background-image:linear-gradient(to right bottom,red,blue);
+background-image:linear-gradient(0deg,red,blue);
+background-image:linear-gradient(red,green,blue);
+background-image:linear-gradient(red,green 20%,blue);
+
+径向渐变：radial-gradient()
+
+eg:
+background-image:radial-gradient(closest-side,red,blue);
+background-image:radial-gradient(circle,red,blue);
+background-image:radial-gradient(circle 100px,red,blue);
+background-image:radial-gradient(red,blue);
+background-image:radial-gradient(100px 50px,red,blue);
+background-image:radial-gradient(100px 50px at 0 0,red,blue);
+background-image:radial-gradient(red,green 20%,blue);
+
+重复线性/径向渐变：repeat-*-gradient
+eg:
+background-image:repeating-linear-gradient(red,blue 20px,red 40px);
+
+background-image:repeating-radial-gradient(red,blue 20px,red 40px);
+
+背景图片右下角位置：background-origin
+background-origin:<box>[,<box>]*
+<box>=border-box|padding-box|content-box
+默认是padding-box
+eg:
+background-origin:border-box;
+
+裁剪背景：background-clip（只要背景在某个区域出来，比如content-box内）
+默认是border-box
+eg:
+background-clip:content-box;
+
+背景大小：background-size
+如果要设置成百分比的话，参照元素是父容器元素，如果父容器宽高比例与图片不同的话，图片有可能会变形。
+
+背景属性缩写：
+如果背景定位和背景大小缩写到一起，就用/隔开，前面的是定位，后面的是大小。
+eg:
+background:url(red.jpg) 0 0/20px 20px no-repeat,url(blue.jpg) 50% 50%/contain no-repeat content-box green;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+圆角边框：border-radius
+文字阴影：text-shadow
+盒阴影：box-shadow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
 
 
 
