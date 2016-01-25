@@ -405,6 +405,162 @@ ul {text-align:center; height:30px; line-height:30px;}
 li,a {display:inline-block; width:80px; height:100%;}
 li {margin:0 10px;}
 
+定位：position
+position:设置定位方式
+配合position使用：top right bottom left z-index
+注：如果同时设置了上下左右四个边缘，就会将内容撑开。
+注：z-index需要配合position来使用。
+
+z-index 栈
+当元素1参照物的z-index大于元素2的参照物的z-index的时候，不论元素2的z-index设置的有多大，元素1都会在元素2上面。
+
+position:static|relative|absolute|fixed
+         默认    相对定位 绝对定位 固定定位
+
+position:relative
+1、仍在文档流中
+2、参照物是元素本身
+3、常用在改变元素的层级（配合z-index使用。）
+4、最常用的地方是绝对定位的参照物
+
+
+
+position:absolute
+1、默认宽度是内容宽度
+2、脱离文档流
+3、参照物为第一个定位祖先或者根元素
+
+position:fixed
+1、默认宽度为内容宽度
+2、脱离文档流
+3、参照物为视窗
+
+如果固定定位以后，内容区记得要设置padding值，防止盖住看不到。
+
+布局-遮罩：
+.mask {position:fixed; left:0; top:0; z-index:999; width:100%; height:100%; background-color:#000; opacity:0.3;}
+
+布局-三行自适应：（顶栏定高在顶部，底栏定高在底部，中间自适应）
+.head {position:absolute; top:0; left:0; width:100%; height:100px;}
+.body {position:absolute; left:0; top:100px; right:0; bottom:100px; overflow:auto;}
+.foot {position:absolute; left:0; bottom:0; width:100%; height:100px;}
+注意：不能给body加高度，要在body里面加内容，然后给内容加高度，这样如果高度过高，就会因为overflow:auto;出现滚动条。如果直接给body加高度的话，顶栏还是会被顶出去的。
+
+float:
+float:left|right
+1、默认宽度为内容宽度
+2、脱离文档流（不完全脱离）
+3、向指定方向一直移动
+
+float的元素在同一文档流
+
+float元素半脱离文档流
+对元素，脱离文档流，对内容，在文档流。DE
+
+clear:清除浮动
+clear:both|left|right
+1、应用于后续元素
+2、应用于块级元素
+清除浮动对后续元素的影响
+
+应用方式：
+1、空白元素(换行元素即可) 
+在浮动元素的最后面加一个换行元素，然后加样式 {clear:both; height:0; overflow:hidden; visibility:hidden;}
+
+2、clearfix(加在浮动元素的父元素上)
+.clearfix:after{content:".";display:block;clear:both;height:0;overflow:hidden;visibility:hidden;}
+.clearfix {zoom:1;}
+
+布局-多行自适应、多列自适应、间距自适应、任意对齐
+
+弹性布局：flex
+flex container:弹性容器
+flex item:弹性元素
+main axis:主轴
+cross axis:辅轴
+
+创建flex container:
+display:flex;
+
+flex item:在文档流中的子元素
+比如，普通子元素是弹性元素，浮动的子元素也是弹性元素，但是绝对定位的元素和后代元素就不是弹性元素。
+
+方向：
+弹性：
+对齐：
+
+方向：flex-direction  flex-wrap  flex-flow  order
+
+flex-direction(弹性的方向):
+flex-direction:row | row-reverse | column | column-reverse
+               行    反向行         列       反向列
+
+flex-wrap(换行)
+flex-wrap:nowrap | wrap | wrap-reverse
+          不换行   换行    向上换行
+
+flex-flow(值缩写，建议值缩写)
+flex-flow:<'flex-direction'> || <'flex-wrap'>
+eg:flex-flow:initial;        横向排列且不换行
+   flex-flow:column wrap     竖向排列且换行
+   flex-flow:row-reverse wrap-reverse   反向横列且反向换行
+
+order(顺序)
+order:<interget>
+initial:0(默认值是0)
+eg:order:1;
+值越大，排的位置越靠后，因为默认值是0
+
+弹性：flex-grow  flex-shrink  flex-basis
+
+flex-basis(设置flex-item的初始宽高)
+flex-basis:main-size(默认值是主轴的大小) | <width>
+
+flex-grow(分配剩余空间比例)
+flex-grow:<number>
+initial:0(默认是0)
+
+flex-shrink(在元素超出空间的时候，超出的部分按什么比例分配。值越大，分配的超出空间越多，所以本身元素就越小。)
+flex-shrink:<number>
+initial:1(默认值是1)
+
+flex(值缩写)
+flex:<'flex-grow'> || <'flex-shrink'> || <'flex-basis'>
+initial:0 1 main-size
+
+对齐：justify-content  align-items  align-self  align-content
+
+justify-content(设置主轴的对齐方式)
+justify-content:flex-start | flex-end | center | space-between | space-around
+                 左对齐       右对齐    居中对齐  两端对齐，平分剩余空间  两端也会平分剩余空间
+
+align-items(设置cross-axis方向上的对齐方式)
+align-items:flex-start | flex-end | center | baseline | stretch
+            居上对齐     居下对齐   居中对齐  基线对齐   延展对齐
+
+align-self(设置单个flex item在cross-axis方向上对齐方式)
+align-self:auto | flex-start | flex-end | center | baseline | stretch
+           应用容器对齐  居上对齐  居下对齐 居中对齐  基线对齐  延展对齐
+
+align-content(设置cross-axis方向上行对齐方式)
+align-content:flex-start | flex-end | center | space-between | space-around | stretch
+              居上对齐     居下对齐   居中对齐  上下两端对齐，平分剩余空间  上下两端也会平分剩余空间  延展对齐
+
+实现一个三行中间自适应，中间两列，一列定宽，一列自适应的布局。
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
 
 
 
