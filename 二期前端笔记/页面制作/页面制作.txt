@@ -482,6 +482,8 @@ cross axis:辅轴
 创建flex container:
 display:flex;
 
+vh单位：相对于视口的高度。视口被均分为100单位的vh
+
 flex item:在文档流中的子元素
 比如，普通子元素是弹性元素，浮动的子元素也是弹性元素，但是绝对定位的元素和后代元素就不是弹性元素。
 
@@ -527,6 +529,8 @@ initial:1(默认值是1)
 flex(值缩写)
 flex:<'flex-grow'> || <'flex-shrink'> || <'flex-basis'>
 initial:0 1 main-size
+如果想要自适应并且可以根据内容撑开容器，初始值就不能设置，因为如果设置了初始值，就会一次定型，不能撑开容器。
+如果想要定宽定高，就可以将初始值设置成定宽定高的值。
 
 对齐：justify-content  align-items  align-self  align-content
 
