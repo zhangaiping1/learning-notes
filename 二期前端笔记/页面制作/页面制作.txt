@@ -548,6 +548,160 @@ align-content:flex-start | flex-end | center | space-between | space-around | st
 
 实现一个三行中间自适应，中间两列，一列定宽，一列自适应的布局。
 
+18、变形
+
+变形：transform
+transform:none | <transform-function>+
+transform:none
+transform:<transform-function>+
+
+旋转：rotate()
+rotate(<angle>)
+angle：角度
+eg:
+transform:rotate(45deg);
+
+3D旋转：rotate3D()
+接收4个参数，X轴的点，Y轴的点，Z轴的点，三个点的坐标与原点的连线做为轴，然后进行旋转最后参数的角度。
+rotate3D(<number>,<number>,<number>,<angle>)
+rotateX(<angle>)
+rotateY(<angle>)
+rotateZ(<angle>)
+eg:
+transform:rotate3D(1,0,0,45deg);
+transform:rotate3D(0,1,0,45deg);
+transform:rotate3D(0,0,1,45deg);
+transform:rotate3D(1,1,1,45deg);
+
+变形样式：transform-style
+设置旋转以后是否保留3D样式,该属性需要加在保留样式的元素的父元素上。
+transform-style:flat | preserve-3D
+                扁平化  保留3D样式
+eg:
+transform-style:flat;
+transform-style:preserve-3D;
+
+背面不可见：backface-visibility
+该元素加到旋转的子元素上。
+backface-visibility:visible | hidden
+eg:
+backface-visibility:visible;
+backface-visibility:hidden;
+
+
+
+
+沿Y轴旋转：eg:transform:rotateY(45deg);
+
+透视：perspective
+人眼距物品的距离，数值越小，透视效果越明显。（属性需要添加到父元素上。）(只要做3D的变化，就必须加上透视，否则没有效果。)
+perspective:none | <length>
+eg:
+perspective:none;
+perspective:2000px;
+perspective:500px;
+
+透视角度：perspective-origin
+人眼看物品的角度。接受两个值，第一个值是X轴位置，第二个值是Y轴位置。值可以是关键字（left top bottom right center ）可以是百分比，也可以是数值。
+eg:
+perspective-origin:50% 50%;
+perspective-origin:left bottom;
+perspective-origin:50% 300px;
+perspective-origin:right;
+
+
+
+移动：translate()
+接受两个参数，第一个参数是X轴移动，第二个参数是Y轴移动，如果第二个参数忽略，会按0计算。
+translate(<translation-value> [,<translation-value>]?)
+translateX(<translation-value>)
+translateY(<translation-value>)
+eg:
+transform:translate(50px,20%);
+transform:translateX(50px);
+
+3D移动：translate3D()
+接收3个参数，X轴位移，Y轴位移，Z轴位移
+translate3D(<translation-value>,<translation-value>,<length>)
+translateX(<translation-value>)
+translateY(<translation-value>)
+translateZ(<length>)
+eg:
+transform:translate3D(10px,20% ,50px);
+transform:translateX(10px);
+transform:translateY(20%);
+transform:translateZ(-100px);
+
+
+
+缩放：scale()
+接受两个参数，与translate不同的是，如果第二个参数忽略，会按第一个参数值进行计算。
+scale(<number>[,<number>]?)
+scaleX(<number>)
+scaleY(<number>)
+eg:
+transform:scale(1,1.2);
+transform:scaleX(1.2);
+
+3D缩放：scale3D()
+单独Z轴缩放没有效果。必须和其它的项配合使用。比如和translateZ()配合使用，会使效果加大。
+scale3D(<number>,<number>,<number>)
+scaleX(<number>)
+scaleY(<number>)
+scaleZ(<number>)
+eg:
+transform:scale3D(1.2,1.2,1);
+transform:scale3D(1,1.2,1);
+transform:scale3D(1.2,1,1);
+transform:scaleZ(5);
+
+
+
+倾斜：skew()
+接收两个参数，当第二个参数被忽略的时候，会按0计算
+skew(<angle>[,<angle>]?)
+skewX(<angle>)
+skewY(<angle>)
+eg:
+transform:skew(30deg,30deg);
+transform:skewX(30deg);
+
+transform允许同时写一个或者多个方法：(多个transform-function连接在一起的时候，他们的顺序会影响结果。)
+transform:translate(50%) rotate(45deg);和transform:rotate(45deg) translate(50%);结果是不同的。
+
+设置坐标轴的位置：transform:origin
+接收三个参数，分别表示X轴，Y轴，Z轴方向上的坐标，可以是关键字（left right top bottom center,Z轴必须是数值，不能是关键字），也可以是百分比，也可以是具体的数值。当接受一个参数的时候，第二个参数是50%。
+eg:
+transform-origin:50% 50%;(这个就是默认值)
+transform-origin:0 0;（左上角）
+transform-origin:20%;
+transform-origin:right 50px 20px;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
