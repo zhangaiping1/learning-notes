@@ -682,6 +682,153 @@ transform-origin:20%;
 transform-origin:right 50px 20px;
 
 
+19、动画
+
+哪些属性发生过渡效果：transition-property
+transition-property:none | <single-transition-property> ['.'<single-transition-property>]*
+<single-transition-property> = all | <IDENT>
+eg;
+transition-property:none;
+transition-property:all;
+transition-property:left;
+transition-property:left,color;
+
+过渡效果执行时间：transition-duration
+transition-duration:<time> [,<time>]*
+eg:
+transition-duration:0s;
+transition-duration:1s;
+transition-duration:1s,2s,3s;
+注：当多个参数的时候，对应的是transition-property的多个变化属性。
+
+过渡效果速度曲线(时间函数)：transition-timing-function
+transition-timing-function:<single-transition-timing-function>[','<single-transition-timing-function>]*
+<single-transition-timing-function> = 
+ease | linear | ease-in | ease-out | ease-in-out |
+cubic-bezier(<number>,<number>,<number>,<number>) |
+step-start | step-end | 
+steps(<integer> [,[start | end]]?)
+eg:
+transition-timing-function:ease;
+transition-timing-function:cubic-bezier(0.25,0.1,0.25,0.1);
+transition-timing-function:linear;
+transition-timing-function:cubic-bezier(0,0,1,1);
+transition-timing-function:ease,linear;
+transition-timing-function:steps(3,start);
+steps方法是跳着进行动画的。第一个参数是分几步跳，第二个参数是每步动画开始就跳，还是每步动画结束的时候跳。
+
+过渡效果延时：transition-delay
+transition-delay:<time> [,<time>]*
+eg:
+transition-delay:0s;
+transition-delay:1s;
+transition-delay:1s,2s,3s;
+
+值缩写：transition
+transition:<single-transition> [','<single-transition>]*
+<single-transition> = [none | <single-transition-property>] || <time> || <single-transition-timing-function> || <time>
+eg:
+transition:none;
+transition:left 2s ease 1s,color 2s;
+transition:2s;
+
+
+
+
+
+动画名称：animation-name
+animation-name:<single-animation-name> [','<single-animation-name>]*
+<animation-name> = none || <IDENT>
+eg:
+animation-name:none;
+animation-name:abc;
+animation-name:abc,abcd;
+
+动画时间：animation-duration
+animation-duration:<time> [,<time>]*
+eg:
+animation-duration:0s;
+animation-duration:1s;
+animation-duration:1s,2s,3s;
+
+动画运动曲线：animation-timing-function
+animation-timing-function:<single-timing-function> [','<single-timing-function>]*
+<single-timing-function> = <single-transition-timing-function>
+eg:
+animation-timing-function:ease;
+animation-timing-function:cubic-bezier(0.25,0.1,0.25,0.1);
+animation-timing-function:linear;
+animation-timing-function:cubic-bezier(0,0,1,1);
+animation-timing-function:ease,linear;
+
+动画执行次数：animation-iteration-count
+animation-iteration-count:<single-animation-iteration-count> [','<single-animation-iteration-count>]*
+<single-animation-iteration-count> = infinite | <number>
+eg:
+animation-iteration-count:1;
+animation-iteration-count:infinite;
+animation-iteration-count:1,2,infinite;
+
+动画方向：animation-direction
+animation-direction:<single-animation-direction>[','<single-animation-direction>]*
+<single-animation-direction> = normal | reverse | alternate | alternate-reverse
+                               正向      反向      正往返        反往返  
+eg:
+animation-direction:reverse;
+animation-direction:alternate;
+animation-direction:alternate-reverse;
+
+播放状态：animation-play-state
+这个可以用在鼠标移入暂停或者继续播放之类的效果。
+animation-play-state:<single-animation-play-state>[','<single-animation-play-state>]*
+<single-animation-play-state> = running | paused
+                                播放中    暂停
+eg:
+animation-play-state:running;
+animation-play-state:paused;
+animation-play=state:running,paused;
+
+延时播放：animation-delay
+animation-delay:<time> [,<time>]*
+eg:
+animation-delay:0s;
+animation-delay:1s;
+animation-delay:1s,2s,3s;
+
+动画开始时是否在第一帧状态，动画结束时是否在最后一帧状态：animation-fill-mode
+animation-fill-mode:<single-animation-fill-mode>[','<single-animation-fill-mode>]*
+<single-animation-fill-mode> = none | backwards | forwards | both
+eg:
+animation-fill-mode:none;
+animation-fill-mode:forwards;
+animation-fill-mode:forwards,backwards;
+
+值缩写：animation
+animation:<single-animation> [','<single-animation>]*
+<single-animation> = <single-animation-name> || <time> || <single-animation-timing-function> || <time> || <single-animation-iteration-count> || <single-animation-direction> || <single-animation-fill-mode> || <single-animation-play-state>
+eg:
+animation:none;
+animation:abc 2s ease 0s 1 normal none running;
+animation:abc 2s;
+animation:abc 1s 2s both,abcd 2s both;
+
+关键帧：@keyframes
+@keyframes abc {
+	from{opacity:1; height:100px;}
+	to{opacity:0.5; height:200px;}
+}
+
+@keyframes abc {
+	0%{opacity:1; height:100px;}
+	100%{opacity:0.5; height:200px;}
+}
+
+@keyframes abc {
+	0%,50%,100%{opacity:1;}
+	25%,75%{opacity:0.5;}
+}
+
+
 
 
 
