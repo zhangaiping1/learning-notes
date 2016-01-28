@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .content {width: 100vh; height:100vh; position: relative;  perspective: 2000px; transform-style: preserve-3d;}
+        .content div {width:600px; height:600px; border: 1px solid black; font-size: 20px; line-height: 600px; text-align: center; position: absolute; left:200px; top:200px; animation-fill-mode: both;}
+
+        .content>div {-webkit-transition:all 2s ease; }
+
+        .content:hover .top {background:red;}
+        .content:hover .bottom {background: lightblue;}
+        .content:hover .left {background: lime;}
+        .content:hover .right {background: lightslategray;}
+        .content:hover .aaa {background: lightcoral;}
+        .content:hover .bbb {background: lightgoldenrodyellow;}
+
+
+        .top {-webkit-animation:t 2s ease;}
+        .bottom {-webkit-animation: b 2s ease 2s;}
+        .left {-webkit-animation: l 2s ease 4s;}
+        .right {-webkit-animation: r 2s ease 6s;}
+        .aaa {-webkit-animation:aaa 2s ease 8s;}
+        .bbb {-webkit-animation: bbb 2s ease 10s;}
+        .content  {-webkit-animation: zhuan 4s linear 12s infinite both;}
+
+        @keyframes t {
+            0% {-webkit-transform: rotate3d(1,0,0,0deg);}
+            100% {-webkit-transform: rotate3d(1,0,0,90deg) translate3d(0,0,300px);}
+        }
+
+        @keyframes b {
+            0% {-webkit-transform: rotate3d(1,0,0,0deg);}
+            100% {-webkit-transform: rotate3d(1,0,0,-90deg) translate3d(0,0,300px);}
+        }
+        @keyframes l {
+            0% {-webkit-transform: rotate3d(0,1,0,0deg);}
+            100% {-webkit-transform: rotate3d(0,1,0,90deg) translate3d(0,0,-300px);}
+        }
+
+        @keyframes r {
+            0% {-webkit-transform: rotate3d(0,1,0,0deg);}
+            100% {-webkit-transform: rotate3d(0,1,0,-90deg) translate3d(0,0,-300px);}
+        }
+
+        @keyframes aaa {
+            0% {-webkit-transform:rotate3d(0,0,0,0deg);}
+            100%{-webkit-transform:rotate3d(0,1,0,180deg) translate3d(0,0,300px);}
+        }
+        @keyframes bbb {
+            0% {}
+            100% {-webkit-transform: translate3d(0,0,300px);}
+        }
+        @keyframes zhuan {
+            0% {}
+            100% {-webkit-transform: rotate3d(1,1,1,360deg);}
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+
+    <div class="top">top</div>
+    <div class="bottom">bottom</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+    <div class="aaa">aaa</div>
+    <div class="bbb">bbb</div>
+
+
+
+
+</div>
+
+</body>
+</html>
