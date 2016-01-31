@@ -6,6 +6,8 @@ reset的引入的时候一定要放在第一位
 
 2、居中布局
 
+以下布局父容器和子容器都是DIV
+
 水平居中：
 里面容器宽度不定，外面容器宽度不定：
 inline-block + text-align:
@@ -34,6 +36,95 @@ flex + justify-content:
 
 
 垂直居中：
+子容器宽度不定，父容易宽度不定
+
+table-cell + vertical-align:
+父容器：display:table-cell;vertical-align:middle;
+子容器：
+优点：兼容性很好，兼容到IE8
+
+absolute + transform:
+父容器：position:relative;
+子容器：position:absolute; top:50%; transform:translateY(-50%);
+优点：不影响其它元素。 缺点：兼容性不太好，还要给属性加私有前缀。
+
+flex + align-items:
+父元素：display:flex; align-items:center;
+子元素：
+优点：代码量少   缺点：兼容性不好。
+
+
+居中（水平+垂直）：
+父容器宽度高度未知，子容器宽度高度也未知，然后水平垂直居中。
+
+方法：综合上面的两种方法：
+
+inline-block + text-align + table-cell + vertical-align:
+父元素：text-align:center; display:table-cell; vertical-align:middle;
+子元素：display:inline-block;
+优点：兼容性好。
+
+absolute + transform:
+父元素：position:relative;
+子元素：position:absolute; left:50%; top:50%; transform:translate(50%,50%);
+优点：不会对其它元素有影响   缺点：兼容性不太好。
+
+flex + justify-content +flex-items:
+父元素：display:flex; justify-content:center; flex-items:center;
+子元素：
+优点：代码量少   缺点：兼容性不好。
+
+3、多列布局
+
+一列定宽+一列自适应：
+float + margin   
+float + overflow
+table
+flex
+
+多列定宽+一列自适应：
+方法和一列定宽是一样的，加再一列，然后把定宽的样式应用上去。
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
