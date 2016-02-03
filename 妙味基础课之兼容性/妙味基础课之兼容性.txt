@@ -1,0 +1,175 @@
+兼容性八讲
+
+1、兼容IE67
+
+H5标签兼容：
+H5的标签IE6下不识别怎么办？可以动态的创建所需要的自定义标签。
+eg:document.createElement("header");
+header {width:200px; height:200px; display:block; background:red;}  //写上样式
+注：创建的自定义标签是内联元素，需要转换成块元素。
+
+如果自定义标签过多怎么办？可以用成熟的html5shiv.js库。
+
+
+2、
+
+元素浮动之后，能设置宽度的话就给元素加宽度，如果需要宽度是内容撑开，就给它里面的块元素加上浮动：
+IE6下浮动会有问题，在IE6下，如果浮动元素内有块元素，在给块元素设置高度的时候，会将父元素撑开。
+怎么解决：能加宽度加宽度，不能加宽度就给里面的块元素加浮动。
+
+eg:
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			.box{
+				width: 400px;
+				border: 1px solid black;
+				overflow:hidden;
+			}
+			.left{
+				float: left;
+				background-color: red;
+			}
+			.right{
+				float: right;
+				background-color: blue;
+			}
+			h2{
+				float: left;
+				margin: 0;
+				height: 30px;
+			}
+		</style>
+		<!--
+			解决方案：float: left;
+		-->
+	</head>
+	<body>
+		<div class="box">
+			<div class="left">
+				<h2>左边</h2>
+			</div>
+			<div class="right">
+				<h2>右边</h2>
+			</div>
+		</div>
+	</body>
+</html>
+
+第一块元素浮动，第二块元素加margin值等于第一块元素，在IE6下会有间隙问题。
+解决方法：
+1、不建议这么写
+2、用浮动解决（将未浮动的元素也浮动起来。）
+eg:
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			body{
+				margin: 0;
+			}
+			.box{
+				width: 500px;
+			}
+			.left{
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				float: left;
+			}
+			.right{
+				width: 200px;
+				height: 200px;
+				background-color: blue;
+				float: left;
+			}
+		</style>
+		<!--
+			解决方案：
+				1、不建议这么写
+				2、用浮动解决
+		-->
+	</head>
+	<body>
+		<div class="box">
+			<div class="left"></div>
+			<div class="right"></div>
+		</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
