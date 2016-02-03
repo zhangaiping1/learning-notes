@@ -1,120 +1,120 @@
-1��JS����
+1、JS介绍
 
-2��JS����
+2、JS调试
 
-�����������Ͻǻ���ʾ�ж��ٸ�����Ȼ����console����л���ʾ�������ݣ����ں�����ϴ�����ļ���������
+调试面板的右上角会显示有多少个错误，然后在console面板中会显示错误内容，并在后面跟上错误的文件及行数。
 
-�����󣺸���д�����˼·��һ��һ���ļ�鿴���������
+检查错误：根据写代码的思路，一步一步的检查看错误在哪里。
 
-������alert(xx);�����ĳ��������ֵ�����������Ҫ������Ƚ��鷳�����Կ���ʹ��console.log(xx);
+可以用alert(xx);来检测某个变量是值。但是这个需要点击，比较麻烦。所以可以使用console.log(xx);
 
-��������Ƚ϶࣬����Ҫ�õ�JS�ĵ�������
-chrome:Sources����
-������ļ����ڣ��м��ǵ��Ե��ļ����ڣ��ļ��������������öϵ㡣
-�Ҳ���4����ť����һ���Ǽ���ִ�а�ť���ڶ����ǵ���ִ�а�ť ���������ǽ��뺯����ť�����ĸ����˳�������ť��
-�Ҳ��м��ǵ��Ե���Ϣ�������鿴����ı�����������Watch Expressions�����ӱ�����
-Call Stack�Ƕ�ջ��
-Sources�����Ҳ����ֱ�Ӵ�Console��塣
+如果变量比较多，就需要用到JS的调试器：
+chrome:Sources窗口
+左侧是文件窗口，中间是调试的文件窗口，文件窗口左侧可以设置断点。
+右侧有4个按钮，第一个是继续执行按钮，第二个是单步执行按钮 ，第三个是进入函数按钮，第四个是退出函数按钮。
+右侧中间是调试的信息。如果想查看特殊的变量，可以在Watch Expressions中添加变量。
+Call Stack是堆栈。
+Sources面板中也可以直接打开Console面板。
 
-������
-��Sources����������ҵ���Ӧ����Ҫ�����ļ�������ļ��϶࣬������ctrl+o�����ң������ļ������ɡ�
-���Ҫ����ĳ�����������ҵ��������ں����ڵ�һ������һ���ϵ㣨����кż��ɣ���
-��������϶࣬����ctrl+shift+o�����в��ҡ�
-���öϵ��Ժ��ں����н��в����������ͻ�ͣ���ϵ����һ�С�Ȼ��Ϳ������Ҳఴť���е��ԡ�
-�������ִ�У��ͻ����һ�����������һ����䡣
-��Scope�е�Local�п��Կ����ֲ���������Global�п��Կ���ȫ�ֱ�����
-������Watch��������Ҫ�鿴�ı�����ֱ��������������ɡ�
-���԰�ESC��������Console��塣
-�뿴�ĸ�������ֵ������Console�����ֱ��������������ɡ�
-��ĳһ���������ĺ����������鿴�ú������ݣ�������뺯����ť�����ɽ���鿴��
-��Call Stack�п��Կ��������Ķ�ջ�����ĸ��������÷�������
-�ڶ�ջ�е�����ú����ķ������Ϳ��Իص��÷������������С�
-������˳��ú������Ϳ��Ե���˳�������ť��
-����������Ժ󣬾Ϳ��Ե������ִ�а�ť�ú�������ִ�С�
-���Խ�����
+操作：
+打开Sources面板后，在左侧找到相应的需要调试文件，如果文件较多，可以用ctrl+o来查找，输入文件名即可。
+如果要调试某个函数，在找到函数后，在函数内第一行设置一个断点（点击行号即可）。
+如果函数较多，可以ctrl+shift+o来进行查找。
+设置断点以后，在函数中进行操作，函数就会停到断点的那一行。然后就可以用右侧按钮进行调试。
+点击单步执行，就会从上一个语句跳到下一个语句。
+在Scope中的Local中可以看到局部变量，在Global中可以看到全局变量。
+可以在Watch中添加想要查看的变量。直接输入变量名即可。
+可以按ESC按键调出Console面板。
+想看哪个变量的值，就在Console面板中直接输入变量名即可。
+在某一行有其它的函数，如果想查看该函数内容，点击进入函数按钮，即可进入查看。
+的Call Stack中可以看到函数的堆栈（被哪个方法调用了该函数）。
+在堆栈中点击调用函数的方法，就可以回到该方法的作用域中。
+如果想退出该函数，就可以点击退出函数按钮。
+当调试完毕以后，就可以点击继续执行按钮让函数继续执行。
+调试结束。
 
-����ִ�л�ִ�е�ǰ�У�Ȼ��������һ�еȴ���
-����ִ�лὫ��ǰ�ļ�ִ��һ�顣����м��������Ķϵ㣬��ͣ����һ���ϵ��ϡ�
+单步执行会执行当前行，然后跳到下一行等待。
+继续执行会将当前文件执行一遍。如果中间有其它的断点，会停到下一个断点上。
 +
-Console��岻ֻ�ǿ�����������������Ըı������ֵ��
-�����е�ĳ�������Ժ�ǰ���б���XX���ǾͿ���ͨ�� XX=10;���ı�XX��ֵ��
+Console面板不只是可以输入变量，还可以改变变量的值。
+当运行到某个函数以后，前面有变量XX，那就可以通过 XX=10;来改变XX的值。
 
-ע���ڵ��Դ����ʱ��������console.log  alert  �ȵȡ������������Щ����Ҫ����ʵ���������롣
+注：在调试代码的时候不能输入console.log  alert  等等。如果想输入这些，需要在真实代码里输入。
 
 
-3�������﷨
+3、基本语法
 
-ͬʱ�����������:
+同时声明多个变量:
 eg:
 var name='abc',
     age=18,
     sex='man';
 
-�ؼ��ֺͱ����֣�
+关键字和保留字：
 var case=1;  
-�������������Ժ����ʾ��SyntaxError:missing variable name  (û�б�����)
-���ֵľ��ǹؼ��ֻ��߱����֡�
+上面的语句运行以后会提示：SyntaxError:missing variable name  (没有变量名)
+这种的就是关键字或者保留字。
 
-ReferenceError:Age is not defined  (Ageû�ж���)
+ReferenceError:Age is not defined  (Age没有定义)
 
-4����������
+4、基本类型
 
-������������������ֵ��NaN��Infinity(��������������ֵ��)
+数字类型有两个特殊值：NaN和Infinity(无穷大，这个有正负值。)
 
-null���ͣ���ʾһ���ն��󣬶��󲻴��ڡ�
-���һ��������Ҫ��ʾ��һ��object��������û�г�ʼ��֮ǰ�����Խ�����ֵΪһ��null��
+null类型：表示一个空对象，对象不存在。
+如果一个对象将来要表示是一个object对象，那在没有初始化之前，可以将他赋值为一个null。
 
-undefined���ͣ�
-���ֳ�����������δ��ֵ�Ķ���    ��ȡ���󲻴��ڵ�����
+undefined类型：
+出现场景：已声明未赋值的对象    获取对象不存在的属性
 
-����ʶ�𷽷���typeof
+类型识别方法：typeof
 eg:
 var num=1;
 typeof num; //number
 
-ԭʼ���ͺ��������͵�����:
-ԭʼ����ֵ�ǵ����ģ��ı�һ������һ�����ı䡣
-��������ֵ��ָ����ʽ�ģ��ı�һ������һ��Ҳ��ı䡣
+原始类型和引用类型的区别:
+原始类型值是单独的，改变一个，另一个不改变。
+引用类型值是指针形式的，改变一个，另一个也会改变。
 
  
-5������������ʽ
+5、运算符与表达式
 
-++age ��age++��ǰ�Ӽӻ��ȼӼӣ�������������Ӽӻ���������е��������֣��ټӼӡ�
+++age 和age++：前加加会先加加，再走其它，后加加会先走语句中的其它部分，再加加。
 eg:
 var age=29;
 var num=age++; //num=29
-�������ߵĸ�ֵ��Ȼ��Ż�Ӽӡ�
+这里先走的赋值，然后才会加加。
 
-�յ�����ת���ɲ���ֵ��true  eg:alert(![]);    //false
+空的数组转换成布尔值是true  eg:alert(![]);    //false
 
-��ȡ��ĳ�����͵Ĳ���ֵ��������!!
+想取得某个类型的布尔值：可以用!!
 eg:alert(!![]);   //true
 
 
-�߼���������
-&&:����߼���ĵ�һ����������false����ô�ڶ��������ǲ�����еġ������һ����������true,���Ƿ��صڶ���ֵ��
+逻辑操作符：
+&&:如果逻辑与的第一个操作符是false，那么第二个操作是不会进行的。如果第一个操作符是true,就是返回第二个值。
 eg:
-var obj=""||num++;   //false  �ڶ����Ӽ��ǲ������еġ�
+var obj=""||num++;   //false  第二个加加是不会运行的。
 
-||:����߼���ĵ�һ����������true,��ô�ڶ��������ǲ�����еġ�
+||:如果逻辑或的第一个操作符是true,那么第二个操作是不会进行的。
 eg:
-var obj=1 || num++; //����num++�ǲ�����еġ�
+var obj=1 || num++; //这里num++是不会进行的。
 
-�����������
-delete:ɾ����������
-eg: delete cat.name;  //����ɾ��һ����������ԡ�
+对象操作符：
+delete:删除对象属性
+eg: delete cat.name;  //可以删除一个对象的属性。
 
-instanceof:�ж�ĳ�������Ƿ���ĳ�������ʵ��
+instanceof:判断某个变量是否是某个对象的实例
 eg:
 var cat={name:'kitty',age:2};
 alert(cat instanceof Object);   //true
 
-in:�ж�ĳ�������Ƿ��ڶ�����
+in:判断某个属性是否在对象中
 eg:
 var cat={name:'kitty',age:2};
 alert('name' in cat); //true
 
-���������ȼ���������������ȼ���ȷ���Ļ�����յİ취���Ǽ����š�
+操作符优先级：如果操作符优先级不确定的话，最保险的办法就是加括号。
 
 
 
