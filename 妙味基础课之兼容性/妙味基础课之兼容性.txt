@@ -1,21 +1,21 @@
-�����԰˽�
+兼容性八讲
 
-1������IE67
+1、兼容IE67
 
-H5��ǩ���ݣ�
-H5�ı�ǩIE6�²�ʶ����ô�죿���Զ�̬�Ĵ�������Ҫ���Զ����ǩ��
+H5标签兼容：
+H5的标签IE6下不识别怎么办？可以动态的创建所需要的自定义标签。
 eg:document.createElement("header");
-header {width:200px; height:200px; display:block; background:red;}  //д����ʽ
-ע���������Զ����ǩ������Ԫ�أ���Ҫת���ɿ�Ԫ�ء�
+header {width:200px; height:200px; display:block; background:red;}  //写上样式
+注：创建的自定义标签是内联元素，需要转换成块元素。
 
-����Զ����ǩ������ô�죿�����ó����html5shiv.js�⡣
+如果自定义标签过多怎么办？可以用成熟的html5shiv.js库。
 
 
-2��
+2、
 
-Ԫ�ظ���֮�������ÿ��ȵĻ��͸�Ԫ�ؼӿ��ȣ������Ҫ���������ݳſ����͸�������Ŀ�Ԫ�ؼ��ϸ�����
-IE6�¸����������⣬��IE6�£��������Ԫ�����п�Ԫ�أ��ڸ���Ԫ�����ø߶ȵ�ʱ�򣬻Ὣ��Ԫ�سſ���
-��ô������ܼӿ��ȼӿ��ȣ����ܼӿ��Ⱦ͸�����Ŀ�Ԫ�ؼӸ�����
+元素浮动之后，能设置宽度的话就给元素加宽度，如果需要宽度是内容撑开，就给它里面的块元素加上浮动：
+IE6下浮动会有兼容性问题，在IE6下，如果浮动元素内有块元素，在给块元素设置高度的时候，会导致块元素撑满一行。破坏父元素浮动。
+怎么解决：能加宽度加宽度，不能加宽度就给里面的块元素加浮动。
 
 eg:
 
@@ -45,25 +45,25 @@ eg:
 			}
 		</style>
 		<!--
-			���������float: left;
+			解决方案：float: left;
 		-->
 	</head>
 	<body>
 		<div class="box">
 			<div class="left">
-				<h2>���</h2>
+				<h2>左边</h2>
 			</div>
 			<div class="right">
-				<h2>�ұ�</h2>
+				<h2>右边</h2>
 			</div>
 		</div>
 	</body>
 </html>
 
-��һ��Ԫ�ظ������ڶ���Ԫ�ؼ�marginֵ���ڵ�һ��Ԫ�أ���IE6�»��м�϶���⡣
-���������
-1����������ôд
-2���ø����������δ������Ԫ��Ҳ������������
+第一块元素浮动，第二块元素加margin值等于第一块元素，在IE6下会有间隙问题。
+解决方法：
+1、不建议这么写
+2、用浮动解决（将未浮动的元素也浮动起来。）
 eg:
 
 <!DOCTYPE html>
@@ -92,9 +92,9 @@ eg:
 			}
 		</style>
 		<!--
-			���������
-				1����������ôд
-				2���ø������
+			解决方案：
+				1、不建议这么写
+				2、用浮动解决
 		-->
 	</head>
 	<body>
