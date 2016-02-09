@@ -614,9 +614,33 @@ eg:
 /thi(c|n)k/
 
 如何获取地址栏里各部分的内容：
+
+
+捕获：()
+保存匹配到的字符串，日后再用。
+
+不捕获：(?:)
+注意：(?:https)  这样的是不捕获    （https?:）  这样的是s出现0-1次。
+
+捕获与不捕获的使用：
+$1、$2...
+API参数或返回值。
+
+str.match(regexp):
 示例地址：http://blog.163.com/album?id=1#comment
+捕获示例的各部分：
+var reg=/(https?:)\/\/([^\/]+)(\/[^\?]*)?(\?[^#]*)?(#.*)?/;
 
+str.replace(regexp,replacement)
+替换一个子串。
+eg:
+str.replace(/(\d+)/g,'$1.00');   这里的$1表示获取到的内容所保存的变量。
 
+replace的第二个参数可以是函数，如果是函数的时候，匹配到的第一个字符会以参数的形式传进第二个函数内。
+
+regexpObj.exec(str):更强大的检索
+更详尽的结果：index
+过程的状态：lastIndex
 
 
 
