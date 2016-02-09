@@ -653,6 +653,91 @@ regexpObj.exec(str):更强大的检索
 更详尽的结果：index
 过程的状态：lastIndex
 
+14、JSON
+以文本的形式来描述数据。（IE6/7是不支持的，可以用自定义对象的方法来解决，需要用到eval方法。）
+
+var jerry = {name:'jerry',age:1};
+
+JS与JSON的区别在于JSON的对象属性需要用双引号引起来：、
+eg:{"name":"jerry","age":1}
+
+JSON转换成JS:JSON.parse(text[,reviver])
+第一个参数是JSON对象或JSON文本，第二个参数是一个回调函数（不常用）。
+注：JSON里的换行需要加“\”
+
+JS转换成JSON:JSON.stringify(value[,replacer[,space]])
+第一个参数是JS对象，后面两个参数可以用来只提取一部分对象属性进行转换（不常用）。
+
+15、类型进阶
+
+因为对象赋值给另一个对象只是将地址复制了过去 ，那如果真实的将一个对象复制出来呢？
+百度一下，暂时不懂。、
+
+哪些符号会涉及隐式类型转换：
+数字运算符：当数字与字符串进行计算时，除了+号，其它的符号都会将字符串隐式的转换成数字类型。
+.号：会将字符串转换成相关的对象类型。
+if语句：将条件部分隐式的转换成布尔值。
+==号：隐式的转换成布尔值。
+注：undefined转换成数字类型为NaN    null转换成数字类型为0
+
+类型识别：
+
+输入格式：
+'2015-08-05'
+1438744815232
+{y:2015,m:8,d:5}
+[2015,8,5]
+返回格式：Date
+实现一下上面的需求的代码。
+
+类型识别的具体方法：
+
+typeof:可以识别标准类型（string number boolean object undefined）（除了null以外,这个识别为object）
+       不能识别具体的对象类型，除了function
+操作方法：typeof("a")     typeof "a"
+
+instanceof:可以判别内置对象类型（array regexp等），不能判别原始类型(number string等)，可以判别自定义对象类型。
+总结：可以识别所有的对象类型。
+eg:
+[] instanceof Array;      //true
+/\d/ instanceof RegExp;   //true
+1 instanceof Number       //false
+"jerry" instanceof String;//false
+
+Object.prototype.toString.call():可以识别标准类型以及内置对象类型。无法识别自定义对象类型。
+eg:
+Object.prototype.toString.call(123);     //"[object Number]"
+封闭这个方法：
+function type(obj) {
+	return Object.prototype.toString.call(obj).slice(8,-1);
+}
+
+constructor:可以判别标准类型（undefined/null除外），可以判别内置对象类型。可以判别自定义对象类型。
+eg:
+"jerry".constructor===String;    //true
+(1).constructor===Number;        //true
+true.constructor===Boolean;      //true
+({}).constructor===Object;       //true
+
+new Date().constructor===Date;   //true
+[].constructor===Array;          //true
+
+封装constructor:getConstructorName
+function getConstructorName(obj) {
+	return obj && obj.constructor && obj.constructor.toString().match(/function\s*([^(]*)/)[1];
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
