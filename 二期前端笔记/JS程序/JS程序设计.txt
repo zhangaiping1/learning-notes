@@ -694,6 +694,7 @@ if语句：将条件部分隐式的转换成布尔值。
 
 typeof:可以识别标准类型（string number boolean object undefined）（除了null以外,这个识别为object）
        不能识别具体的对象类型，除了function
+       注：typeof()返回的类型是一个字符串并且是小写，如果要比较的话，另一边也必须是字符串也必须是小写。
 操作方法：typeof("a")     typeof "a"
 
 instanceof:可以判别内置对象类型（array regexp等），不能判别原始类型(number string等)，可以判别自定义对象类型。
