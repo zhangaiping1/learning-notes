@@ -753,6 +753,75 @@ function getConstructorName(obj) {
 构造函数命名通常首字母大写。
 
 
+函数调用（按this分类）：
+
+构造函数调用模式：this指向调用构造函数的那个实例。
+
+方法调用模式：对象在调用方法函数的时候，this指向该对象。
+
+函数调用模式：
+如果函数内存在子函数，那么子函数的this将指向window
+如果真的需要函数内的子函数的this指向父级，那么可以通过的父级var that=this;来修改this的指向（闭包）。
+
+apply(call)调用模式：Function prototype.apply
+函数借用的一个方法。
+假如A有一个函数，B没有这个函数，就可以让B借用到A的这个函数。
+接收两个参数，第一个参数是谁来借（这个对象），第二个参数是一个数组，里面是变化的数据。
+eg:
+p.move.apply(circle,[2,1]);   //{x:3,y:2,r:1}
+
+call的话和apply效果类似，但是第二个参数不是数组，而是一个字符序列。
+
+Function.prototype.bind:
+指定了一个函数的this和函数的实参，然后返回一个函数的引用（不会立即执行，需要调用）。
+接收若干个参数，第一个参数是this的指向，剩下的参数是本函数的参数。
+eg:
+var circlemove = p.move.bind(circle,2,1);
+circlemove();
+
+思考：为什么JS中需要apply 
+
+函数调用（按arguments分类）：
+
+Array-like
+-arguments[index]:可以通过这种形式访问里面的内容。
+-arguments.length:可以通过这种形式访问具体的实参数量。
+将类似数组的内容转换成真实数组：Array.prototype.slice.apply(arguments);
+
+arguments.callee:实现一个递归，用的不多，了解一下。
+
+递归：
+function fac(i) {
+	if(i=0) {
+		return 1;
+	}
+	return i*fac(i-1);
+}
+
+闭包（函数内部调用函数）：
+隐藏、封装
+记忆函数
+eg:
+(function () {
+	var a=0;
+	function b() {
+		a=1;
+		debugger;	
+	}
+	b();
+})();
+
+First-class function（函数可以被当作变量保存，当作参数传递等。）:
+curry:(函数柯里化)
+回调：
+
+
+
+
+
+
+
+
 
 
 
