@@ -787,6 +787,7 @@ Array-like
 -arguments[index]:可以通过这种形式访问里面的内容。
 -arguments.length:可以通过这种形式访问具体的实参数量。
 将类似数组的内容转换成真实数组：Array.prototype.slice.apply(arguments);
+Array.prototype.slice.call(arguments)能将具有length属性的对象转成数组
 
 arguments.callee:实现一个递归，用的不多，了解一下。
 
@@ -794,13 +795,12 @@ arguments.callee:实现一个递归，用的不多，了解一下。
 function fac(i) {
 	if(i=0) {
 		return 1;
-	}
+	}                  //记得要加一个非常明确的退出条件。
 	return i*fac(i-1);
 }
 
 闭包（函数内部调用函数）：
-隐藏、封装
-记忆函数
+隐藏、封装：可以将变量很合适的隐藏起来，防止外部的调用或者污染什么的。
 eg:
 (function () {
 	var a=0;
@@ -810,17 +810,106 @@ eg:
 	}
 	b();
 })();
+记忆函数（这个记忆函数看不懂）：
+// // 记忆函数
+// var factorial = (function(){
+//   var memo = [1];
+//   var count = 0;
+//   var fac = function(i){
+//     count++;
+//     var result = memo[i];
+//     if(typeof result === 'number'){
+//       console.log('调用次数：' + count); 
+//       return result;
+//     } 
+//     result = i*fac(i-1);
+//     memo[i] = result;
+//     return result;
+//   }
+//   return fac;
+// })();
+// for(var i=0;i<=10;i++){
+//   console.log(factorial(i)); 
+// }
 
-First-class function（函数可以被当作变量保存，当作参数传递等。）:
-curry:(函数柯里化)
-回调：
 
+First-class function（函数可以被当作变量保存，当作参数传递，当作返回值返回。）:
+curry:(函数柯里化)（这里没有看懂。）：
+// // curry函数柯里化
+// function add(value){
+//    var helper = function(next){
+//       value = typeof(value)==="undefined"?next:value+next;
+//       return helper;
+//    }
+//    helper.valueOf = function(){
+//      return value;
+//    }
+//    return helper
+// }
 
+回调（比如AJAX的异步回调）：
 
+debugger:手动的给代码打造一个断点。进行调试。
 
+17、原型：
 
+原型：
 
+原型VS类：
+类是通过抽象的对象构造出一个具体的对象。
+原型是通过具体的对象构造出另一个具体的对象。
 
+设置对象的原型：
+Object.create(proto[,propertiesObject]):
+接受两个参数，第一个参数是一个对象，作为新创建对象的原型。第二个参数是对象的属性定义（不常用）。
+这个是创建的实例里面自带__proto__属性指向原型。
+eg:
+var landRover = {
+	name:'landRover',
+	start:function () {
+		console.log('%s start',this.logo);	
+	}
+}
+var landWind = Object.create(landRover);
+landWind.logo = 'landWind';
+landWind.start();
+
+构造函数：
+使用prototype设置原型：
+使用new创建对象：
+这个创建的实例里面自带__proto__属性指向原型的prototype属性。
+步骤：1，创建对象landRover  2，设置landRover的__proto__   3,Car.apply(landRover,arguments)
+eg:
+function Car(logo) {
+	this.logo = logo || 'unknown name';
+}
+Car.prototype = {
+	start:function () {
+		console.log('%s start',this.logo);
+	},
+	run:function () {
+		console.log('%s running',this.logo)
+	}
+
+}
+
+var landRover = new Car('landRover');
+landRover.start();
+
+原型链：
+
+访问属性：要根据原型链一点一点的找到顶端。
+
+修改属性：只会修改实例本身的相关属性，如果本身没有相关的属性，会自行创建并赋值。
+
+删除属性：只会删除实例本身的相关属性。如果本身属性删除，而原型上存在，再次删除是没有效果的。
+
+hasOwnProperty:
+对所传入的属性参数进行判断，看是不是属性自身的属性，如果是返回true,如果不是返回false.
+eg: landRover1.hasOwnProperty('serialno');  //true
+
+最后，所有的构造函数都是通过function创建的，所以所有的构造函数都指向function.prototype
+而function又是object，所以最后所有的实例都会具有object的prototype属性。
 
 
 
