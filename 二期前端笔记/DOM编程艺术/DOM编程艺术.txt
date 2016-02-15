@@ -1,0 +1,116 @@
+1、文档树
+
+2、节点操作
+
+根据CSS选择器获取元素（querySelector）
+querySelector:只返回第一个查找到的节点。
+querySelectorAll:返回所有符合条件的节点。
+接收的参数是CSS选择器。
+eg:
+var list = elm.querySelectorAll('#md .top .act,.foot');
+
+创建节点：
+createElement:
+innerHTML:如果给添加的节点添加事件，只能通过onclick的方式在HTML里添加。而不能使用addEventLisner来添加。
+
+插入节点：
+appendChild:插入到尾部 eg: parent.appendChild(newElm);
+insertBefore:插入到某个节点之前  eg: parent.insertBefore(newElm,rElm);   //rElm:插入到这个节点之前
+insertAdjacentElement:插入一个元素节点，插入到某个元素的开标签之前、之后，闭标签之前、之后。
+格式：elm.insertAdjacentElement(sWhere,oElm);   
+sWhere:beforeBegin  afterBegin  beforeEnd   afterEnd   elm:参照节点    oElm:要插入的元素    
+insertAdjacentHTML:插入一个带标签的字符串。（因为效率问题（隐式类型转换），不太建议。）
+eg:
+var str = '<span>abc</span>';
+p.insertAdjacentElement('afterBegin',str);
+
+文档上的所有节点类型都是由HTMLElement派生出去的。所以他们的原型都是HTMLElement.prototype
+
+修改节点：
+innerHTML:
+textContent(innerText，这个需要兼容)(修改文本内容):
+
+在对象定义后通过Object的__defineGetter__、__defineSetter__方法来追加定义
+例如我们给Date对象添加一个year属性： 
+Date.prototype.__defineGetter__('year', function() {return this.getFullYear();});     
+Date.prototype.__defineSetter__('year', function(y) {this.setFullYear(y)});     
+
+var now = new Date;     
+alert(now.year);     
+now.year = 2006;     
+alert(now);    
+
+
+删除节点：(删除之前记得将节点上的事件移除掉，然后进行删除的操作)
+removeChild(删除某个子节点，返回删除的节点): eg: parent.removeChild(child);
+另可以只需要传入一个被删除的节点参数，就可以删除该节点：
+function remove(elm) {
+	elm.parentNode.removeChild(elm);
+}
+      
+replaceChild（替换节点，返回值是被删除的节点）:  eg: parent.replaceChild(newChild,oElm);
+newChild:需要插入的节点   oElm:需要删除的节点  
+
+3、属性操作
+
+property accessor
+getAttribute/setAttribute
+dataset
+
+property accessor(属性访问器):
+读：eg: input.value;
+写：eg: input.value='wwq@163.com';
+好处：获得的都是实用对象，比如class获得的就是字符串，length获得的就是数值型。
+坏处：通用性差，因为名字有一些不一样。比如className  htmlFor等。
+      扩展性差，HMTL里添加属性，DOM里就需要添加内容。
+
+g/setAttribute:
+读：elm.getAttribute(attributeName)
+写：elm.setAttribute(name,value);
+好处：通用性好，名字不会有异常问题。
+坏处：访问到的都是属性的字符串。
+
+以上两种：纯字符串操作，选择setAttribute  ，如果涉及到实用属性操作，则选择属性访问器。
+
+dataset:
+
+HTMLElement.dataset
+data-*属性集
+eg:<div data-id = '123456' data-account-name = 'wwq'>wwq</div>
+   div.dataset.id  //123456
+   div.dataset.accountName   //wwq
+元素上保存数据
+用处：用户的卡片信息
+比如放到一个用户的名称上，然后显示一个像名片一样的信息表。这些信息就可以以自定义的方式来写入HTML，然后用dataset来获取。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
