@@ -79,14 +79,108 @@ data-*属性集
 eg:<div data-id = '123456' data-account-name = 'wwq'>wwq</div>
    div.dataset.id  //123456
    div.dataset.accountName   //wwq
-元素上保存数据
+data-*的用处：元素上保存数据
 用处：用户的卡片信息
 比如放到一个用户的名称上，然后显示一个像名片一样的信息表。这些信息就可以以自定义的方式来写入HTML，然后用dataset来获取。
 
+4、样式操作
+
+对于外链样式和内联样式的访问：
+element.sheet.cssRules[0].style.lineHeight
+
+对于行内样式的访问：
+element.style.color
+
+对于一次性设置CSS多个属性：
+element.style.cssText = 'border-color:red;color:red;';
+
+如何更好的将样式分离出去(更新CSS最好的方法)：
+更新class:
+eg:
+element.className += 'invalid';
+
+怎么样更换更多的样式：更换样式表
+给链接上加个ID,然后获取到以后通过ele.href = 'xx.css';就可以达到更换样式表。
+
+获取样式：
+element.style:只能获取到行内样式。
+
+如何获取到所有的实际的样式值：
+var style=window.getComputedStyle(element[,pseudoElt])  //这个方法IE8及以下不支持
+接受两个参数，第一个参数是要获取样式的元素，第二个参数是伪类。
+eg:
+window.getComputedStyle(element).color;    //'rgb(255.0.0)'
+
+IE9以下解决办法：
+element.currentStyle:
+
+5、事件
+
+事件流：
+capture phase(捕获)
+target phase(目标)
+bubble phase(冒泡)
+从window开始： window-document-html-body-... -目标元素的父节点 (捕获)
+从目标元素的父节点开始： 父节点-目标-父节点（目标）
+从目标元素的节节点开始： 父节点-...-body-html-document-window  (冒泡)
+
+并不是所有的浏览器都有这三个过程，比如IE的低版本浏览器没有捕获过程
+并不是所有的事件都有这三个过程，比如有一些事件没有冒泡过程。比如页面的load事件就没有冒泡过程。
+
+事件注册与触发：
+
+事件注册：
+eventTarget.addEventListener(type,listener[,useCapture])
+eventTarget:DOM元素  type:事件类型  listener:事件处理函数  useCapture:是否为冒泡时处理
+默认是冒泡时处理(false)，如果是ture，会是捕获时处理）
+
+另外还有一种方法：eventTarget.onclick=function () {}  //缺点：这种方法只能注册一个事件。
+
+取消事件注册：
+eventTarget.removeEventListener(type,listener[,useCapture])
 
 
+事件触发(确定触发方式)：
+eventTarget.dispatchEvent(type)
+eg:
+elem.dispatchEvent('click');
 
+关于IE6\7\8的浏览器兼容性：
+首先：IE的浏览器注册事件需要带on ,例：elem.attachEvent('on'+click,listener);
+事件注册与取消：
+attchEvent/detachEvent:
+事件触发：
+fireEvent(e)
 
+IE6\7\8没有捕获阶段，因此就没有第三个参数。
+
+事件对象(event)：
+function clickHandler(event) {};
+
+关于IE兼容性：
+IE低版本浏览器不是简单的event对象，他会将event放到window中。因此需要兼容一下。
+function(event) {
+	event = event || window.event;
+}
+当浏览器查不到event时，则查找window.event
+
+事件对象的属性和方法：
+属性：
+type:事件类型
+target(srcElement):事件触发节点
+currentTarget:当前处理的事件节点。
+
+方法：
+阻止事件传播：
+event.stopPropagation(); (W3C)（阻止冒泡）
+event.cancelBubble = true (IE) (IE下的阻止冒泡)
+event.stopImmediatePropagation() (阻止冒泡并阻止该节点的后续事件)
+
+默认行为：
+event.preventDefault() (W3C)
+event.returnValue = false (IE)
+
+事件分类：
 
 
 
