@@ -154,6 +154,10 @@ fireEvent(e)
 
 IE6\7\8没有捕获阶段，因此就没有第三个参数。
 
+标准方法与IE下的方法不同之处在于：
+标准方法对节点添加事件以后，执行顺序为添加事件的顺序。
+IE下的方法对节点添加事件以后，执行的顺序为添加事件顺序的倒序。
+
 事件对象(event)：
 function clickHandler(event) {};
 
@@ -170,17 +174,189 @@ type:事件类型
 target(srcElement):事件触发节点
 currentTarget:当前处理的事件节点。
 
+function eventHandler(e){ 
+//获取事件对象 
+e = e || window.event;//IE和Chrome下是window.event FF下是e 
+//获取事件源 
+var target = e.target || e.srcElement;//IE和Chrome下是srcElement FF下是target 
+} 
+
+
 方法：
 阻止事件传播：
 event.stopPropagation(); (W3C)（阻止冒泡）
 event.cancelBubble = true (IE) (IE下的阻止冒泡)
 event.stopImmediatePropagation() (阻止冒泡并阻止该节点的后续事件)
 
+什么时候用阻止事件冒泡？
+
+例如：document上有A事件，div有B事件，div里面的span有C事件，如果不给span和div加阻止事件冒泡的话，点击span时就会触发到div的B事件、document的A事件，
+当点击span时不想触发div和document的事件就要加上阻止事件冒泡，div也是一样的道理。
+
 默认行为：
 event.preventDefault() (W3C)
 event.returnValue = false (IE)
 
 事件分类：
+
+事件          UI事件         焦点事件          输入事件          键盘事件             鼠标事件        滚轮事件
+Event         UIEvent        FocusEvent        InputEvent        KeyboardEvent        MouseEvent      Wheel Event
+load          resize         blur              beforeinput       keydown              click           wheel
+unload        scroll         focus             input             keyup                dbclick         
+error                        focusin                                                  mousedown
+select                       focusout                                                 mouseenter
+abort                                                                                 mouseleave
+                                                                                      mousemove
+                                                                                      mouseout
+                                                                                      mouseover
+                                                                                      mouseup
+
+event:(不冒泡)
+unload:卸载的事件，比如一个链接连接到其它页面，点击这个链接的时候，就会触发这个事件。
+select:选择的事件，比如在textarea里选择一段文字的时候。
+abort:取消的事件，比如说图片在加载的时候被取消了，就会发生这个事件。
+error:出错的时候发生的事件。
+eg:<images src="xxxa.jpg" onerror = "this.src = 'xxxb.jpg'"/>
+
+UIEvent:
+resize:改变window或者iframe大小的时候触发。不冒泡。
+scroll:滚动的时候触发。事件在window,document时不冒泡，在div时会冒泡 。
+
+MouseEvent:
+mouseenter和mouseover的区别：
+mouseover在嵌套的子元素上也会触发，但是mouseenter只会在本身元素上触发。
+mouseout他mouseleave同上。
+
+除了mouseenter和mouseleave不冒泡以外，其它的全部冒泡。
+
+MouseEvent对象：
+属性：
+clientX,clientY  //到页面边界的距离
+screenX,screenY  //到屏幕边界的距离
+
+ctrlKey  shiftKey  altKey  metaKey   //鼠标点击的时候，如果ctrl键是按下去的，那么ctrlKey的值就是trul,以此类推。
+
+button(0,1,2)     //按下的是鼠标的哪个键
+
+MouseEvent顺序：
+从元素A上方移过：
+mousemove-mouseover-mouseenter-mousemove-mouseout-mouseleave
+点击元素：
+mousedown-[mousemove]-mouseup-click
+
+例子-拖拽DIV
+HTML：绝对定位并设置好TOP和LEFT
+JS：鼠标按下，鼠标拖拽，鼠标弹起
+
+WheelEvent滚轮事件:
+属性：
+deltaMode:
+deltaX:
+deltaY:
+deltaZ:
+
+FocusEvent:不冒泡
+blur:失去焦点触发
+focus:获得焦点触发
+focusin:即将获得焦点触发
+focusout:即将失去焦点触发
+
+属性：
+relatedTarget:主元素对应的另一个副元素。比如blur，某个元素失去焦点触发blur，那肯定会有另外一个元素获得焦点，这个元素就是relatedTarget
+
+InputEvent:冒泡
+beforeinput:即将输入之前触发
+input:内容输入后触发
+IE的低版本下没有InputEvent事件，一般用onpropertychange(IE)来处理。
+
+KeyboardEvent:冒泡
+属性：
+key:
+code:
+ctrlKey  shiftKey  altKey  metaKey
+repeat:持续按一个键这个会是true
+
+事件代理：
+
+将事件注册到元素的父节点上，到时候冒泡的时候自然会访问到。
+
+好处：如果子元素过多，注册一个事件的话，注册到父元素会方便。
+坏处：如果事件过多，全部注册到顶端元素上，会不好管理。
+
+6、数据通信
+
+HTTP协议：
+
+常见的HTTP状态码：
+200     请求成功，一般用于GET和POST方法
+301     资源移动。所请求资源自动到新的URL，浏览器自动跳转到新的URL。
+304     未修改。所请求资源未修改，浏览器读取缓存数据。
+400     请求语法错误，服务器无法理解。
+404     未找到资源，可以设置个性404页面
+500     服务器内部错误。
+
+HTTP协议在前端中的应用--AJAX：
+
+open()是开始一个请求，但并未发送。
+send()是发送请求。
+
+当XHR对象创建好以后，readyState的值为0，open()以后值为1，send()以后值为2，服务器返回请求以后值为3，当全部返回以后值为4。
+当全部返回以后，status值为200，responseText值为返回的数据。
+
+三步走：创建XHR对象--发送请求--处理返回数据
+
+open:
+xhr.open(method,url[,async = true]);
+method:请求的方式 
+url:请求的资源相对于当前文件的地址
+async:同步还是异步，默认是true(异步)。false:同步
+
+setRequestHeader:(open后跟上)
+xhr.setRequestHeader(header,value);
+
+send:(发起请求)
+xhr.send([data = null])
+
+同源策略：
+相同的协议，相同的端口，相同的主机，就是同源。
+
+跨域资源访问：（如果不是同源，就是跨域。）
+跨域资源访问三方法：
+CORS:
+Frame代理：
+JSONP：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
