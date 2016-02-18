@@ -1,0 +1,43 @@
+1、安装服务器环境
+
+2、AJAX可以和后端来做数据交互。
+应用：可以开个定时器在某个位置，然后动态的获取到后端的数据。
+      注册窗口验证填入的数据是否是注册过的。（这个就需要访问后台数据库了）
+
+
+3、AJAX过程
+<script>
+    window.onload=function () {
+
+        var oBtn=document.getElementById('btn');
+        oBtn.onclick=function () {
+            var xhr= null;
+            if (window.XMLHttpRequest) {
+                xhr=new XMLHttpRequest();
+            }else {
+                xhr=new ActiveXObject('Microsoft.XMLHTTP');   //兼容IE6
+            }
+            xhr.open('get','1.txt',true);
+            xhr.send();
+            xhr.onreadystatechange=function () {
+                if(xhr.readyState==4) {
+                    alert(xhr.responseText);
+                }
+            };
+        }
+    }
+</script>
+
+4、open方法与表单
+get与post两种方式的区别：
+get:会被缓存，但是格式是字符串。
+post:不会被缓存，但是格式比较多。
+异步与同步：
+异步：非阻塞模式，前面的代码与AJAX代码一起执行。
+同步：阻塞模式，前面的代码执行完成以后才会执行后面的AJAX代码。
+
+5、数据的获取
+HTTP状态码：2开头表达成功。   3开头表示重定向    4开头表示错误     5开头表示服务器错误
+
+6、AJAX获取数据的处理和实例（未学）
+

@@ -309,13 +309,20 @@ open:
 xhr.open(method,url[,async = true]);
 method:请求的方式 
 url:请求的资源相对于当前文件的地址
+注：如果这个地址是一个文件加上查询参数，那么GET的参数应该这样写：
+xhr.open('get','example.json?'+'name1=value1&name2=value2',true)
+参数应该跟在URL之后。如果参数是一个对象的话，需要先将对象转换成这种参数，跟在URL之后。（转换函数这一课第二个里有。）
+如果是POST的参数，文件还在URL里，但是查询参数应该放到send()的参数里。
 async:同步还是异步，默认是true(异步)。false:同步
+
 
 setRequestHeader:(open后跟上)
 xhr.setRequestHeader(header,value);
 
 send:(发起请求)
 xhr.send([data = null])
+
+
 
 同源策略：
 相同的协议，相同的端口，相同的主机，就是同源。
@@ -324,7 +331,9 @@ xhr.send([data = null])
 跨域资源访问三方法：
 CORS:
 Frame代理：
-JSONP：
+JSONP：通过script标签跨域
+首先创建一个script标签，然后将跨域的地址写入src地址中。然后将这个标签插入到body中。就会可以生成一个JSON.JS类似的文件。就可以用了。
+
 
 
 
