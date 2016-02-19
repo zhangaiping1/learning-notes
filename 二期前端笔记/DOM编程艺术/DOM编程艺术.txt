@@ -334,6 +334,141 @@ Frame代理：
 JSONP：通过script标签跨域
 首先创建一个script标签，然后将跨域的地址写入src地址中。然后将这个标签插入到body中。就会可以生成一个JSON.JS类似的文件。就可以用了。
 
+7、数据存储
+
+cookie:cookie的增删查改
+
+storage:storage的增删查改，这个有一些API的方法，可以用于增删查改。
+             -localStorage                                      -sessionStorage
+有效期：     永久有效                                            浏览器绘画完成即销毁
+
+8、动画
+
+三要素：
+对象：DOM
+属性：width height opacity left
+定时器：setInterval setTimeout requestAnimationFrame
+
+setInterval:
+var intervalID = setInterval(func,delay[,param1,param2,...])  //每过delay毫秒就会触发一次。可以触发无数次。
+clearInterval(intervalID)                                     //在执行之前传入ID值可清除定时器
+
+setTimeout:
+var timeoutID = setTimeout(func,[delay,param1,param2,...])    //若干时间以后执行一次。只执行一次
+clearTimeout(timeoutID)                                       //在执行之前传入ID值可清除定时器
+
+requestAnimationFrame:
+var requestID = requestAnimationFrame(func)                   //执行时间由浏览器刷新频率决定，每当浏览器刷新一次，他就执行一次。
+                                                              //（现在显示器刷新频率约为60次/秒）
+cancelAnimationFrame(requestID)                               //在执行之前传入ID值可清除定时器
+
+9、音频与视频
+
+audio:
+<audio src='xxx.mp3'></audio>
+audio兼容：
+<audio>
+<source src='xxx.mp3'>
+<source src='xxx.wav'>
+<source src='xxx.ogg'>
+</audio>
+
+video:
+<video src='xxx.mov' width=320 height=240></video>
+video兼容：
+<video>
+<source src='xxx.webm'>
+<source src='xxx.mp4'>
+</video>
+
+音频：http://en.wikipedia.org/wiki/HTML5_Audio#Supported_audio_coding_formats
+视频：http://en.wikipedia.org/wiki/HTML5_video#Browser_support
+
+多媒体格式兼容性：
+音频：
+var a new Audio();
+a.canPlayType('audio/nav');    //如果支持则会返回'maybe'或'probably'，不支持会返回空。
+
+视频：
+因为视频没有构造函数。所以如果想检测视频的话，需要在浏览器内插入video标签，然后获取到再检测。
+
+多媒体相关事件列表：http://www.w3.org/wiki/HTML/Elements/audio#Media_Events
+
+W3C官方定义：http://webaudio.github.io/web-audio-api/
+mozilla官方教程：https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+第三方教程：http://www.html5rocks.com/en/tutorials/webaudio/intro/,http://webaudioapi.com/
+
+10、canvas
+
+<canvas id='tutorial' width='300' height='150'></canvas>
+
+渲染上下文对象：
+var canvas = document.getElementById('tutorial');
+var ctx = canvas.getContext('2d');
+
+globalCompositeOperation:在正式绘画之前需要确定绘画图形的顺序。
+ctx.globalCompositeOperation = 'destination-over';
+
+基本绘图的步骤：
+清除画布--绘制图形--保存渲染上下文状态--绘制图形--恢复渲染上下文状态
+
+Mozilla官方教程：https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
+
+11、BOM
+
+navigator:浏览器信息
+location:浏览器定位和导航
+history:窗口浏览器历史
+screen:屏幕信息
+
+navigator:
+-platform:运行平台
+-userAgent:浏览器信息，用来判断客户用的是什么浏览器，判断内核就可以了。
+
+location:
+-href:浏览器的地址
+
+screen:
+-availHeight:浏览器显示高度
+-height:显示器显示高度
+
+12、表单操作
+
+构建表单--服务器处理--配置表单
+
+form元素的一些属性：
+
+form.elements:符合以下类型任意一个，就在这个集合中。
+-该表单子孙表单控件（除图片按钮）
+-归属于该表单的表单控件（除图片按钮）
+eg:
+<form id='f'></form>
+<p><label><input name="d" form="f"></label></p>
+
+图片按钮：<input type='image'>
+
+form.length:  elements.length
+
+以上的元素都属于elements这个集合，那么如果将这个集合里面的元素取出来呢：
+<form name='test'>
+<input name='a'>
+<input name='b'>
+</form>
+取出name为a的input，以下四种方法都可以取到：
+testForm.elements[0];
+testForm.elements['a'];
+testForm[0];
+testForm['a'];
+
+
+
+
+
+
+
+
+
+
 
 
 
