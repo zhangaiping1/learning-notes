@@ -432,7 +432,7 @@ screen:
 -availHeight:浏览器显示高度
 -height:显示器显示高度
 
-12、表单操作
+12、表单操作(如何通过form标签来访问标签内的子元素)(平时那些选择器都是写死的，如果想做级联下拉选择器等活的，就得用DOM来操作表单。)
 
 构建表单--服务器处理--配置表单
 
@@ -460,8 +460,95 @@ testForm.elements['a'];
 testForm[0];
 testForm['a'];
 
+form[name]:
+-返回ID或name为指定名称的表单控件（除图片按钮）
+-如果结果为空，则返回ID为指定名称的img元素
+eg:
+<form name='test'>
+	<img id='a' src='./test.png'/>     //testForm['a']  ，当这样的时候，取到的是<input name='a'/>
+	<input name='a'/>                  //当<input name='a'>被删除时，上一行的取值会取到<img>元素
+</form>
+
+-如果有多个同名元素，则返回这些元素的动态节点集合。
+-一量用指定名称取过该元素，则不管该元素的ID或者name怎么变化，只要节点还在页面上均可使用原名称获取该元素。
+eg:
+<form name='test'>
+	<input name='b'/>
+</form>
+testForm['a'];
+testForm.elements['a'];
+testForm['a'].name='b';
+testForm['a'];           //以前取到过这个元素，然后改变name值为b，然后用a还是可以取到该值的。
+testForm.elements['a'];  //如果还用elements来取这个值的话，会是null
+
+form的几个常用接口：reset()   submit()   checkValidity()
+
+reset():
+-可重置元素：input keygen output select textarea
+-触发表单reset事件，阻止该事件的默认行为可取消重置。
+-元素重置时不再触发元素上的change和input事件。
+例：可以用来删除文件选择器选中的文件。
 
 
+label的一些属性：
+
+htmlFor:
+-关联表单控件激活行为，点击label区域可以激活表单控件的行为。
+-可关联元素：button input(除hidden之外) keygen meter output progress select textarea
+例：label除了可以修改触发区域外，还可以个性化的定制，比如按钮改成图片。
+
+form:
+-关联归属表单
+-可关联元素：button fieldset input keygen label object output select textarea
+-只读属性，不可在程序中修改。
+如果要修改：label.setAttribute('form','newFormId');
+
+
+input的一些属性：
+
+type:
+-控件外观：
+-数据类型：
+-默认为text:
+
+关于input小例：本地图片预览：
+-onchange:
+-accept:
+-multiple:
+-files:
+
+
+select的一些属性：
+
+name value multiple options selectedOptions selectedIndex add(element[,before]) remove([index])
+
+创建选项：
+-document.createElement
+-new Option([text,[,value[,defaultSelected[,selected]]]])
+
+添加选项：
+-insertAdjacentElement
+-select.add
+
+删除选项：
+-removeChild
+-select.remove
+
+小例：级联下拉选择器：
+-onchange
+-remove
+-add
+
+
+textarea的一些属性：
+
+name value select() selectionStart selectionEnd selectionDirection setSelectionRange(start,end[,direction])
+setRangeText(replacement[,start,end[,mode]])
+
+小例：艾特别人
+-oninput
+-selectionStart
+-setRangeText
 
 
 
