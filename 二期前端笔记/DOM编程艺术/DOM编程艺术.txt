@@ -466,11 +466,11 @@ form[name]:
 eg:
 <form name='test'>
 	<img id='a' src='./test.png'/>     //testForm['a']  ，当这样的时候，取到的是<input name='a'/>
-	<input name='a'/>                  //当<input name='a'>被删除时，上一行的取值会取到<img>元素
+	<input name='a'/>                  //当<input name='a'>被删除时，上一行的取值会取到id=a的<img>元素
 </form>
 
 -如果有多个同名元素，则返回这些元素的动态节点集合。
--一量用指定名称取过该元素，则不管该元素的ID或者name怎么变化，只要节点还在页面上均可使用原名称获取该元素。
+-曾经用指定名称取过该元素，则不管该元素的ID或者name怎么变化，只要节点还在页面上均可使用原名称获取该元素。
 eg:
 <form name='test'>
 	<input name='b'/>
@@ -479,7 +479,7 @@ testForm['a'];
 testForm.elements['a'];
 testForm['a'].name='b';
 testForm['a'];           //以前取到过这个元素，然后改变name值为b，然后用a还是可以取到该值的。
-testForm.elements['a'];  //如果还用elements来取这个值的话，会是null
+testForm.elements['a'];  //但是如果还用elements来取这个值的话，会是null
 
 form的几个常用接口：reset()   submit()   checkValidity()
 
@@ -549,6 +549,92 @@ setRangeText(replacement[,start,end[,mode]])
 -oninput
 -selectionStart
 -setRangeText
+
+
+验证：
+验证元素：
+-可验证元素：button input select textarea
+-以下情况不做验证
+input元素类型为hidden  reset  buttion时，不验证
+button元素类型为reset  button时，不验证
+input和textarea元素有readonly时，不验证
+作为datalist的子孙节点时，不验证
+disabled时，不验证
+
+在相应的元素上调用以下属性和接口做验证：
+willValidate
+checkValidity()
+validity
+validationMessage
+setCustomValidity(message)
+
+验证：validity
+
+自定义异常：
+-oninvalid
+-setCustomValidity  //自定义异常时候的提示。
+
+禁止验证：
+在form上添加novalidate属性
+
+
+提交：
+隐式提交
+-如：聚集在输入框时按回车提交表单：
+-满足以下任一条件：
+表单有非禁用的提交按钮。
+没有提交按钮时，只有一个类型为text search url email password date time number 的input元素，也可以。
+
+提交过程：
+-根据表单enctype指定的值构建要提交的数据结构。
+-使用method指定的方式发送数据到action指定的目标。
+
+构建提交数据：
+-从可提交元素中提取数据组装成指定的数据结构的过程
+-可提交元素：button input keygen object select textarea
+
+编码方式（enctype）：
+-application/x-www-form-urlencoded [默认]         //提交上去的是以&符号分隔的间值对。  a=a&b=b&c=c
+-multipart/form-data                         //以字节流的方式发送到服务器。文件上传常用的方式。
+-text/plain                   //提交的是以回车换行符分隔的间值对。  第一行：a=a  第二行：b=b  第三行c=c 适合人阅读
+
+特殊案例：
+-<input name='isindex' />  当这个元素作为form的第一个元素时，提交以后只会显示值，不会显示name
+如果想正常，将这个元素放到第二个位置就行。
+
+-<input type='hidden' name='_charset_' />  当该元素没有设置value值，提交时value自动用当前提交的字符集填充。
+结果 _charset_='UTF-8'
+
+submit()
+-提交表单   form.submit();
+
+onsubmit
+-表单提交事件
+-提交之前的数据验证
+-阻止事件的默认行为可取消表单提交。
+
+小例：无刷新表单提交
+-form
+-target
+-iframe
+
+
+表单应用的完整的例子：
+
+
+13、列表操作（相当于一个完整的列表的例子）
+
+面向视图：
+
+面向数据：
+
+
+14、组件实践
+
+
+
+
+
 
 
 
