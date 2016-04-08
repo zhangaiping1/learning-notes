@@ -42,6 +42,23 @@ invalid事件:当input元素内验证不通过时触发该事件。
 formnovalidate：关闭验证
 
 
+1、新的选择器
+querySelector():传入的参数可以是ID,可以是标签，可以是class,可以是某个属性。只能选中一组中的第一个元素。
+id:#div1  标签：div1  class:.div1   属性：[title=hello]
+querySelectorAll():选中一组元素。
+classList:一个类似于数组的对象，这个对象包含了当前元素的所有class。
+
+2、JSON的新方法
+parse():把字符串转成JSON，字符串中的属性要严格的加上引号
+stringify():把JSON转化成字符串，会自动的把双引号加上
+如何其他浏览器做到兼容：www.json.org去下载json2.js
+把这两个方法联合起来使用可以深复制对象。先把一个对象转换成字符串，然后把这个字符串再转换成一个新对象。
+
+
+
+
+
+
 
 
 
