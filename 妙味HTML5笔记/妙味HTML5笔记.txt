@@ -55,6 +55,46 @@ stringify():把JSON转化成字符串，会自动的把双引号加上
 把这两个方法联合起来使用可以深复制对象。先把一个对象转换成字符串，然后把这个字符串再转换成一个新对象。
 
 
+以下的内容我决定跳着看，首先看HTML5，JS和其它的暂时先放放。
+
+3、自定义数据与JS加载
+dataset:alert(oDiv.dataset.miaov)获取到元素上的自定义属性。
+以下两个属性添加在JS的引用语句中，确定JS加载顺序。
+defer:延迟加载，会按顺序执行，在onload执行前被触发。（先加载其它的文件，最后加载这个文件，并且最后执行这个文件。）
+async:异步加载，加载完就触发，有顺序问题。（异步加载文件，所以有可能会找不到DOM元素。另外谁先加载完就会立即执行，所以没办法保证执行顺序。）
+异步加载的库：labjs库（这个库已经把兼容性写好）
+
+4、历史管理history
+onhashchange:改变hash值来管理。当hash值改变时会触发这个事件，从而可以跳转页面。
+history:
+-服务器下运行
+-pushState:三个参数：数据 标题（都没实现） 地址（可选，地址不变会用户有可能不适应）
+-popstate事件：读取数据 event.state
+-注意：网址是虚假的，需在服务器指定对应页面，不然刷新找不到页面
+
+5、拖放操作一
+在元素上加上draggable="true" 属性，就可以拖拽了
+<div draggable="true"></div>
+拖放事件：
+拖拽元素事件：事件对象为被拖拽元素
+-dragstart:拖拽前触发
+-drag:拖拽前，拖拽结束之间，连续触发。
+-dragend:拖拽结束触发
+目标元素事件：事件对象为目标元素
+-dragenter:进入目标元素触发，相当于mouseover
+-dragover:进入目标、离开目标之间，连续触发
+-dragleave:离开目标元素触发，相当于mouseout
+-drop:在目标元素上释放鼠标触发。（要想触发drop事件，就必须在dragover当中阻止默认事件）（oDiv.ondragover=function (ev) {ev.preventDefault();};）
+
+6、拖放操作二
+解决火狐下的问题：
+-必须设置dataTransfer对象的setData方法才可以拖拽除图片外的其他标签。（图片默认是可以直接拖拽的。）
+dataTransfer对象：
+-setData():设置数据key和value(必须是字符串)
+-getData():获取数据，根据key值，获取对应的value。
+eg:ev.dataTransfer.setData('name','hello');
+-effectAllowed:设置光标样式，参数包括（none,copy,copyLink,copyMove,link,linkMove,move,all,uninitialized）
+-setDragImage:设置拖放的样式，三个参数，指定的元素（可以是图片） 坐标X  坐标Y
 
 
 
