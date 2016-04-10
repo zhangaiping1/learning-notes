@@ -96,6 +96,13 @@ eg:ev.dataTransfer.setData('name','hello');
 -effectAllowed:设置光标样式，参数包括（none,copy,copyLink,copyMove,link,linkMove,move,all,uninitialized）
 -setDragImage:设置拖放的样式，三个参数，指定的元素（可以是图片） 坐标X  坐标Y
 
+7、拖放操作三
+files:
+-获取外部拖拽的文件，返回一个filesList列表
+-filesList下有个type属性，返回文件的类型。
+
+8、拖放操作四
+
 
 
 
