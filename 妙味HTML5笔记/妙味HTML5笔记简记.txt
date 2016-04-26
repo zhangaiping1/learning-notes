@@ -1,0 +1,50 @@
+1、同域下的窗口通信
+准备工作：开一个服务器，虚拟两个域名出来。把域名指向文件夹。（虚拟主机）在设置完成以后，要重启服务器。
+
+同域下窗口间通信的方式：
+iframe:oMyIframe.contentWindow.document.body.style.background="";
+window.open：这个方法在打开新窗口的同时，会返回一个值，这个值就是打开的新窗口这个对象。所以可以通过这个对象，来操作这个新窗口。
+newWindow=window.open('4.window.open.html','_blank');
+newWindow.document.body.style.background='';
+
+2、窗口跨域操作问题和postMessage的使用
+跨域的情况下，可以通过postMessage()方法来操作另一个窗口。
+postMessage:
+-接收消息的窗口的window对象.postMessage();(要先获取到接收消息的窗口，然后使用接收消息的窗口来操作这个方法。)
+-这个方法会发送一些消息给接收消息的窗口。
+-http://www.b.com  协议要带全
+接收两个参数：第一个参数是发送的数据，第二个参数是接收数据的域名（带上协议）。
+eg:oMyIframe.contentWindow.postMessage('abc','http://www.b.com');
+
+-当接收数据的窗口接收到数据的时候，会有一个message事件被触发。那我们就可以将这个事件注册到某个对象下，当事件被触发的时候，发生一个函数，处理一些问题。
+-ev.data:发送过来的数据
+
+eg: window.addEventListener('message',function  (ev) {
+		alert(ev.data);
+	},false);
+
+-这样就可以了，通过postMessage方法可以发送过来数据，而第二个页面在接收到数据的时候触发message方法，通过注册message方法使用一个函数，函数里的ev.data就是发送过来的数据。通过判断这个数据的内容，来操作接收消息的页面发生相应的变化。
+eg:
+if(ev.data=='1'){
+	document.body.style.background='red';
+}
+
+-ev.origin:发送消息的域。  如果想判断接收到的消息的来源，就要用到这个。
+
+-现在父级可以操作子级页面，那子级页面怎么操作父级页面。(以下方法是同域下。)
+-parent:如果当前页面是顶级，没有被其他页面所包含，那么parent就是当前页面的window对象。如果被包含了，那么parent就是包含当前页面的父级页面的window对象。
+eg:同域下：
+parent.document.body.style.background='green';
+
+-几个对象：window,parent,top.
+top指的是最外层的window对象。
+parent指的是上一层的window对象。
+这两个如果都是最外层的话，就指向他们本身。
+
+-window.opener:通过window.open方法打开当前页面的那个页面的window
+
+
+6、websocket服务器的创建和应用
+
+
+
