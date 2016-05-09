@@ -1,0 +1,23 @@
+1、网格系统：
+外层是container，中层是row,内层是col-xs-4;
+xs:不论多小都是多行。
+sm:768以下时变一行。
+md:992以下时变一行。
+lg:1200以下时变一行。
+
+列上面内容间的间距通过设置列的padding值来得到。
+设置了内边距以后所偏移的量通过设置行上的margin负值来调整。
+
+媒体查询：
+
+@media (max-width:@screen-xs-max) {}                                    768以下
+@media (min-width:@screen-sm-min) and (max-width:@screen-sm-max) {}     768-992
+@media (min-width:@screen-md-min) and (max-width:@screen-md-max) {}     992-1200
+@media (min-width:@screen-lg-min) {}                                    1200以上
+
+
+
+
+
+
+
