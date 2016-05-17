@@ -46,7 +46,7 @@ bootstrap是基于JQ的，需要引入JQ。
 
 
 2、bootstrap栅格系统
-容器：这两个容器不要出现嵌套关系，否则宽度容易混乱。如果感觉宽度不合适，可以直接指定宽度（width:1000px !important;）
+容器：“流体容器”和“固定容器”不要出现嵌套关系，否则宽度容易混乱。如果感觉宽度不合适，可以直接指定宽度（width:1000px !important;）
 -container-fluid
  >>流体
 -container
@@ -65,6 +65,73 @@ bootstrap是基于JQ的，需要引入JQ。
  >>992>=
  >>768>=
  >>768<
+
+
+3、
+选择器：div[class*="col-"]
+
+概念：
+-语法：
+ >>col-lg-*
+ >>col-md-*
+ >>col-sm-*
+ >>col-xs-*
+-组合模式：可以将两种模式组合使用
+eg:<div class="col-lg-4 col-md-6"></div>
+
+缩略图：thumbnail  加上这个以后会形成一个实线灰圈
+
+加空隙：caption  加上这个以后会在文字四周形成空隙。
+
+
+4、
+-列偏移
+  >>col-[*]-offset-* 将当前元素向右侧偏移*个格，和后方元素重叠时，会将后方元素推向下一行。
+  eg:col-lg-offset-4
+-列排序
+  >>col-[*]-push-*   将当前元素向后移动*个格，和后方元素重叠时，会重叠，后方元素位置不变。
+  eg:col-lg-push-10
+  >>col-[*]-pull-*   将当前元素向前移动*个格，和后方元素重叠时，会重叠，后方元素位置不变。
+  eg:col-lg-pull-2
+偏移和排序的差别注：偏移如果当前行满，就会在下一行进行偏移，排序则会排出窗口。
+
+-嵌套：按照父级的宽度再次分成12个网格。进行分配。
+-清浮动：
+  >>class="clearfix"
+
+
+5、响应式工具
+概念：
+-针对不同设备展示或隐藏页面内容
+可见类：
+-visible-*-*
+  >>lg md sm xs
+  >>block inline inline-block
+-hidden-*
+  >>lg md sm xs
+打印类：(只有在打印机打印的时候才对应的显示隐藏。)
+-visible-print-* hidden-print
+实例：天猫侧边栏
+
+左浮动：pull-left
+右浮动：pull-right
+
+如何处理右侧边距：
+-可以将元素放到container元素的外面。
+-或者给元素外面加一层行元素(<div class="row"></div>)
+
+固定定位：affix  (靠右的话：<div class="affix" style="right:0;"></div>)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
