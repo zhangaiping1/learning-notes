@@ -123,6 +123,32 @@ eg:<div class="col-lg-4 col-md-6"></div>
 固定定位：affix  (靠右的话：<div class="affix" style="right:0;"></div>)
 
 
+6、Glyphicons字体图标
+-好处：
+  >>减少请求
+  >>容易控制样式
+  >>例子：淘宝
+-用法：
+  >>font-face
+  >>字体路径
+<div class="glyphicon glyphicon-search" style="color:red;"></div>
+注：记得把字体文件拷到页面目录中。如果字体路径要变，记得修改CSS中的路径。
+-自制图标：
+      >>http://jingyan.baidu.com/article/f79b7cb346cf499145023e78.html
+
+
+7、预定义样式风格 （非针对某一元素，所有元素都可以应用下列样式。）
+按钮样式：class="btn btn-info" 段落样式：class="bg-info"
+文本样式：class="text-primary" 警告框：class="alert alert-info"
+插件样式：class="panel panel-info"
+-primary(首选项) eg:<input type="button" class="btn btn-primary">
+-success(成功)   eg:<input type="button" class="btn btn-success">
+-info(一般信息)  eg:<input type="button" class="btn btn-info">
+-warning(警告)   eg:<input type="button" class="btn btn-warning">
+-danger(危险)    eg:<input type="button" class="btn btn-danger">
+-实例：登陆框
+
+
 
 
 
