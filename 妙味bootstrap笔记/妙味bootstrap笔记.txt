@@ -148,6 +148,38 @@ eg:<div class="col-lg-4 col-md-6"></div>
 -danger(危险)    eg:<input type="button" class="btn btn-danger">
 -实例：登陆框
 
+panel:面板
+panel-heading:面板头部
+panel-body:面板主体
+
+form-group:表单
+form-control:文本元素需添加的
+
+
+8、按钮
+-基类
+ 》btn
+-样式
+ 》btn-default(默认)
+ 》btn-link(链接)
+-大小
+ 》btn-*[lg,sm,xs]
+-状态
+ 》active(选中状态)
+ 》disabled（禁用状态）
+-种类
+ 》a,input,button
+-块级
+ 》btn-block
+-按钮组
+ 》btn-group （按钮组）
+ 》btn-group-justified （与父容器两边端点对齐。适用于A标签，input需要外面套一层div class="btn-group"）
+ 》btn-group-vertical （纵向按钮组 一般只需要加这个属性，不加btn-group，因为加了右上角会是直角。）
+
+-按钮上向下的箭头：<span class="caret"></span>  (不适用于input)
+-箭头向上：dropup 加到父级上
+
+-实例：github按钮组
 
 
 
