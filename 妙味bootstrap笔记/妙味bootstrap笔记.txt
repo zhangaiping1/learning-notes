@@ -162,7 +162,7 @@ form-control:文本元素需添加的
 -样式
  》btn-default(默认)
  》btn-link(链接)
--大小
+-按钮大小
  》btn-*[lg,sm,xs]
 -状态
  》active(选中状态)
@@ -173,6 +173,7 @@ form-control:文本元素需添加的
  》btn-block
 -按钮组
  》btn-group （按钮组）
+ 》btn-group-*[lg,sm,xs] (按钮组大小)
  》btn-group-justified （与父容器两边端点对齐。适用于A标签，input需要外面套一层div class="btn-group"）
  》btn-group-vertical （纵向按钮组 一般只需要加这个属性，不加btn-group，因为加了右上角会是直角。）
 
@@ -181,6 +182,22 @@ form-control:文本元素需添加的
 
 -实例：github按钮组
 
+
+10、下拉菜单
+-属性
+ 》data-* （用来触发JS交互）
+ 》aria-* （给特殊人群用 行为状态）
+ 》role   （给特殊人群用 标签类型）
+ eg:<div role="checkbox" aria-*="checked"></div>
+
+需加的三个class：dropdowm dropdowm-toggle dropdown-menu  
+需加一个交互属性：data-toggle="dropdown"
+
+-open  (默认打开)
+-dropdown-menu-right  (默认靠右)
+-dropdown-header
+-divider
+-例子：运动且带图标的菜单
 
 
 
