@@ -191,7 +191,9 @@ form-control:文本元素需添加的
  eg:<div role="checkbox" aria-*="checked"></div>
 
 需加的三个class：dropdown dropdown-toggle dropdown-menu  
-需加一个交互属性：data-toggle="dropdown"
+需加一个交互属性：data-toggle="dropdown" （子元素如果显示靠边就是里面没有加A标签）
+注：需要加的元素要加到子元素上，不能加到子元素的子元素上。
+    dropdown-toggle和dropdown-menu是同级元素，dropdown是父级元素
 
 -open  (默认打开)
 -dropdown-menu-right  (默认靠右)
@@ -220,7 +222,7 @@ data-target=".dropdown"：让哪些目标来应用下列事件。凡是带.dropdown的全部会应用以
 13、标签页
 -头部
  》nav
- 》nav-tabs
+ 》nav-tabs   (如果带上这个以后没有显示方块，就是子元素里面没有带A标签)
  》nav-justified
  》nav-tabs-justified
  》nav-pills
@@ -243,6 +245,32 @@ $('#myTabs a').mouseover(function () {
 
 });
  》带下拉菜单的切换
+
+
+15、导航条
+-navbar   （基类）
+-navbar-deault （默认类型 加到父级）
+-nav navbar-nav （导航条内容需要加，加到UL上）
+-navbar-inverse  （深色样式）
+-navbar-static-top （非圆角 加父级）
+-navbar-fixed-top   （顶部固定导航）
+-navbar-fixed-bottom （底部固定导航）
+-遮挡内容的问题  （给BODY加margin-top）
+
+
+16、导航条
+-navbar-header （加在LOGO之前的父级上）
+-navbar-brand  （加LOGO）
+-navbar-left
+-navbar-right
+-navbar-btn
+-navbar-link
+-navbar-text
+-navbar-form
+-例子：知乎导航条
+
+
+
 
 
 
