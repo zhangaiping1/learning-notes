@@ -33,29 +33,92 @@ document.createElement("article");
 email:如果输入的不是邮箱，会有提示。
 
 4、HTML5表单验证反馈
+
+表单验证：
+validity对象，通过下面的valid可以查看验证是否通过，如果八种验证都通过返回true,一种验证失败返回false。
+
+eg:
+oText.addEventListener("invalid",fn,false);
+function fn() {
+
+	alert(this.validity.falid);//如果验证通过返回true,如果验证失败返回false
+
+}
+
+
+-oText.addEventListener("invalid",fn1,false);
+-ev.preventDefault()  阻止默认事件
+-valueMissing:输入值为空时，返回true eg:this.validity.valueMissing
+-typeMismatch:控件值与预期类型不匹配，返回true
+-patternMismatch:输入值不满足pattern正则,返回true
+-toolong:超过maxLength最大限制，返回true
+-rangeUnderflow:验证的range最小值，不符合最小值返回true
+-rangeOverflow:验证的range最大值，不符合最大值返回true
+-stepMismatch:验证range的当前值是否符合min\max及step的规则，不符合返回true
+-customError:输入自定义验证的关键词时，返回true
+  》setCustomValidity();自定义验证
+
+formnovalidate：表单上加上该属性，可以关闭验证
+
+
+
+关于自定义验证：
+eg:
+oText.oninput=function () {
+
+	if(this.value=="敏感词") {
+		this.setCustomValidity("请不要输入敏感词");
+		//这里的customError返回true
+
+	}
+
+}
+
+
+
 通过对validity.valid属性的检测来判定是否验证通过，如果通过，该值为true，如果不通过，该值为false。
 方法：获取当前元素-给当前元素添加invalid事件-事件后面跟上函数-函数内就可以输入这个方法，来验证是否通过。
-invalid事件:当input元素内验证不通过时触发该事件。
+invalid事件:当input元素内验证不通过时触发该事件。如果通过就直接提交了，不会触发这个事件。
 
 
 
-formnovalidate：关闭验证
+
 
 
 1、新的选择器
+
+html5相关网站：www.caniuse.com/#index
+
 querySelector():传入的参数可以是ID,可以是标签，可以是class,可以是某个属性。只能选中一组中的第一个元素。
-id:#div1  标签：div1  class:.div1   属性：[title=hello]
-querySelectorAll():选中一组元素。
-classList:一个类似于数组的对象，这个对象包含了当前元素的所有class。
+id:#div1  标签：div   class:.div1   属性：[title=hello]
+querySelectorAll():选中一组元素。然后要对这组元素进行循环操作，不能直接加状态，直接加加不上去。
+
+注：其实原生JS里面凡是获取一组元素的，都不能直接加属性，都需要循环着来加属性。否则加不上去。
+
+classList:这个对象包含了当前元素的所有class，可以用来获取到当前元素所有的class名，是一个类似于数组的对象。
+包括三个对class操作的方法：add() remove() toggle()
+eg:oDiv.classList.add('box4');
 
 2、JSON的新方法
-parse():把字符串转成JSON，字符串中的属性要严格的加上引号
-stringify():把JSON转化成字符串，会自动的把双引号加上
-如何其他浏览器做到兼容：www.json.org去下载json2.js
-把这两个方法联合起来使用可以深复制对象。先把一个对象转换成字符串，然后把这个字符串再转换成一个新对象。
 
+eval():接收一个JS字符串，并运行其中的JS代码。
+eg:eval("function show() {alert(1);}");
+   show();  //结果弹出1
+注：参数只能接收字符串，string对象是不行的。另外，如果参数出错，运用方式出错，参数运行出错，都是抛出错误。
 
-以下的内容我决定跳着看，首先看HTML5，JS和其它的暂时先放放。
+-parse():把JSON字符串转成JSON对象
+ 》字符串中的key和value一定要用双引号包括
+-stringify():把JSON对象转化成JSON字符串
+ 》会自动的把双引号加上
+
+注：当JSON字符串转JSON对象时，KEY上必须加引号，否则不能常的转化。当JSON对象转JSON字符串时，KEY上不需要加双引号，转成字符串以后会自动加上双引号。
+
+-新方法与eval的区别
+-新方法的应用
+ 》深度克隆新对象 //将对象转换成字符串，然后再转换成对象，就会是一个新的对象，再修改属性的话，就不会对以前的对象造成影响。
+-如何其他浏览器做到兼容
+ 》www.json.org去下载json2.js
+
 
 3、自定义数据与JS加载
 dataset:alert(oDiv.dataset.miaov)获取到元素上的自定义属性。
@@ -306,6 +369,56 @@ oGC.fillRect(num,num,100,100);
 注意：canvas的宽高设置在canvas标签内，不能设置到style里，否则会宽高不对。
 
 
+
+
+
+1、同域下的窗口通信
+准备工作：开一个服务器，虚拟两个域名出来。把域名指向文件夹。（虚拟主机）在设置完成以后，要重启服务器。
+
+同域下窗口间通信的方式：
+iframe:oMyIframe.contentWindow.document.body.style.background="";
+window.open：这个方法在打开新窗口的同时，会返回一个值，这个值就是打开的新窗口这个对象。所以可以通过这个对象，来操作这个新窗口。
+newWindow=window.open('4.window.open.html','_blank');
+newWindow.document.body.style.background='';
+
+2、窗口跨域操作问题和postMessage的使用
+跨域的情况下，可以通过postMessage()方法来操作另一个窗口。
+postMessage:
+-接收消息的窗口的window对象.postMessage();(要先获取到接收消息的窗口，然后使用接收消息的窗口来操作这个方法。)
+-这个方法会发送一些消息给接收消息的窗口。
+-http://www.b.com  协议要带全
+接收两个参数：第一个参数是发送的数据，第二个参数是接收数据的域名（带上协议）。
+eg:oMyIframe.contentWindow.postMessage('abc','http://www.b.com');
+
+-当接收数据的窗口接收到数据的时候，会有一个message事件被触发。那我们就可以将这个事件注册到某个对象下，当事件被触发的时候，发生一个函数，处理一些问题。
+-ev.data:发送过来的数据
+
+eg: window.addEventListener('message',function  (ev) {
+		alert(ev.data);
+	},false);
+
+-这样就可以了，通过postMessage方法可以发送过来数据，而第二个页面在接收到数据的时候触发message方法，通过注册message方法使用一个函数，函数里的ev.data就是发送过来的数据。通过判断这个数据的内容，来操作接收消息的页面发生相应的变化。
+eg:
+if(ev.data=='1'){
+	document.body.style.background='red';
+}
+
+-ev.origin:发送消息的域。  如果想判断接收到的消息的来源，就要用到这个。
+
+-现在父级可以操作子级页面，那子级页面怎么操作父级页面。(以下方法是同域下。)
+-parent:如果当前页面是顶级，没有被其他页面所包含，那么parent就是当前页面的window对象。如果被包含了，那么parent就是包含当前页面的父级页面的window对象。
+eg:同域下：
+parent.document.body.style.background='green';
+
+-几个对象：window,parent,top.
+top指的是最外层的window对象。
+parent指的是上一层的window对象。
+这两个如果都是最外层的话，就指向他们本身。
+
+-window.opener:通过window.open方法打开当前页面的那个页面的window
+
+
+6、websocket服务器的创建和应用
 
 
 
