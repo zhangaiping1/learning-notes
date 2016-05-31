@@ -171,6 +171,35 @@ history:
 -注意：网址是虚假的，需在服务器指定对应页面，不然刷新找不到页面
 
 5、拖放操作一
+
+HTML5新特性的浏览器支持情况
+-www.caniuse.com/#index
+拖放：
+-draggable:
+ 》设置为true,元素就可以拖拽了
+拖放事件：
+-拖拽元素事件：事件对象为被拖拽元素
+ 》dragstart:拖拽前触发
+ 》drag:拖拽前、拖拽结束之间，连续触发
+ 》dragend:拖拽结束触发
+-目标元素事件：事件对象为目标元素
+ 》dragenter:进入目标元素触发，相当于mouseover
+ 》dragover:进入目标、离开目标之间，连续触发
+ 》dragleave:离开目标元素触发，相当于mouseout
+ 》drop:在目标元素上释放鼠标触发
+   注：要想触发drop事件，就必须在dragover当中阻止默认事件。
+   eg:oDiv.ondragover=function (ev) {ev.preventDefault();};
+
+for循环上有个i，循环里面有个函数，函数里面再有个i，这两个i是不相干的。改变其中一个i，另一个i不会受到影响。
+
+拖放事件：
+-事件的执行顺序：drop不触发的时候
+ 》dragstart>drag>dragenter>dragover>dragleave>dragend
+-事件的执行顺序：drop触发的时候（dragover的时候阻止默认事件）
+ 》dragstart>drag>dragenter>dragover>drop>dragend
+-不能释放的光标和能释放的光标不一样。
+
+
 在元素上加上draggable="true" 属性，就可以拖拽了
 <div draggable="true"></div>
 拖放事件：
