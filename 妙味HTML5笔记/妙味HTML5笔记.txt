@@ -190,7 +190,7 @@ HTML5新特性的浏览器支持情况
    注：要想触发drop事件，就必须在dragover当中阻止默认事件。
    eg:oDiv.ondragover=function (ev) {ev.preventDefault();};
 
-for循环上有个i，循环里面有个函数，函数里面再有个i，这两个i是不相干的。改变其中一个i，另一个i不会受到影响。
+
 
 拖放事件：
 -事件的执行顺序：drop不触发的时候
@@ -214,9 +214,46 @@ for循环上有个i，循环里面有个函数，函数里面再有个i，这两个i是不相干的。改变其中一
 -drop:在目标元素上释放鼠标触发。（要想触发drop事件，就必须在dragover当中阻止默认事件）（oDiv.ondragover=function (ev) {ev.preventDefault();};）
 
 6、拖放操作二
+
+拖放事件：
+-解决火狐下的问题
+ 》必须设置dataTransfer对象的setData方法才可以拖拽除图片外的其他标签。图片是可直接拖拽的。
+-dataTransfer对象
+ 》setData():设置数据key和value（必须是字符串）
+ 》getData():获取数据，根据key值，获取对应的value
+eg:aLi[i].ondragstart=function (ev) {
+
+	var ev=ev||window.event;
+	ev.dataTransfer.setData('name','hello');
+
+}
+oDiv.ondrop=function (ev) {
+
+	alert(ev.dataTransfer.getData('name'));  //hello
+}
+
+拖拽删除元素小例
+
+dataTransfer对象：
+-effectAllowed:
+ 》effectAllowed:设置光标样式（none,copy,copyLink,copyMove,link,linkMove,move,all,uninitialized）
+-setDraglmage:（拖拽的样式）
+ 》三个参数：指定的元素，坐标X，坐标Y。
+
+拖拽排序列表小例
+
+-files
+ 》获取外部拖拽文件，返回一个fileList列表
+ 》filelist下有个type属性，返回文件的类型。
+ 注：拖文件进入浏览器以后默认会打开，如果不想打开，要关闭默认行为。
+     这里关闭默认行为要注意，不只是关闭释放的默认行为，移入以后到移出之前这一段的默认行为也要关闭，就是关闭ondragover的默认行为。
+
+
+
+
 解决火狐下的问题：
 -必须设置dataTransfer对象的setData方法才可以拖拽除图片外的其他标签。（图片默认是可以直接拖拽的。）
-dataTransfer对象：
+dataTransfer对象：在进行拖放操作时，DataTransfer 对象用来保存被拖动的数据。它可以保存一项或多项数据、一种或者多种数据类型。
 -setData():设置数据key和value(必须是字符串)
 -getData():获取数据，根据key值，获取对应的value。
 eg:ev.dataTransfer.setData('name','hello');
@@ -224,9 +261,24 @@ eg:ev.dataTransfer.setData('name','hello');
 -setDragImage:设置拖放的样式，三个参数，指定的元素（可以是图片） 坐标X  坐标Y
 
 7、拖放操作三
-files:
--获取外部拖拽的文件，返回一个filesList列表
--filesList下有个type属性，返回文件的类型。
+
+-files
+ 》获取外部拖拽文件，返回一个fileList列表
+ 》filelist下有个type属性，返回文件的类型。
+ 注：拖文件进入浏览器以后默认会打开，如果不想打开，要关闭默认行为。
+
+FileReader(读取文件信息，注意F和R都是大写的)
+-readAsDataURL
+ 》参数为要读取的文件对象，将文件读取为DataUrl
+-onload
+ 》当读取文件成功完成的时候触发此事件
+ 》this.result,来获取读取的文件数据，如果是图片，将返回base64格式的图片数据
+-实例：
+ 》拖拽删除列表
+ 》拖拽购物车
+ 》上传图片预览功能
+
+
 
 8、拖放操作四
 拖拽购物实例
