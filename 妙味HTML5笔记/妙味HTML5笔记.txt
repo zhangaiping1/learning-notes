@@ -242,11 +242,7 @@ dataTransfer对象：
 
 拖拽排序列表小例
 
--files
- 》获取外部拖拽文件，返回一个fileList列表
- 》filelist下有个type属性，返回文件的类型。
- 注：拖文件进入浏览器以后默认会打开，如果不想打开，要关闭默认行为。
-     这里关闭默认行为要注意，不只是关闭释放的默认行为，移入以后到移出之前这一段的默认行为也要关闭，就是关闭ondragover的默认行为。
+
 
 
 
@@ -266,6 +262,7 @@ eg:ev.dataTransfer.setData('name','hello');
  》获取外部拖拽文件，返回一个fileList列表
  》filelist下有个type属性，返回文件的类型。
  注：拖文件进入浏览器以后默认会打开，如果不想打开，要关闭默认行为。
+     这里关闭默认行为要注意，不只是关闭释放的默认行为，移入以后到移出之前这一段的默认行为也要关闭，就是关闭ondragover的默认行为。
 
 FileReader(读取文件信息，注意F和R都是大写的)
 -readAsDataURL
@@ -273,6 +270,24 @@ FileReader(读取文件信息，注意F和R都是大写的)
 -onload
  》当读取文件成功完成的时候触发此事件
  》this.result,来获取读取的文件数据，如果是图片，将返回base64格式的图片数据
+
+eg:
+oDiv.ondrop=function (ev) {
+                    ev.preventDefault();
+                    var fs=ev.dataTransfer.files;
+                    for(var i=0;i<fs.length;i++) {
+                        var fd=new FileReader();
+                        fd.readAsDataURL(fs[i]);
+                        fd.onload=function () {
+                            var oLi=document.createElement('li');
+                            var oImg=document.createElement('img');
+                            oImg.src=this.result;
+                            oLi.appendChild(oImg);
+                            oUl.appendChild(oLi);
+                        };
+                    };
+                };
+
 -实例：
  》拖拽删除列表
  》拖拽购物车
@@ -282,10 +297,59 @@ FileReader(读取文件信息，注意F和R都是大写的)
 
 8、拖放操作四
 拖拽购物实例
+其实就是一个在拖放的时候读写数据的过程，拖的时候读，放的时候写。
+dataTransfer是一个ev下的功能。ev.dataTransfer.setData('','');
+setData设置数据。getData读出设置的数据。
 appendChild有剪切的功能，当新创建appendChild的时候，上一个创建的就会被剪切掉。
 
 
 1、canvas
+
+标签：
+<canvas>--不支持canvas的浏览器可以看到这里的内容</canvas>
+
+绘制环境：
+getContext('2d'):目前支持2D的场景
+
+注：绘制的图形的样式都要放到绘制之前。比如颜色，填充，线宽，都要放到绘制之前。
+
+绘制方块：
+-fillRect(L,T,W,H):默认颜色是黑色
+-strokeRect(L,T,W,H):带边框的方块
+ 》默认一像素黑色边框，显示出来的不一样原因
+
+设置绘图：
+-fillStyle:填充颜色（绘制canvas是有顺序的）
+-lineWidth:线宽度，是一个数值
+-strockeStyle:边框颜色
+
+注：填充和边框绘制的顺序不一样的话，显示效果会不一样。后绘制的图形会覆盖在前绘制的图形上边。
+
+边界绘制：
+-lineJoin:边界连接点样式
+ 》miter(默认) round(圆角) bevel(斜角)
+-lineCap:端点样式
+ 》butt(默认) round(圆角) square(高度多出为宽一半的值)
+
+绘制路径：
+-beginPath:开始绘制路径
+-closePath:结束绘制路径
+-moveTo:移动到绘制的新目标点
+-lineTo:新的目标点
+
+绘制路径2：
+-stroke:画线，默认黑色
+-fill:填充，默认黑色
+-rect:矩形区域
+-clerRect:删除一个画布的矩形区域
+-save:保存路径  （可以用保存路径和恢复路径保存更改的内容，这个区域的内容不会影响到其它区域，里面的内容就像局部变量一样。）
+-restore:恢复路径
+-小例子：鼠标画线 
+-小例子：方块移动
+
+注：canvas画布的宽高要设置在canvas元素内，不能设置到其它的样式里，否则里面绘制的元素会变形。
+
+
 引入：<canvas id=c1 width="400" height="400">
         <span>不支持canvas的浏览器</span>
       </canvas>   默认宽300像素，高150像素。
@@ -483,6 +547,44 @@ oGC.fillRect(num,num,100,100);
 
 
 注意：canvas的宽高设置在canvas标签内，不能设置到style里，否则会宽高不对。
+
+2、canvas
+绘制圆：
+-arc(x,y,半径，起始弧度，结束弧度，旋转方向)
+ 》x,y:起始位置
+ 》弧度与角度的关系：弧度=角度*Math.PI/180
+ 》旋转方向：顺时针（默认：false）、逆时针（true）
+ 》例子：用arc去画个钟表
+
+绘制其他曲线：
+-arcTo(x1,y1,x2,y2,r)
+ 》第一组坐标、第二组坐标、半径
+-quadraticCurveTo(dx,dy,x1,y1)
+ 》贝塞尔曲线：第一组控制点、第二组结束坐标
+-bezierCurveTo(dx1,dy1,dx2,dy2,x1,y1)
+ 》贝塞尔曲线：第一组控制点、第二组控制点、第三组结束坐标
+
+变换：
+-translate:
+ 》偏移：从起始点为基准点，移动当前坐标位置
+-rotate:
+ 》旋转：参数为弧度（x*Math.PI/180），基准点为左上角。
+ 》例子：旋转的小方块
+-scale:
+ 》缩放例子：旋转加缩放的小方块，基准点为左上角。
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
