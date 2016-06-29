@@ -1,0 +1,46 @@
+{dede:channelartlist  row='6' }   循环大栏目内的小栏目6次
+
+    {dede:type}       大栏目内调用子栏目名称
+        <dt><h3>[field:typename/]</h3><a href="[field:typelink/]" target="_blank" title="[field:typename/]" alt="[field:typename/]">更多</a></dt>
+    {/dede:type}
+
+
+
+    {dede:arclist    row='1'  typeid=''   titlelen='32' }            调用大栏目内当前子栏目文章一个。
+			<a class="pic-b" href="[field:arcurl/]" target="_blank" title="[field:title/]" alt="[field:title/]"><img src="[field:picname/]" width="108" height="91" alt="[field:title/]"/></a>
+				<span class="summary"><a class="wz-title"href="[field:arcurl/]" target="_blank" title="[field:title/]" alt="[field:title/]">[field:title/]</a>
+				<p>[field:description function="cn_substr(@me,140)"/]...<a class="col-blue"href="[field:arcurl/]" target="_blank" title="[field:title/]" alt="[field:title/]">[详细]</a></p>
+				 </span>
+     {/dede:arclist}
+
+
+     {dede:arclist    row='4'  typeid=''   titlelen='32' }   调用大栏目内当前子栏目文章六个
+				<li><i class="jt"></i><a href="[field:arcurl/]" target="_blank" title="[field:title/]" alt="[field:title/]">[field:title/]</a></li>
+
+     {/dede:arclist}
+
+
+
+
+{/dede:channelartlist}
+
+
+{dede:channel row='5' type='son' noself='yes'}     调用子栏目的栏目名称
+	<a href='[field:typelink/]' target="_blank" title="[field:typename/]" alt="[field:typename/]">[field:typename/]</a> |
+{/dede:channel}
+
+
+
+
+{dede:arclist    row='1'   typeid=''   titlelen='28'      flag='by'  }  调用当前栏目的带by标签的文章
+	<li><span>病 因</span><a href="[field:arcurl/]" target="_blank" title="[field:title/]"  alt="[field:title/]"  >[field:title/]</a></li>
+{/dede:arclist}
+
+
+
+{dede:field name='typeid' runphp='yes'}    在当前栏目ID是11时，调用第一行的图片，如果当前栏目ID是12时，调用第二行的图片
+	if(@me==11){@me='<a class="l-b alignleft" href="/swt/" target="_blank"><img src="/templets/whra/images/1423452752.jpg" width="796" height="99"  alt=""/></a>';}
+	elseif(@me==12){@me='<a class="l-b alignleft" href="/swt/" target="_blank"><img src="/templets/whra/images/1423452752.jpg" width="796" height="99"  alt=""/></a>';}		
+	else{@me='<a class="l-b alignleft" href="/swt/" target="_blank"><img src="/templets/whra/images/1423471389.jpg" width="796" height="99"  alt=""/></a>';}
+{/dede:field}
+

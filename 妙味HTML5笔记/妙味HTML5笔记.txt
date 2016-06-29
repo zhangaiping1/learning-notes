@@ -549,12 +549,19 @@ oGC.fillRect(num,num,100,100);
 注意：canvas的宽高设置在canvas标签内，不能设置到style里，否则会宽高不对。
 
 2、canvas
+
+注：关于画线和填充颜色，首先要设置好填充的颜色样式和线的样式（oGC.fillStyle='red'）然后再进行填充（oGC.fill()）。
+注2：如果要设置线的宽度，不是在线的样式里设置，而是oGC.lineWidth=3;
+
 绘制圆：
 -arc(x,y,半径，起始弧度，结束弧度，旋转方向)
  》x,y:起始位置
  》弧度与角度的关系：弧度=角度*Math.PI/180
  》旋转方向：顺时针（默认：false）、逆时针（true）
  》例子：用arc去画个钟表
+
+注：获取时间是date     var d=new Date();
+
 
 绘制其他曲线：
 -arcTo(x1,y1,x2,y2,r)
@@ -565,8 +572,12 @@ oGC.fillRect(num,num,100,100);
  》贝塞尔曲线：第一组控制点、第二组控制点、第三组结束坐标
 
 变换：
+
+注：要先设置好偏移和旋转以后再画图。
+注2：
+
 -translate:
- 》偏移：从起始点为基准点，移动当前坐标位置
+ 》偏移：重新映射0，0点。
 -rotate:
  》旋转：参数为弧度（x*Math.PI/180），基准点为左上角。
  》例子：旋转的小方块
@@ -574,8 +585,17 @@ oGC.fillRect(num,num,100,100);
  》缩放例子：旋转加缩放的小方块，基准点为左上角。
 
 
+3、canvas
+插入图片：
+-等图片加载完，再执行canvas操作
+ 》图片预加载：的onload中调用方法 eg:yImg.onload=function() {};
+-drawImage(oImg,x,y,w,h)
+ 》oImg:当前图片  x,y：坐标，  w,h：宽高
+ 》例子：微博的图片旋转效果
 
-
+设置背景：
+-createPattern(oImg,平铺方式)
+ 》第二个参数为：repeat,repeat-x,repeat-y,no-repeat
 
 
 
@@ -591,6 +611,9 @@ oGC.fillRect(num,num,100,100);
 
 
 1、同域下的窗口通信
+
+虚拟主机的相关设置：
+
 准备工作：开一个服务器，虚拟两个域名出来。把域名指向文件夹。（虚拟主机）在设置完成以后，要重启服务器。
 
 同域下窗口间通信的方式：
@@ -598,8 +621,24 @@ iframe:oMyIframe.contentWindow.document.body.style.background="";
 window.open：这个方法在打开新窗口的同时，会返回一个值，这个值就是打开的新窗口这个对象。所以可以通过这个对象，来操作这个新窗口。
 newWindow=window.open('4.window.open.html','_blank');
 newWindow.document.body.style.background='';
+注：这里这个返回的对象定义的是全局变量，如果在函数内定义局部变量的话，要注意作用域 。
+
 
 2、窗口跨域操作问题和postMessage的使用
+
+postMessage对象：
+-接收消息的窗口对象：.postMessage()
+-一参：发送的数据，二参：接收的域
+-交互方式：
+ 》iframe:    父页面：contentWindow     子页面：window.top
+ 》窗口页：   父页面：window.open       子页面：window.opener
+-接收事件：
+ 》message
+ 》ev.origin:发送数据来源的域
+ 》ev.data:发送的数据
+
+
+
 跨域的情况下，可以通过postMessage()方法来操作另一个窗口。
 postMessage:
 -接收消息的窗口的window对象.postMessage();(要先获取到接收消息的窗口，然后使用接收消息的窗口来操作这个方法。)
