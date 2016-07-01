@@ -1,0 +1,3 @@
+普通的文章摘要标签有可能会让文章消失。用下面这个文章摘要标签来调用。
+
+{dede:field.description runphp='yes'}if(@me<>'' )@me = .@me.;{/dede:field.description}
